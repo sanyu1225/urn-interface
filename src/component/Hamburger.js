@@ -24,7 +24,6 @@ const displayAnimation = `${display} 1 0.2s linear`;
 function AnimationLink({ children, path, disabled = false }) {
   const location = useLocation();
   const isActive = location.pathname === path;
-
   return (
     <Link
       color={disabled ? "#676765" : "#FFF3CD"}
