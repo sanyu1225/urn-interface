@@ -54,7 +54,7 @@ const Altar = () => (
             w="100%"
             bgRepeat="no-repeat"
             bgSize="100% 100%"
-            minH={{ base: '860px' }}
+            minH={{ base: window.innerHeight < 860 ? '860px' : '100vh' }}
             position="relative"
         >
             <Box
