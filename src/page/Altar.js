@@ -1,12 +1,50 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { Box, Flex, Text, Button, Grid } from '@chakra-ui/react';
+import { Box, Flex, Text, Button, Grid, Image } from '@chakra-ui/react';
 import Layout from '../layout';
 import HomeBg from '../assets/images/altar/altar_bg.png';
 import CardBrandImg from '../assets/images/altar/cardbrand.png';
-import BoardSmallImg from '../assets/images/merchant/merchant_board_small.png';
+import SkullItemImg from '../assets/images/altar/skull_item.png';
+import UrnItemImg from '../assets/images/altar/urn_item.png';
+import AltarImg from '../assets/images/altar/altar.png';
+import HandImg from '../assets/images/altar/hand.png';
 import BoardImg from '../assets/images/altar/board.png';
-import { ReactComponent as BowlImg } from '../assets/images/merchant/bowl.svg';
+
+const CollectionListData = [{
+    title: 'Urn list',
+    description: 'You can choose the urn.',
+    image: UrnItemImg,
+    type: 'urn'
+}, {
+    title: 'Bone list',
+    description: "You can choose the bone.",
+    image: SkullItemImg,
+    type: 'bone'
+}]
+
+const CollectionList = ({
+    title,
+    description,
+    image,
+    type
+}) => (
+    <Flex justifyContent="space-evenly" p="0 30px" mb="20px">
+        <Box>
+            <Image src={image} />
+        </Box>
+        <Flex wrap="wrap" w="40%" justifyContent="flex-start">
+            <Text fontSize="18px" fontWeight={700} color="#FFF3CD" w="100%">
+                {title}
+            </Text>
+            <Text mt="12px" fontSize="14px" fontWeight={400} color="#FFF3CD" w="100%">
+                {description}
+            </Text>
+            <Button mt="12px" variant="primary">
+                Select {type}
+            </Button>
+        </Flex>
+    </Flex>
+)
 
 const Altar = () => (
     <Layout>
@@ -16,39 +54,64 @@ const Altar = () => (
             w="100%"
             bgRepeat="no-repeat"
             bgSize="100% 100%"
-            minH={{ base: '100vh' }}
+            minH={{ base: '860px' }}
             position="relative"
         >
             <Box
-                bgImage={BoardSmallImg}
-                w="15.4rem"
-                bgRepeat="no-repeat"
-                bgSize="100% 100%"
-                minH={{ base: '33.2vh' }}
+                w="436px"
                 position="absolute"
-                bottom="32vh"
-                right={{ base: '12%' }}
+                minH={{ base: '688px' }}
+                bottom="9vh"
+                right={{ base: '22%' }}
             >
-                <Flex justifyContent="center" mt="4rem" wrap="wrap" p="0 49px" pb="2.3rem">
-                    <Text w="100%" textAlign="center" color="#794D0B" fontSize="20px" fontWeight={700} mb="0.9rem">
-                        Golden urn
-                    </Text>
-                    <BowlImg />
-                    <Text w="100%" textAlign="center" color="#794D0B" fontSize="14px" fontWeight={500} mb="0.9rem" mt="0.9rem">
-                        it&apos;s lame without the golden urn.
-                    </Text>
-                    <Button variant="gold">
-                        Forge
-                    </Button>
-                </Flex>
+                <Box
+                    bgImage={AltarImg}
+                    w="19.6rem"
+                    bgRepeat="no-repeat"
+                    bgSize="100% 100%"
+                    minH={{ base: '52.2vh' }}
+                    position="absolute"
+                    bottom="0"
+                />
+                <Box
+                    bgImage={HandImg}
+                    w="15.3rem"
+                    bgRepeat="no-repeat"
+                    bgSize="100% 100%"
+                    minH={{ base: '26rem' }}
+                    position="absolute"
+                    bottom="32vh"
+                    top={{ base: '1rem' }}
+                    right={{ base: '0' }}
+                >
+                    <Flex justifyContent="flex-end" mt="4rem" wrap="wrap" pr="2rem">
+                        <Text
+                            pr="1rem"
+                            w="100%"
+                            textAlign="right"
+                            color="#794D0B"
+                            fontSize="24px"
+                            fontWeight={700}
+                            mb="0.9rem"
+                            mt="0.9rem"
+                        >
+                            - -
+                        </Text>
+                        <Button variant="putIn">
+                            Put in
+                        </Button>
+                    </Flex>
+                </Box>
+
             </Box>
+
             <Flex
                 wrap="wrap"
                 w="24.6rem"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
                 position="absolute"
-                top="10rem"
+                top="12%"
                 left={{ base: '24.5%' }}
             >
                 <Box
@@ -58,39 +121,38 @@ const Altar = () => (
                     bgSize="100% 100%"
                     minH={{ base: '34rem' }}
                 >
-                    <Flex justifyContent="space-evenly" mt="10rem">
-                        <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p="16px" justifyContent="center">
-                            <Text fontSize="20px" fontWeight={700} color="#292229" textAlign="center" w="100%">
-                                Buy shovel
-                            </Text>
-                            <Text mt="12px" fontSize="20px" fontWeight={500} color="#292229" textAlign="center" w="100%">
-                                Every grave robber needs a shovel.
-                            </Text>
-                            <Button mt="12px" variant="dark">
-                                Buy shovel
-                            </Button>
-                        </Flex>
-                        <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p="16px" justifyContent="center">
-                            <Text fontSize="20px" fontWeight={700} color="#292229" textAlign="center" w="100%">
-                                Buy urn
-                            </Text>
-                            <Text mt="12px" fontSize="20px" fontWeight={500} color="#292229" textAlign="center" w="100%">
-                                I think... you need an urn for bones.
-                            </Text>
-                            <Button mt="12px" variant="dark">
-                                Buy urn
-                            </Button>
-                        </Flex>
-                    </Flex>
+                    <Text color="#fff5ce" fontWeight={700} fontSize="24px" w="100%" mt="8%" textAlign="center">
+                        Collection list
+                    </Text>
+                    <Text mb="32px" color="#fff5ce" fontWeight={500} fontSize="16px" w="100%" mt="12%" textAlign="center">
+                        Come on, bro. Your family need a rez.
+                    </Text>
+                    {
+                        CollectionListData.map((item) => (
+                            <CollectionList
+                                title={item.title}
+                                key={item.title}
+                                description={item.description}
+                                image={item.image}
+                                type={item.type}
+                            />
+                        ))
+                    }
                 </Box>
-                <Box
+                <Flex
                     mt="1.5rem"
                     bgImage={CardBrandImg}
                     w="100%"
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
                     minH={{ base: '10.5rem' }}
-                />
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <Text color="#FFF3CD" textAlign="center" fontSize="16px" fontWeight={400}>
+                        Hey, you are not select yet. Need some help?
+                    </Text>
+                </Flex>
             </Flex>
 
         </Box>

@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { Box, Flex, Text, Button, Grid } from '@chakra-ui/react';
@@ -10,6 +12,8 @@ import BoardSmallImg from '../assets/images/merchant/merchant_board_small.png';
 import BoardImg from '../assets/images/altar/board.png';
 import { ReactComponent as BowlImg } from '../assets/images/merchant/bowl.svg';
 
+
+
 const Altar = () => (
     <Layout>
         <Box
@@ -18,7 +22,7 @@ const Altar = () => (
             w="100%"
             bgRepeat="no-repeat"
             bgSize="100% 100%"
-            minH={{ base: '100vh' }}
+            minH={{ base: '860px' }}
             position="relative"
         >
             <Box

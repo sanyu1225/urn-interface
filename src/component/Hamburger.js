@@ -63,7 +63,8 @@ function AnimationLink({ children, path, disabled = false }) {
 const Landing = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <Grid textAlign="right" position="absolute" top="32px" zIndex={2} right="32px">
+    <Grid textAlign="right" position="absolute" top="32px" zIndex={2} right="32px" gridAutoFlow="column">
+      <Button variant="hamburger" mr="14px">Connect Wallet</Button>
       <Box position="relative">
         <Box w="100%">
           <Button w="54px" variant="hamburger" onClick={() => setIsOpen((state) => !state)}>

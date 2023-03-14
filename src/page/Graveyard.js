@@ -35,16 +35,15 @@ const Graveyard = () => (
             w="100%"
             bgRepeat="no-repeat"
             bgSize="100% 100%"
-            minH={{ base: '100vh' }}
+            minH={{ base: '860px' }}
             position="relative"
         >
-
             <Box
                 bgImage={TombstoneImg}
                 w="16rem"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
-                minH={{ base: '33.4vh' }}
+                minH={{ base: '19rem' }}
                 position="absolute"
                 bottom="13%"
                 right={{ base: '37%' }}

@@ -17,7 +17,7 @@ const Merchant = () => (
             w="100%"
             bgRepeat="no-repeat"
             bgSize="100% 100%"
-            minH={{ base: '100vh' }}
+            minH={{ base: '860px' }}
             position="relative"
         >
 

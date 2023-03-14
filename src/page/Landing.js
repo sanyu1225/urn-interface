@@ -14,7 +14,7 @@ const Landing = () => (
       w="100%"
       bgRepeat="no-repeat"
       bgSize="100% 100%"
-      minH={{ base: '100vh' }}
+      minH={{ base: '860px' }}
       position="relative"
     >
       <Box
@@ -25,7 +25,7 @@ const Landing = () => (
         minH={{ base: '47.5vh' }}
         position="absolute"
         bottom="0px"
-        right="35rem"
+        right="29.5%"
         textAlign="center"
         pt="3%"
       >
@@ -47,7 +47,7 @@ const Landing = () => (
         w="17rem"
         bgRepeat="no-repeat"
         bgSize="100% 100%"
-        minH={{ base: '47.5vh' }}
+        minH={{ base: '25.5rem' }}
         position="absolute"
         bottom="0px"
         right={{ base: '23%' }}

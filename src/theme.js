@@ -197,6 +197,7 @@ export const theme = extendTheme({
           },
         },
         hamburger: {
+          color: "#FFF3CD",
           background: '#292229',
           backgroundColor: '#292229',
           transition: 'all 0.2s ease-in-out',
@@ -272,7 +273,6 @@ export const theme = extendTheme({
             boxShadow: 'none',
           },
         },
-
         dark: {
           background: '#353135',
           backgroundColor: '#353135',
@@ -290,6 +290,34 @@ export const theme = extendTheme({
           _active: {
             borderColor: 'transparent',
             backgroundColor: '#353135',
+            opacity: 0.9,
+            transform: 'scale(0.96)',
+          },
+          _focus: {
+            borderColor: 'transparent',
+            boxShadow: 'none',
+          },
+        },
+        putIn: {
+          background: '#FFE182',
+          backgroundColor: '#FFE182',
+          transition: 'all 0.2s ease-in-out',
+          borderRadius: 100,
+          fontSize: '16px',
+          fontWeight: '600',
+          color: "#292229",
+          width: "72px",
+          height: "39px",
+          padding: "10px",
+          _hover: {
+            borderColor: 'transparent',
+            backgroundColor: '#F6D469',
+            opacity: 0.8,
+            transform: 'scale(0.98)',
+          },
+          _active: {
+            borderColor: 'transparent',
+            backgroundColor: '#F6D469',
             opacity: 0.9,
             transform: 'scale(0.96)',
           },
