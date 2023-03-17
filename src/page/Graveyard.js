@@ -75,7 +75,7 @@ const Graveyard = () => (
 
                 <CustomLink path="/merchant" >Go to merchant</CustomLink>
                 <CustomLink mt="-9rem" path="/altar">Go to altar</CustomLink>
-                <CustomLink mt="-15rem" path="#" disabled>Go to teleport<br />(Coming soon)</CustomLink>
+                <CustomLink mt="-15rem" path="#" disabled>Go to reincarnation<br />(Coming soon)</CustomLink>
             </Flex>
 
         </Box>
