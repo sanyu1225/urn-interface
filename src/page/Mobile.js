@@ -10,12 +10,12 @@ const Mobile = () => (
             maxW="1920px"
             bgColor="#1E1E1E"
             w="100%"
-            minH={{ base: '100vh' }}
+            minHeight="100vh"
             position="relative"
             justifyContent="center"
             alignItems="center"
         >
-            <Grid gridAutoColumns="row" justifyItems="center">
+            <Grid gridAutoColumns="row" justifyItems="center" >
                 <MobileIcon />
                 <Text color="#FFF3CD" fontSize="28px" fontWeight={700} mt="42px" mb="20px">
                     Desktop only

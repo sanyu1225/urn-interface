@@ -1,28 +1,41 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { Box, Flex, Text, Button, Grid } from '@chakra-ui/react';
+import PropTypes from 'prop-types';
+import { Box, Flex, Text, Button } from '@chakra-ui/react';
 import Layout from '../layout';
 import HomeBg from '../assets/images/merchant/merchant_bg.png';
+import HomeBgWebp from '../assets/images/merchant/merchant_bg.webp';
+import HomeBaseBg from '../assets/images/merchant/merchant_1440.png';
+import HomeBaseBgWebp from '../assets/images/merchant/merchant_1440.webp';
 import FurnaceImg from '../assets/images/merchant/merchant_furnace.png';
+import FurnaceImgWebp from '../assets/images/merchant/merchant_furnace.webp';
 import BoardSmallImg from '../assets/images/merchant/merchant_board_small.png';
+import BoardSmallImgWebp from '../assets/images/merchant/merchant_board_small.webp';
 import SkullImg from '../assets/images/merchant/merchant_skull.png';
+import SkullImgWebp from '../assets/images/merchant/merchant_skull.webp';
 import BoardBigImg from '../assets/images/merchant/merchant_board_big.png';
+import BoardBigImgWebp from '../assets/images/merchant/merchant_board_big.webp';
 import { ReactComponent as BowlImg } from '../assets/images/merchant/bowl.svg';
 
-const Merchant = () => (
+const Merchant = ({ isSupportWebp }) => (
     <Layout>
         <Box
             maxW="1920px"
-            bgImage={HomeBg}
+            bgImage={{
+                base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
+                desktop: isSupportWebp ? HomeBgWebp : HomeBg
+            }}
             w="100%"
             bgRepeat="no-repeat"
             bgSize="100% 100%"
             minH={{ base: window.innerHeight < 860 ? '860px' : '100vh' }}
+            minW={{ base: '1440px' }}
             position="relative"
         >
-
             <Box
-                bgImage={BoardSmallImg}
+                bgImage={{
+                    base: isSupportWebp ? BoardSmallImgWebp : BoardSmallImg,
+                }}
                 w="15.4rem"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
@@ -45,7 +58,9 @@ const Merchant = () => (
                 </Flex>
             </Box>
             <Box
-                bgImage={FurnaceImg}
+                bgImage={{
+                    base: isSupportWebp ? FurnaceImgWebp : FurnaceImg,
+                }}
                 w="24.4rem"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
@@ -65,7 +80,9 @@ const Merchant = () => (
                 right={{ base: '42%' }}
             >
                 <Box
-                    bgImage={BoardBigImg}
+                    bgImage={{
+                        base: isSupportWebp ? BoardBigImgWebp : BoardBigImg
+                    }}
                     w="100%"
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
@@ -98,7 +115,9 @@ const Merchant = () => (
                     </Flex>
                 </Box>
                 <Box
-                    bgImage={SkullImg}
+                    bgImage={{
+                        base: isSupportWebp ? SkullImgWebp : SkullImg
+                    }}
                     w="88.2%"
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
@@ -110,4 +129,7 @@ const Merchant = () => (
     </Layout>
 );
 
+Merchant.prototype = {
+    isSupportWebp: PropTypes.bool.isRequired,
+}
 export default Merchant;

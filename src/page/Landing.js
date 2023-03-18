@@ -7,8 +7,11 @@ import HomeBgWebp from '../assets/images/home/home_bg.webp';
 import HomeBaseBg from '../assets/images/home/home_1440.jpg';
 import HomeBaseBgWebp from '../assets/images/home/home_1440.webp';
 import SoilImg from '../assets/images/home/home_soil.png';
+import SoilImgWebp from '../assets/images/home/home_soil.webp';
 import ShovelImg from '../assets/images/home/home_shovel.png';
+import ShovelImgWebp from '../assets/images/home/home_shovel.webp';
 import TombstoneImg from '../assets/images/home/home_tombstone.png';
+import TombstoneImgWebp from '../assets/images/home/home_tombstone.webp';
 
 const Landing = ({ isSupportWebp }) => (
   <Layout>
@@ -26,7 +29,9 @@ const Landing = ({ isSupportWebp }) => (
       position="relative"
     >
       <Box
-        bgImage={TombstoneImg}
+        bgImage={{
+          base: isSupportWebp ? TombstoneImgWebp : TombstoneImg,
+        }}
         w="35.3rem"
         bgRepeat="no-repeat"
         bgSize="100% 100%"
@@ -63,7 +68,9 @@ const Landing = ({ isSupportWebp }) => (
         </Grid>
       </Box>
       <Box
-        bgImage={ShovelImg}
+        bgImage={{
+          base: isSupportWebp ? ShovelImgWebp : ShovelImg,
+        }}
         w="17rem"
         bgRepeat="no-repeat"
         bgSize="100% 100%"
@@ -73,7 +80,9 @@ const Landing = ({ isSupportWebp }) => (
         right={{ base: '23%' }}
       />
       <Box
-        bgImage={SoilImg}
+        bgImage={{
+          base: isSupportWebp ? SoilImgWebp : SoilImg,
+        }}
         w="100%"
         bgRepeat="no-repeat"
         bgSize="100% 100%"
