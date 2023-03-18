@@ -1,7 +1,7 @@
 import { extendTheme } from '@chakra-ui/react'
 
 export const breakpoints = {
-  desktop: '425px',
+  desktop: '1920px',
 }
 
 export const theme = extendTheme({
