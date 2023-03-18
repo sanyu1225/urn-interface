@@ -1,20 +1,28 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Box, Text, Button, Grid, Link } from '@chakra-ui/react';
 import Layout from '../layout';
 import HomeBg from '../assets/images/home/home_bg.png';
+import HomeBgWebp from '../assets/images/home/home_bg.webp';
+import HomeBaseBg from '../assets/images/home/home_1440.jpg';
+import HomeBaseBgWebp from '../assets/images/home/home_1440.webp';
 import SoilImg from '../assets/images/home/home_soil.png';
 import ShovelImg from '../assets/images/home/home_shovel.png';
 import TombstoneImg from '../assets/images/home/home_tombstone.png';
 
-const Landing = () => (
+const Landing = ({ isSupportWebp }) => (
   <Layout>
     <Box
       maxW="1920px"
-      bgImage={HomeBg}
+      bgImage={{
+        base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
+        desktop: isSupportWebp ? HomeBgWebp : HomeBg
+      }}
       w="100%"
       bgRepeat="no-repeat"
       bgSize="100% 100%"
       minH={{ base: window.innerHeight < 860 ? '860px' : '100vh' }}
+      minW={{ base: '1440px' }}
       position="relative"
     >
       <Box
@@ -22,7 +30,7 @@ const Landing = () => (
         w="35.3rem"
         bgRepeat="no-repeat"
         bgSize="100% 100%"
-        minH={{ base: '47.5vh' }}
+        minH={{ base: '38.5vh', desktop: '47.5vh' }}
         position="absolute"
         bottom="0px"
         right="29.5%"
@@ -69,7 +77,7 @@ const Landing = () => (
         w="100%"
         bgRepeat="no-repeat"
         bgSize="100% 100%"
-        minH={{ base: '47.5vh' }}
+        minH={{ base: '35.5vh', desktop: '47.5vh' }}
         position="absolute"
         bottom="0px"
       />
@@ -77,4 +85,7 @@ const Landing = () => (
   </Layout>
 );
 
+Landing.prototype = {
+  isSupportWebp: PropTypes.bool.isRequired,
+}
 export default Landing;
