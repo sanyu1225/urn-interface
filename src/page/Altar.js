@@ -1,24 +1,36 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button, Grid, Image } from '@chakra-ui/react';
 import Layout from '../layout';
 import HomeBg from '../assets/images/altar/altar_bg.png';
+import HomeBgWebp from '../assets/images/altar/altar_bg.webp';
+import HomeBaseBg from '../assets/images/altar/altar_1440.jpg';
+import HomeBaseBgWebp from '../assets/images/altar/altar_1440.webp';
 import CardBrandImg from '../assets/images/altar/cardbrand.png';
+import CardBrandImgWebp from '../assets/images/altar/cardbrand.webp';
 import SkullItemImg from '../assets/images/altar/skull_item.png';
+import SkullItemImgWebp from '../assets/images/altar/skull_item.webp';
 import UrnItemImg from '../assets/images/altar/urn_item.png';
+import UrnItemImgWebp from '../assets/images/altar/urn_item.webp';
 import AltarImg from '../assets/images/altar/altar.png';
+import AltarImgWebp from '../assets/images/altar/altar.webp';
 import HandImg from '../assets/images/altar/hand.png';
+import HandImgWebp from '../assets/images/altar/hand.webp';
 import BoardImg from '../assets/images/altar/board.png';
+import BoardImgWebp from '../assets/images/altar/board.webp';
 
 const CollectionListData = [{
     title: 'Urn list',
     description: 'You can choose the urn.',
     image: UrnItemImg,
+    imageWebp: UrnItemImgWebp,
     type: 'urn'
 }, {
     title: 'Bone list',
     description: "You can choose the bone.",
     image: SkullItemImg,
+    imageWebp: SkullItemImgWebp,
     type: 'bone'
 }]
 
@@ -26,12 +38,14 @@ const CollectionList = ({
     title,
     description,
     image,
+    imageWebp,
     type,
-    onClick
+    onClick,
+    isSupportWebp
 }) => (
     <Flex justifyContent="space-evenly" p="0 30px" mb="20px">
         <Box>
-            <Image src={image} />
+            <Image src={isSupportWebp ? imageWebp : image} />
         </Box>
         <Flex wrap="wrap" w="40%" justifyContent="flex-start">
             <Text fontSize="18px" fontWeight={700} color="#FFF3CD" w="100%">
@@ -47,13 +61,16 @@ const CollectionList = ({
     </Flex>
 )
 
-const Altar = () => {
+const Altar = ({ isSupportWebp }) => {
     const [showType, setShowType] = useState('');
     return (
         <Layout>
             <Box
                 maxW="1920px"
-                bgImage={HomeBg}
+                bgImage={{
+                    base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
+                    desktop: isSupportWebp ? HomeBgWebp : HomeBg
+                }}
                 w="100%"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
@@ -65,10 +82,12 @@ const Altar = () => {
                     position="absolute"
                     minH={{ base: '688px' }}
                     bottom="9vh"
-                    right={{ base: '22%' }}
+                    right={{ base: '10%', desktop: '22%' }}
                 >
                     <Box
-                        bgImage={AltarImg}
+                        bgImage={{
+                            base: isSupportWebp ? AltarImgWebp : AltarImg,
+                        }}
                         w="19.6rem"
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
@@ -77,7 +96,9 @@ const Altar = () => {
                         bottom="0"
                     />
                     <Box
-                        bgImage={HandImg}
+                        bgImage={{
+                            base: isSupportWebp ? HandImgWebp : HandImg,
+                        }}
                         w="15.3rem"
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
@@ -117,10 +138,12 @@ const Altar = () => {
                     bgSize="100% 100%"
                     position="absolute"
                     top="12%"
-                    left={{ base: '24.5%' }}
+                    left={{ base: '6.5%', mid: '24.5%' }}
                 >
                     <Box
-                        bgImage={BoardImg}
+                        bgImage={{
+                            base: isSupportWebp ? BoardImgWebp : BoardImg,
+                        }}
                         w="100%"
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
@@ -139,15 +162,19 @@ const Altar = () => {
                                     key={item.title}
                                     description={item.description}
                                     image={item.image}
+                                    imageWebp={item.imageWebp}
                                     type={item.type}
                                     onClick={() => setShowType(item.type)}
+                                    isSupportWebp={isSupportWebp}
                                 />
                             ))
                         }
                     </Box>
                     <Flex
                         mt="1.5rem"
-                        bgImage={CardBrandImg}
+                        bgImage={{
+                            base: isSupportWebp ? CardBrandImgWebp : CardBrandImg,
+                        }}
                         w="100%"
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
@@ -166,4 +193,7 @@ const Altar = () => {
     )
 };
 
+Altar.prototype = {
+    isSupportWebp: PropTypes.bool.isRequired,
+}
 export default Altar;
