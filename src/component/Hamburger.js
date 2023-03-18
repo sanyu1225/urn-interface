@@ -99,7 +99,7 @@ const Landing = () => {
               <AnimationLink path="/merchant">Merchant</AnimationLink>
               <AnimationLink path="/graveyard">Graveyard</AnimationLink>
               <AnimationLink path="/altar">Altar</AnimationLink>
-              <AnimationLink disabled path="/teleport">Teleport *Coming soon</AnimationLink>
+              <AnimationLink disabled path="/teleport">Reincarnation *Coming soon</AnimationLink>
               <AnimationLink path="/faq">FAQ</AnimationLink>
             </Grid >
             <Flex wrap="wrap">
