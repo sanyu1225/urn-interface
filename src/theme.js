@@ -161,6 +161,7 @@ export const theme = extendTheme({
           fontSize: '16px',
           fontWeight: '600',
           _hover: {
+            textDecoration: "none",
             borderColor: 'transparent',
             backgroundColor: '#E3D4A2',
             opacity: 0.8,

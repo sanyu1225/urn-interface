@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Button, Grid } from '@chakra-ui/react';
+import { Box, Text, Button, Grid, Link } from '@chakra-ui/react';
 import Layout from '../layout';
 import HomeBg from '../assets/images/home/home_bg.png';
 import SoilImg from '../assets/images/home/home_soil.png';
@@ -36,10 +36,22 @@ const Landing = () => (
           Fine. You can start playing, I&apos;m tired to explain.
         </Text>
         <Grid w="100%" justifyContent="center">
-          <Button zIndex={2} mt="20px" mb="16px">
+          <Button
+            as={Link}
+            href="/graveyard"
+            zIndex={2}
+            mt="20px"
+            mb="16px"
+          >
             Get in
           </Button>
-          <Button zIndex={2}>FAQ</Button>
+          <Button
+            as={Link}
+            href="/faq"
+            zIndex={2}
+          >
+            FAQ
+          </Button>
         </Grid>
       </Box>
       <Box
