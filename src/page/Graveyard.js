@@ -1,8 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button, Link } from '@chakra-ui/react';
 import HomeBg from '../assets/images/graveyard/graveyard_bg.png';
+import HomeBgWebp from '../assets/images/graveyard/graveyard_bg.webp';
+import HomeBaseBg from '../assets/images/graveyard/graveyard_1440.jpg';
+import HomeBaseBgWebp from '../assets/images/graveyard/graveyard_1440.webp';
 import TombstoneImg from '../assets/images/graveyard/tombstone.png'
+import TombstoneImgWebp from '../assets/images/graveyard/tombstone.webp'
 import SignpostImg from '../assets/images/graveyard/signpost.png'
+import SignpostImgWebp from '../assets/images/graveyard/signpost.webp'
 import { ReactComponent as SkullImg } from '../assets/images/graveyard/skull.svg';
 import Layout from '../layout';
 
@@ -28,10 +34,13 @@ const CustomLink = ({ children, path, mt, disabled = false }) => (
     </Link>
 )
 
-const Graveyard = () => (
+const Graveyard = ({ isSupportWebp }) => (
     <Layout>
         <Box
-            bgImage={HomeBg}
+            bgImage={{
+                base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
+                desktop: isSupportWebp ? HomeBgWebp : HomeBg
+            }}
             w="100%"
             bgRepeat="no-repeat"
             bgSize="100% 100%"
@@ -39,7 +48,9 @@ const Graveyard = () => (
             position="relative"
         >
             <Box
-                bgImage={TombstoneImg}
+                bgImage={{
+                    base: isSupportWebp ? TombstoneImgWebp : TombstoneImg,
+                }}
                 w="16rem"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
@@ -59,7 +70,9 @@ const Graveyard = () => (
                 </Flex>
             </Box>
             <Flex
-                bgImage={SignpostImg}
+                bgImage={{
+                    base: isSupportWebp ? SignpostImgWebp : SignpostImg,
+                }}
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
                 minH={{ base: '62.4vh' }}
@@ -72,7 +85,6 @@ const Graveyard = () => (
                 pt="2.5rem"
                 pl="12rem"
             >
-
                 <CustomLink path="/merchant" >Go to merchant</CustomLink>
                 <CustomLink mt="-9rem" path="/altar">Go to altar</CustomLink>
                 <CustomLink mt="-15rem" path="#" disabled>Go to reincarnation<br />(Coming soon)</CustomLink>
@@ -82,4 +94,7 @@ const Graveyard = () => (
     </Layout>
 );
 
+Graveyard.prototype = {
+    isSupportWebp: PropTypes.bool.isRequired,
+}
 export default Graveyard;

@@ -53,7 +53,7 @@ function AnimationLink({ children, path, disabled = false }) {
       } : {}}
     >
       {isActive && <Box mr="12px">&gt;</Box>}
-      <Text as="span" mr={disabled ? '0' : '2px'}>
+      <Text as="span" mr={disabled ? '0' : '2px'} fontSize={disabled ? '14px' : '18px'}>
         {children}
       </Text>
     </Link>
