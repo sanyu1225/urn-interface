@@ -1,11 +1,17 @@
 import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Box, Flex, Text, Grid } from '@chakra-ui/react';
-import TombstoneImg from '../assets/images/faq/faq_tombstone.png'
-import { ReactComponent as MediaIcon } from '../assets/images/faq/Media.svg';
-import Typewriter from '../component/Typewriter';
 import Layout from '../layout';
+import Typewriter from '../component/Typewriter';
+import TombstoneImg from '../assets/images/faq/faq_tombstone.png'
+import TombstoneImgWebp from '../assets/images/faq/faq_tombstone.webp'
 import HomeBg from '../assets/images/faq/faq_bg.png';
+import HomeBgWebp from '../assets/images/faq/faq_bg.webp';
+import HomeBaseBg from '../assets/images/faq/faq_1440.png';
+import HomeBaseBgWebp from '../assets/images/faq/faq_1440.webp';
 import StoneImg from '../assets/images/faq/faq_stone.png'
+import StoneImgWebp from '../assets/images/faq/faq_stone.webp'
+import { ReactComponent as MediaIcon } from '../assets/images/faq/Media.svg';
 import KeyboardAudio from '../assets/keyboard.mp3'
 
 const FAQ_LIST = [{
@@ -22,8 +28,7 @@ const FAQ_LIST = [{
     title: 'Congrats, your grandma lives on-chain permanently.'
 }]
 
-const Altar = () => {
-
+const FAQ = ({ isSupportWebp }) => {
     const audioRef = useRef();
     const [info, setInfo] = useState('')
 
@@ -46,7 +51,10 @@ const Altar = () => {
         <Layout>
             <Box
                 maxW="1920px"
-                bgImage={HomeBg}
+                bgImage={{
+                    base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
+                    desktop: isSupportWebp ? HomeBgWebp : HomeBg
+                }}
                 w="100%"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
@@ -71,7 +79,9 @@ const Altar = () => {
                     )
                 }
                 <Box
-                    bgImage={TombstoneImg}
+                    bgImage={{
+                        base: isSupportWebp ? TombstoneImgWebp : TombstoneImg,
+                    }}
                     w="42.8rem"
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
@@ -109,7 +119,9 @@ const Altar = () => {
                     </Grid>
                 </Box>
                 <Box
-                    bgImage={StoneImg}
+                    bgImage={{
+                        base: isSupportWebp ? StoneImgWebp : StoneImg,
+                    }}
                     w="100%"
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
@@ -122,4 +134,7 @@ const Altar = () => {
     )
 };
 
-export default Altar;
+FAQ.prototype = {
+    isSupportWebp: PropTypes.bool.isRequired,
+}
+export default FAQ;
