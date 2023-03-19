@@ -111,39 +111,6 @@ export const theme = extendTheme({
         dialog: { borderRadius: '20px' },
       },
     },
-    Checkbox: {
-      baseStyle: {
-        control: {
-          border: '1px solid',
-          borderRadius: '5px',
-          _checked: {
-            bg: 'BloctoBlue.Light02',
-            borderColor: 'BloctoBlue.Light02',
-          },
-          _readOnly: {
-            bg: 'gray04',
-            borderColor: 'gray04',
-            userSelect: 'none',
-            _checked: {
-              bg: 'BloctoBlue.Light02',
-              borderColor: 'BloctoBlue.Light02',
-              '& ~ span': {
-                color: 'inherit',
-              },
-            },
-            '& ~ span': {
-              color: 'gray01',
-            },
-          },
-        },
-      },
-      sizes: {
-        md: {
-          control: { w: '20px', h: '20px' },
-          label: { fontSize: '14px', fontWeight: '500', ml: '10px' },
-        },
-      },
-    },
     Button: {
       variants: {
         primary: {
@@ -336,12 +303,6 @@ export const theme = extendTheme({
         },
       },
     },
-    Tooltip: {
-      baseStyle: {
-        borderRadius: '8px',
-        fontSize: '12px',
-      },
-    },
     Alert: {
       variants: {
         Blue: {
@@ -358,60 +319,7 @@ export const theme = extendTheme({
           },
         },
       },
-    },
-    Menu: {
-      baseStyle: {
-        list: {
-          minWidth: '100px',
-          border: 'none',
-          py: '0',
-          boxShadow: '0 0 20px rgba(0, 0, 0, 0.05)',
-          borderRadius: '12px',
-        },
-        item: {
-          px: '20px',
-          minHeight: '62px',
-          transition: 'all 0.2s ease-in-out',
-          _hover: {
-            transform: 'scale(0.98)',
-            background: 'none',
-          },
-          _focus: {
-            background: 'none',
-          },
-          WebkitTapHighlightColor: 'transparent',
-        },
-        groupTitle: {
-          fontSize: '16px',
-          m: '0',
-          p: '20px 20px 12px',
-        },
-      },
-      variants: {
-        header: {
-          item: {
-            minHeight: '40px',
-            fontSize: '12px',
-          },
-        },
-      },
-    },
-    Toast: {
-      baseStyle: {
-        container: {
-          bg: "yellow.500",
-        },
-      },
-      variants: {
-        "solid-success": {
-          container: {
-            bg: "red.500",
-            color: "#49473E"
-          },
-        },
-      }
-    },
-
+    }
   },
   breakpoints,
 })

@@ -16,3 +16,8 @@ export const setImage = (isSupportWebp, baseImg, baseImgWebp, desktopImg, deskto
 
     return obj
 }
+
+export function shortenAddress(address, chars = 4) {
+    if (!address) return new Error('No address provided')
+    return `${address.slice(0, chars)}...${address.slice(-chars)}`
+}

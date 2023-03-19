@@ -1,12 +1,22 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { useLocation } from "react-router-dom";
-import { Grid, Flex, Box, Button, keyframes, Text, Divider, Link } from '@chakra-ui/react';
+import { Grid, Flex, Box, Button, keyframes, Text, Divider, Link, MenuItem } from '@chakra-ui/react';
+import {
+  BloctoWalletName,
+  useWallet,
+} from '@manahippo/aptos-wallet-adapter';
+import Cusmenu from "./Cusmenu";
+import useCopyToClipboard from "../hooks/useCopyToClipboard";
+import { shortenAddress } from '../utils'
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { ReactComponent as CloseIcon } from '../assets/images/icons/Close.svg';
 import { ReactComponent as LogoIcon } from '../assets/images/icons/Logo.svg';
 import { ReactComponent as TwitterIcon } from '../assets/images/icons/Twitter.svg';
 import { ReactComponent as TgIcon } from '../assets/images/icons/Tg.svg';
+import { ReactComponent as CopyIcon } from '../assets/images/icons/Copy.svg';
+import { ReactComponent as LogoutIcon } from '../assets/images/icons/Logout.svg';
 
 const display = keyframes`
     from {
@@ -62,9 +72,58 @@ function AnimationLink({ children, path, disabled = false }) {
 
 const Landing = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { connect, disconnect, connected, account } = useWallet();
+  const [copyToClipboard] = useCopyToClipboard();
+
+  const address = account && account.address;
+
   return (
     <Grid textAlign="right" position="absolute" top="32px" zIndex={2} right="32px" gridAutoFlow="column">
-      <Button variant="hamburger" mr="14px">Connect Wallet</Button>
+      {
+        connected ? (
+          <Cusmenu buttonText="Wallet">
+            <MenuItem
+              bg="#292229"
+              _hover={{
+                opacity: 0.8,
+              }}
+              p="16 28px"
+            >
+              <Flex flexWrap="wrap" w="100%" onClick={() => copyToClipboard(address)}>
+                <Text color="#FFF3CD" fontSize="14px" fontWeight={700} w="100%">
+                  Your Address
+                </Text>
+                <Flex justifyContent="space-between" w="100%">
+                  <Text color="#FFF3CD" fontSize="14px" fontWeight={700}>
+                    {account && shortenAddress(account.address)}
+                  </Text>
+                  <CopyIcon />
+                </Flex>
+              </Flex>
+            </MenuItem>
+            <MenuItem
+              bg="#292229"
+              _hover={{
+                opacity: 0.8,
+              }}
+              p="16 28px"
+            >
+              <Flex justifyContent="space-between" w="100%" onClick={disconnect}>
+                <Text color="#FFF3CD" fontSize="14px" fontWeight={700}>
+                  Log out
+                </Text>
+                <LogoutIcon />
+              </Flex>
+            </MenuItem>
+          </Cusmenu>
+        ) : (
+          <Button variant="hamburger" mr="14px" onClick={() => connect(BloctoWalletName)}>
+            Connect Wallet
+          </Button>
+        )
+      }
+
+
       <Box position="relative">
         <Box w="100%">
           <Button w="54px" variant="hamburger" onClick={() => setIsOpen((state) => !state)}>
@@ -116,7 +175,7 @@ const Landing = () => {
           </Box>
         )}
       </Box>
-    </Grid>
+    </Grid >
   );
 };
 
