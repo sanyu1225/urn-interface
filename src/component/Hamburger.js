@@ -3,10 +3,7 @@
 import React, { useState } from 'react';
 import { useLocation } from "react-router-dom";
 import { Grid, Flex, Box, Button, keyframes, Text, Divider, Link, MenuItem } from '@chakra-ui/react';
-import {
-  BloctoWalletName,
-  useWallet,
-} from '@manahippo/aptos-wallet-adapter';
+import { BloctoWalletName, useWallet, } from '@manahippo/aptos-wallet-adapter';
 import Cusmenu from "./Cusmenu";
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
 import { shortenAddress } from '../utils'
@@ -102,6 +99,7 @@ const Landing = () => {
               </Flex>
             </MenuItem>
             <MenuItem
+              mt="14px"
               bg="#292229"
               _hover={{
                 opacity: 0.8,

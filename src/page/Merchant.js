@@ -1,7 +1,9 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button } from '@chakra-ui/react';
 import useCusToast from '../hooks/useCusToast';
+import { BloctoWalletName, useWallet } from '@manahippo/aptos-wallet-adapter';
 import Layout from '../layout';
 import HomeBg from '../assets/images/merchant/merchant_bg.png';
 import HomeBgWebp from '../assets/images/merchant/merchant_bg.webp';
@@ -18,18 +20,62 @@ import BoardBigImgWebp from '../assets/images/merchant/merchant_board_big.webp';
 import { ReactComponent as BowlImg } from '../assets/images/merchant/bowl.svg';
 
 
-
-
 const Merchant = ({ isSupportWebp }) => {
 
+    const { connect, connected, signAndSubmitTransaction } = useWallet()
     const { toastSeccess, toastError } = useCusToast()
+    const [isLoading, setLoading] = useState(false);
 
-    const buyShovel = () => {
-        toastSeccess('success')
+    const checkLogin = async () => {
+        if (connected) {
+            return true
+        }
+        await connect(BloctoWalletName)
+        return false
     }
+
+    const signAndSubmitTransactionFnc = async (payload,
+        options = {
+            max_gas_amount: "20000",
+            gas_unit_price: "200",
+        }) => {
+        try {
+            setLoading(true);
+            const { hash } = await signAndSubmitTransaction(payload, options);
+            if (hash) {
+                return hash;
+            }
+            throw new Error('hash is null');
+        } catch (error) {
+            console.log(error);
+            return null;
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const buyShovel = async () => {
+        await checkLogin()
+        if (isLoading) return null
+        const shovel = {
+            arguments: [],
+            function: '0x4b7088485460199fd540f4de4d71da425dd8025e988e69577731ae03e67b42c3::urn_to_earn::mint_shovel',
+            // function: '0x495947c96cf56b18480d03603be8c53bfdc74b17221431debe0f4472672da99d::shovel::mint', // old contract
+            type: 'entry_function_payload',
+            type_arguments: [],
+        };
+        const hash = await signAndSubmitTransactionFnc(shovel);
+        if (hash) {
+            toastSeccess(hash)
+        }
+        return null
+    }
+
     const buyUrn = () => {
         toastError('error')
     }
+
+
     return (
         <Layout>
             <Box
