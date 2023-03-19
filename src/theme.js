@@ -17,14 +17,6 @@ export const theme = extendTheme({
     gray03: '#DCDCDC',
     gray04: '#EFEFEF',
     gray05: '#F9F9F9',
-    BloctoBlue: {
-      Light01: '#365BEA',
-      Light02: '#0A94FF',
-      Light03: '#A6D9FF',
-      Light04: '#E0F0FF',
-      Light05: '#F0F8FF',
-      Light06: '#F0F3F8',
-    },
   },
   radii: {
     md: '8px',
@@ -352,9 +344,9 @@ export const theme = extendTheme({
     },
     Alert: {
       variants: {
-        BloctoBlue: {
+        Blue: {
           container: {
-            background: 'BloctoBlue.Light01',
+            background: 'blue.100',
             color: 'white',
             borderRadius: '8px',
             px: '15px',
@@ -404,6 +396,22 @@ export const theme = extendTheme({
         },
       },
     },
+    Toast: {
+      baseStyle: {
+        container: {
+          bg: "yellow.500",
+        },
+      },
+      variants: {
+        "solid-success": {
+          container: {
+            bg: "red.500",
+            color: "#49473E"
+          },
+        },
+      }
+    },
+
   },
   breakpoints,
 })
