@@ -5,6 +5,7 @@ import { Box, Flex, Text, Button } from '@chakra-ui/react';
 import useCusToast from '../hooks/useCusToast';
 import { BloctoWalletName, useWallet } from '@manahippo/aptos-wallet-adapter';
 import Layout from '../layout';
+import CONTRACT_ADDR from '../constant'
 import HomeBg from '../assets/images/merchant/merchant_bg.png';
 import HomeBgWebp from '../assets/images/merchant/merchant_bg.webp';
 import HomeBaseBg from '../assets/images/merchant/merchant_1440.png';
@@ -54,25 +55,22 @@ const Merchant = ({ isSupportWebp }) => {
         }
     }
 
-    const buyShovel = async () => {
+    const mint = async (functionName) => {
         await checkLogin()
         if (isLoading) return null
         const shovel = {
             arguments: [],
-            function: '0x4b7088485460199fd540f4de4d71da425dd8025e988e69577731ae03e67b42c3::urn_to_earn::mint_shovel',
-            // function: '0x495947c96cf56b18480d03603be8c53bfdc74b17221431debe0f4472672da99d::shovel::mint', // old contract
+            function: `${CONTRACT_ADDR}::urn_to_earn::${functionName}`,
             type: 'entry_function_payload',
             type_arguments: [],
         };
         const hash = await signAndSubmitTransactionFnc(shovel);
         if (hash) {
             toastSeccess(hash)
+        } else {
+            toastError('error')
         }
         return null
-    }
-
-    const buyUrn = () => {
-        toastError('error')
     }
 
 
@@ -111,7 +109,7 @@ const Merchant = ({ isSupportWebp }) => {
                         <Text w="100%" textAlign="center" color="#794D0B" fontSize="14px" fontWeight={500} mb="0.9rem" mt="0.9rem">
                             it&apos;s lame without the golden urn.
                         </Text>
-                        <Button variant="gold">
+                        <Button variant="gold" onClick={() => mint('mint_golden_bone')}>
                             Forge
                         </Button>
                     </Flex>
@@ -156,7 +154,7 @@ const Merchant = ({ isSupportWebp }) => {
                                 <Text mt="12px" fontSize="20px" fontWeight={500} color="#292229" textAlign="center" w="100%">
                                     Every grave robber needs a shovel.
                                 </Text>
-                                <Button mt="12px" variant="dark" onClick={buyShovel}>
+                                <Button mt="12px" variant="dark" onClick={() => mint('mint_shovel')}>
                                     Buy shovel
                                 </Button>
                             </Flex>
@@ -167,7 +165,7 @@ const Merchant = ({ isSupportWebp }) => {
                                 <Text mt="12px" fontSize="20px" fontWeight={500} color="#292229" textAlign="center" w="100%">
                                     I think... you need an urn for bones.
                                 </Text>
-                                <Button mt="12px" variant="dark" onClick={buyUrn}>
+                                <Button mt="12px" variant="dark" onClick={() => mint('mint_urn')}>
                                     Buy urn
                                 </Button>
                             </Flex>
