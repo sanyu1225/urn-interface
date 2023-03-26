@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button, Link } from '@chakra-ui/react';
-import HomeBg from '../assets/images/graveyard/graveyard_bg.png';
-import HomeBgWebp from '../assets/images/graveyard/graveyard_bg.webp';
-import HomeBaseBg from '../assets/images/graveyard/graveyard_1440.jpg';
-import HomeBaseBgWebp from '../assets/images/graveyard/graveyard_1440.webp';
+import HomeBg from '../assets/images/graveyard/graveyard_1920_x2.jpg';
+import HomeBgWebp from '../assets/images/graveyard/graveyard_1920_x2.webp';
+import HomeBaseBg from '../assets/images/graveyard/graveyard_1440_x2.jpg';
+import HomeBaseBgWebp from '../assets/images/graveyard/graveyard_1440_x2.webp';
 import TombstoneImg from '../assets/images/graveyard/tombstone.png'
 import TombstoneImgWebp from '../assets/images/graveyard/tombstone.webp'
 import SignpostImg from '../assets/images/graveyard/signpost.png'
@@ -41,10 +41,10 @@ const Graveyard = ({ isSupportWebp }) => (
                 base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
                 desktop: isSupportWebp ? HomeBgWebp : HomeBg
             }}
-            w="100%"
             bgRepeat="no-repeat"
             bgSize="100% 100%"
-            minH={{ base: window.innerHeight < 860 ? '860px' : '100vh' }}
+            minH={{ base: '768px', mid: '900px', desktop: '1080px' }}
+            minW={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
             position="relative"
         >
             <Box
@@ -54,7 +54,7 @@ const Graveyard = ({ isSupportWebp }) => (
                 w="16rem"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
-                minH={{ base: '19rem' }}
+                minH={{ base: '360px', mid: '360px', desktop: '360px' }}
                 position="absolute"
                 bottom="13%"
                 right={{ base: '37%' }}

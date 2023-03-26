@@ -87,18 +87,18 @@ const Merchant = ({ isSupportWebp }) => {
                 w="100%"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
-                minH={{ base: window.innerHeight < 860 ? '860px' : '100vh' }}
-                minW={{ base: '1440px' }}
+                minH={{ base: '768px', mid: '900px', desktop: '1080px' }}
+                minW={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
                 position="relative"
             >
                 <Box
                     bgImage={{
                         base: isSupportWebp ? BoardSmallImgWebp : BoardSmallImg,
                     }}
-                    w="15.4rem"
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
-                    minH={{ base: '33.2vh' }}
+                    w={{ base: '246px' }}
+                    minH={{ base: '358px' }}
                     position="absolute"
                     bottom="32vh"
                     right={{ base: '12%' }}
@@ -130,10 +130,10 @@ const Merchant = ({ isSupportWebp }) => {
                 />
                 <Flex
                     wrap="wrap"
-                    w="34.8rem"
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
-                    minH={{ base: '42.3vh' }}
+                    w="34.8rem"
+                    minH={{ base: '923px', mid: '923px' }}
                     position="absolute"
                     bottom="0px"
                     right={{ base: '42%' }}
@@ -142,10 +142,10 @@ const Merchant = ({ isSupportWebp }) => {
                         bgImage={{
                             base: isSupportWebp ? BoardBigImgWebp : BoardBigImg
                         }}
-                        w="100%"
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
-                        minH={{ base: '25.4rem' }}
+                        w={{ base: '556px', mid: '556px', desktop: '556px' }}
+                        minH={{ base: '406px', mid: '406px', desktop: '406px' }}
                     >
 
                         <Flex justifyContent="space-evenly" mt="10rem">
@@ -177,10 +177,10 @@ const Merchant = ({ isSupportWebp }) => {
                         bgImage={{
                             base: isSupportWebp ? SkullImgWebp : SkullImg
                         }}
-                        w="88.2%"
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
-                        minH={{ base: '48vh' }}
+                        w={{ base: '362px', mid: '491px' }}
+                        minH={{ base: '381px', mid: '517px' }}
                     />
                 </Flex>
 

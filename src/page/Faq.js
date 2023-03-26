@@ -55,10 +55,10 @@ const FAQ = ({ isSupportWebp }) => {
                     base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
                     desktop: isSupportWebp ? HomeBgWebp : HomeBg
                 }}
-                w="100%"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
-                minH={{ base: window.innerHeight < 860 ? '860px' : '100vh' }}
+                minH={{ base: '768px', mid: '900px', desktop: '1080px' }}
+                minW={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
                 position="relative"
             >
                 <audio
@@ -80,12 +80,23 @@ const FAQ = ({ isSupportWebp }) => {
                 }
                 <Box
                     bgImage={{
-                        base: isSupportWebp ? TombstoneImgWebp : TombstoneImg,
+                        base: isSupportWebp ? StoneImgWebp : StoneImg,
                     }}
-                    w="42.8rem"
+                    w="100%"
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
-                    minH={{ base: '56.5rem' }}
+                    minH={{ base: '220px', mid: '220px', desktop: '294px' }}
+                    position="absolute"
+                    bottom="0"
+                />
+                <Box
+                    bgImage={{
+                        base: isSupportWebp ? TombstoneImgWebp : TombstoneImg,
+                    }}
+                    bgRepeat="no-repeat"
+                    bgSize="100% 100%"
+                    w={{ base: '684px' }}
+                    minH={{ base: '906px' }}
                     position="absolute"
                     bottom="0"
                     left={{ base: '35%' }}
@@ -118,17 +129,7 @@ const FAQ = ({ isSupportWebp }) => {
                         </Grid>
                     </Grid>
                 </Box>
-                <Box
-                    bgImage={{
-                        base: isSupportWebp ? StoneImgWebp : StoneImg,
-                    }}
-                    w="100%"
-                    bgRepeat="no-repeat"
-                    bgSize="100% 100%"
-                    minH={{ base: '18.4rem' }}
-                    position="absolute"
-                    bottom="0"
-                />
+
             </Box>
         </Layout>
     )

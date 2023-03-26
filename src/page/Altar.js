@@ -71,10 +71,10 @@ const Altar = ({ isSupportWebp }) => {
                     base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
                     desktop: isSupportWebp ? HomeBgWebp : HomeBg
                 }}
-                w="100%"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
-                minH={{ base: window.innerHeight < 860 ? '860px' : '100vh' }}
+                minH={{ base: '768px', mid: '900px', desktop: '1080px' }}
+                minW={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
                 position="relative"
             >
                 <Box
@@ -88,10 +88,10 @@ const Altar = ({ isSupportWebp }) => {
                         bgImage={{
                             base: isSupportWebp ? AltarImgWebp : AltarImg,
                         }}
-                        w="19.6rem"
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
-                        minH={{ base: '52.2vh' }}
+                        w={{ base: '314px' }}
+                        minH={{ base: '537px' }}
                         position="absolute"
                         bottom="0"
                     />
@@ -99,10 +99,10 @@ const Altar = ({ isSupportWebp }) => {
                         bgImage={{
                             base: isSupportWebp ? HandImgWebp : HandImg,
                         }}
-                        w="15.3rem"
+                        minH={{ base: '420px' }}
+                        w={{ base: '244px' }}
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
-                        minH={{ base: '26rem' }}
                         position="absolute"
                         bottom="32vh"
                         top={{ base: '1rem' }}
@@ -133,7 +133,7 @@ const Altar = ({ isSupportWebp }) => {
 
                 <Flex
                     wrap="wrap"
-                    w="24.6rem"
+                    w={{ base: '393px' }}
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
                     position="absolute"
@@ -144,10 +144,10 @@ const Altar = ({ isSupportWebp }) => {
                         bgImage={{
                             base: isSupportWebp ? BoardImgWebp : BoardImg,
                         }}
-                        w="100%"
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
-                        minH={{ base: '34rem' }}
+                        w="100%"
+                        minH={{ base: '544px' }}
                     >
                         <Text color="#fff5ce" fontWeight={700} fontSize="24px" w="100%" mt="8%" textAlign="center">
                             Collection list
@@ -178,7 +178,7 @@ const Altar = ({ isSupportWebp }) => {
                         w="100%"
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
-                        minH={{ base: '10.5rem' }}
+                        minH={{ base: '167px' }}
                         justifyContent="center"
                         alignItems="center"
                     >

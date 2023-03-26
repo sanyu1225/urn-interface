@@ -24,20 +24,20 @@ const Landing = ({ isSupportWebp }) => (
       w="100%"
       bgRepeat="no-repeat"
       bgSize="100% 100%"
-      minH={{ base: window.innerHeight < 860 ? '860px' : '100vh' }}
-      minW={{ base: '1440px' }}
+      minH={{ base: '768', mid: '900px', desktop: '1080px' }}
+      minW={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
       position="relative"
     >
       <Box
         bgImage={{
           base: isSupportWebp ? TombstoneImgWebp : TombstoneImg,
         }}
-        w="35.3rem"
         bgRepeat="no-repeat"
         bgSize="100% 100%"
-        minH={{ base: '38.5vh', desktop: '47.5vh' }}
+        w={{ base: '388px', mid: '492px', desktop: '564px' }}
+        minH={{ base: '329px', mid: '417px', desktop: '478px' }}
         position="absolute"
-        bottom="0px"
+        bottom={{ base: 0 }}
         right="29.5%"
         textAlign="center"
         pt="3%"
@@ -74,7 +74,7 @@ const Landing = ({ isSupportWebp }) => (
         w="17rem"
         bgRepeat="no-repeat"
         bgSize="100% 100%"
-        minH={{ base: '25.5rem' }}
+        minH={{ base: '355px', mid: '447px', desktop: '513px' }}
         position="absolute"
         bottom="0px"
         right={{ base: '23%' }}
@@ -86,7 +86,7 @@ const Landing = ({ isSupportWebp }) => (
         w="100%"
         bgRepeat="no-repeat"
         bgSize="100% 100%"
-        minH={{ base: '35.5vh', desktop: '47.5vh' }}
+        minH={{ base: '276px', mid: '387px', desktop: '516px' }}
         position="absolute"
         bottom="0px"
       />
