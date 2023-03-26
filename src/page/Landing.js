@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Text, Button, Grid, Link } from '@chakra-ui/react';
 import Layout from '../layout';
-import HomeBg from '../assets/images/home/home_bg.png';
+import HomeBg from '../assets/images/home/home_bg.jpg';
 import HomeBgWebp from '../assets/images/home/home_bg.webp';
 import HomeBaseBg from '../assets/images/home/home_1440.jpg';
 import HomeBaseBgWebp from '../assets/images/home/home_1440.webp';
