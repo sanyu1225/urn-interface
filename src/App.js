@@ -7,6 +7,7 @@ import {
   BloctoWalletAdapter,
   WalletAdapterNetwork
 } from '@manahippo/aptos-wallet-adapter';
+import { ContextProvider } from './context'
 import Landing from './page/Landing';
 import Merchant from './page/Merchant';
 import Graveyard from './page/Graveyard';
@@ -39,20 +40,22 @@ function App() {
       }}
     >
       <ChakraProvider theme={theme}>
-        <BrowserRouter>
-          {
-            isDesktop ? (
-              <Routes>
-                <Route path="/" element={<Landing isSupportWebp={isSupportWebp} />} />
-                <Route path="/merchant" element={<Merchant isSupportWebp={isSupportWebp} />} />
-                <Route path="/graveyard" element={<Graveyard isSupportWebp={isSupportWebp} />} />
-                <Route path="/altar" element={<Altar isSupportWebp={isSupportWebp} />} />
-                <Route path="/faq" element={<Faq isSupportWebp={isSupportWebp} />} />
-                <Route path="*" element={<NotfoundPage isSupportWebp={isSupportWebp} />} />
-              </Routes>
-            ) : <Mobile />
-          }
-        </BrowserRouter>
+        <ContextProvider>
+          <BrowserRouter>
+            {
+              isDesktop ? (
+                <Routes>
+                  <Route path="/" element={<Landing isSupportWebp={isSupportWebp} />} />
+                  <Route path="/merchant" element={<Merchant isSupportWebp={isSupportWebp} />} />
+                  <Route path="/graveyard" element={<Graveyard isSupportWebp={isSupportWebp} />} />
+                  <Route path="/altar" element={<Altar isSupportWebp={isSupportWebp} />} />
+                  <Route path="/faq" element={<Faq isSupportWebp={isSupportWebp} />} />
+                  <Route path="*" element={<NotfoundPage isSupportWebp={isSupportWebp} />} />
+                </Routes>
+              ) : <Mobile />
+            }
+          </BrowserRouter>
+        </ContextProvider>
       </ChakraProvider>
     </WalletProvider>
   );
