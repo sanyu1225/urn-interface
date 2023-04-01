@@ -33,7 +33,7 @@ const Merchant = ({ isSupportWebp }) => {
                 w="100%"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
-                minH={{ base: '768px', mid: '900px', desktop: '1080px' }}
+                h={{ base: '768px', mid: '900px', desktop: '1080px' }}
                 minW={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
                 position="relative"
             >
@@ -44,7 +44,7 @@ const Merchant = ({ isSupportWebp }) => {
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
                     w={{ base: '246px' }}
-                    minH={{ base: '358px' }}
+                    h={{ base: '358px' }}
                     position="absolute"
                     bottom="32vh"
                     right={{ base: '12%' }}
@@ -79,10 +79,10 @@ const Merchant = ({ isSupportWebp }) => {
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
                     w="34.8rem"
-                    minH={{ base: '923px', mid: '923px' }}
                     position="absolute"
                     bottom="0px"
                     right={{ base: '42%' }}
+                    justifyContent="center"
                 >
                     <Box
                         bgImage={{
@@ -91,10 +91,10 @@ const Merchant = ({ isSupportWebp }) => {
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
                         w={{ base: '556px', mid: '556px', desktop: '556px' }}
-                        minH={{ base: '406px', mid: '406px', desktop: '406px' }}
+                        h={{ base: '365px', mid: '365px', desktop: '406px' }}
                     >
 
-                        <Flex justifyContent="space-evenly" mt="10rem">
+                        <Flex justifyContent="space-evenly" mt={{ base: '8.5rem', desktop: '10rem' }}>
                             <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p="16px" justifyContent="center">
                                 <Text fontSize="20px" fontWeight={700} color="#292229" textAlign="center" w="100%" >
                                     Buy shovel
@@ -126,7 +126,7 @@ const Merchant = ({ isSupportWebp }) => {
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
                         w={{ base: '362px', mid: '491px' }}
-                        minH={{ base: '381px', mid: '517px' }}
+                        h={{ base: '381px', mid: '517px' }}
                     />
                 </Flex>
 
