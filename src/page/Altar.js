@@ -74,7 +74,7 @@ const Altar = ({ isSupportWebp }) => {
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
                 minH={{ base: '768px', mid: '900px', desktop: '1080px' }}
-                minW={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
+                w={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
                 position="relative"
             >
                 <Box

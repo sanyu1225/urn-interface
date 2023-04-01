@@ -21,11 +21,10 @@ const Landing = ({ isSupportWebp }) => (
         base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
         desktop: isSupportWebp ? HomeBgWebp : HomeBg
       }}
-      w="100%"
       bgRepeat="no-repeat"
       bgSize="100% 100%"
       minH={{ base: '768', mid: '900px', desktop: '1080px' }}
-      minW={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
+      w={{ base: '1440px', mid: '1440px', desktop: '1920px' }}
       position="relative"
     >
       <Box
@@ -35,7 +34,7 @@ const Landing = ({ isSupportWebp }) => (
         bgRepeat="no-repeat"
         bgSize="100% 100%"
         w={{ base: '388px', mid: '492px', desktop: '564px' }}
-        minH={{ base: '329px', mid: '417px', desktop: '478px' }}
+        minH={{ base: '355px', mid: '417px', desktop: '478px' }}
         position="absolute"
         bottom={{ base: 0 }}
         right="29.5%"
@@ -45,7 +44,7 @@ const Landing = ({ isSupportWebp }) => (
         <Text fontSize="32px" fontWeight={700} color="#FFF5CE">
           Urn to earn
         </Text>
-        <Text mt="16px" fontSize="16px" fontWeight={500} color="#FFF5CE">
+        <Text mt="16px" fontSize={{ base: '14px', mid: '16px' }} fontWeight={500} color="#FFF5CE">
           Fine. You can start playing, I&apos;m tired to explain.
         </Text>
         <Grid w="100%" justifyContent="center">
@@ -77,7 +76,7 @@ const Landing = ({ isSupportWebp }) => (
         minH={{ base: '355px', mid: '447px', desktop: '513px' }}
         position="absolute"
         bottom="0px"
-        right={{ base: '23%' }}
+        right={{ base: '20%', mid: '23%' }}
       />
       <Box
         bgImage={{
