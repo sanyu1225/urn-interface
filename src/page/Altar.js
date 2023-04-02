@@ -1,9 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button, Grid, Image } from '@chakra-ui/react';
 import Layout from '../layout';
 import HomeBg from '../assets/images/altar/altar_bg.png';
+import { gql, useQuery } from 'urql';
 import HomeBgWebp from '../assets/images/altar/altar_bg.webp';
 import HomeBaseBg from '../assets/images/altar/altar_1440.jpg';
 import HomeBaseBgWebp from '../assets/images/altar/altar_1440.webp';
@@ -61,8 +63,66 @@ const CollectionList = ({
     </Flex>
 )
 
+const query = gql`
+      query getAccountCurrentTokens($address: String!, $offset: Int, $limit: Int) {
+        current_token_ownerships(
+          where: {owner_address: {_eq: $address}, amount: {_gt: 0}}
+          order_by: [{last_transaction_version: desc}, {creator_address: desc}, {collection_name: desc}, {name: desc}]
+          offset: $offset
+          limit: $limit
+        ) {
+          amount
+          current_token_data {
+            ...TokenDataFields
+          }
+          current_collection_data {
+            ...CollectionDataFields
+          }
+          last_transaction_version
+          property_version
+          token_properties
+        }
+      }
+
+      fragment TokenDataFields on current_token_datas {
+        creator_address
+        collection_name
+        description
+        metadata_uri
+        name
+        token_data_id_hash
+        collection_data_id_hash
+      }
+
+      fragment CollectionDataFields on current_collection_datas {
+        metadata_uri
+        supply
+        description
+        collection_name
+        collection_data_id_hash
+        table_handle
+        creator_address
+      }
+    `
+
 const Altar = ({ isSupportWebp }) => {
     const [showType, setShowType] = useState('');
+    const [result, reexecuteQuery] = useQuery({
+        query,
+        variables: { address: '0x4ef96daa47a306111e877f792cd0b0682e881dde126a51f0e5e439f95c760eae', offset: 0, limit: 12 },
+    });
+    const { data, fetching, error } = result;
+    console.log('data: ', data);
+
+    useEffect(() => {
+        reexecuteQuery();
+    }, [reexecuteQuery]);
+
+
+    const showItemHandler = (item) => {
+        console.log('item: ', item);
+        reexecuteQuery()
+    }
     return (
         <Layout>
             <Box
@@ -164,7 +224,7 @@ const Altar = ({ isSupportWebp }) => {
                                     image={item.image}
                                     imageWebp={item.imageWebp}
                                     type={item.type}
-                                    onClick={() => setShowType(item.type)}
+                                    onClick={() => showItemHandler(item.type)}
                                     isSupportWebp={isSupportWebp}
                                 />
                             ))

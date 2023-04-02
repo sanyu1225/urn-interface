@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ChakraProvider, useMediaQuery } from '@chakra-ui/react'
@@ -8,6 +9,7 @@ import {
   WalletAdapterNetwork
 } from '@manahippo/aptos-wallet-adapter';
 import { ContextProvider } from './context'
+import { Client, Provider, cacheExchange, fetchExchange } from 'urql';
 import Landing from './page/Landing';
 import Merchant from './page/Merchant';
 import Graveyard from './page/Graveyard';
@@ -20,9 +22,16 @@ import { supportWebp } from './utils'
 const wallets = [
   new BloctoWalletAdapter({
     network: WalletAdapterNetwork.Testnet,
-    bloctoAppId: 'c9aae963-60fc-4066-b8f9-21eda88d384a'
+    bloctoAppId: '9307ddb3-e4cc-4ebf-bbca-fc0ec99288a7'
+    // bloctoAppId: 'c9aae963-60fc-4066-b8f9-21eda88d384a'
   }),
 ];
+
+const client = new Client({
+  // TODO: set env file for graphql endpoint
+  url: 'https://indexer-testnet.staging.gcp.aptosdev.com/v1/graphql',
+  exchanges: [cacheExchange, fetchExchange],
+});
 
 function App() {
   const [isDesktop] = useMediaQuery(`(min-width: 1024px)`)
@@ -41,20 +50,22 @@ function App() {
     >
       <ChakraProvider theme={theme}>
         <ContextProvider>
-          <BrowserRouter>
-            {
-              isDesktop ? (
-                <Routes>
-                  <Route path="/" element={<Landing isSupportWebp={isSupportWebp} />} />
-                  <Route path="/merchant" element={<Merchant isSupportWebp={isSupportWebp} />} />
-                  <Route path="/graveyard" element={<Graveyard isSupportWebp={isSupportWebp} />} />
-                  <Route path="/altar" element={<Altar isSupportWebp={isSupportWebp} />} />
-                  <Route path="/faq" element={<Faq isSupportWebp={isSupportWebp} />} />
-                  <Route path="*" element={<NotfoundPage isSupportWebp={isSupportWebp} />} />
-                </Routes>
-              ) : <Mobile />
-            }
-          </BrowserRouter>
+          <Provider value={client}>
+            <BrowserRouter>
+              {
+                isDesktop ? (
+                  <Routes>
+                    <Route path="/" element={<Landing isSupportWebp={isSupportWebp} />} />
+                    <Route path="/merchant" element={<Merchant isSupportWebp={isSupportWebp} />} />
+                    <Route path="/graveyard" element={<Graveyard isSupportWebp={isSupportWebp} />} />
+                    <Route path="/altar" element={<Altar isSupportWebp={isSupportWebp} />} />
+                    <Route path="/faq" element={<Faq isSupportWebp={isSupportWebp} />} />
+                    <Route path="*" element={<NotfoundPage isSupportWebp={isSupportWebp} />} />
+                  </Routes>
+                ) : <Mobile />
+              }
+            </BrowserRouter>
+          </Provider>
         </ContextProvider>
       </ChakraProvider>
     </WalletProvider>
