@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useLocation } from "react-router-dom";
 import { Grid, Flex, Box, Button, keyframes, Text, Divider, Link, MenuItem } from '@chakra-ui/react';
-import { BloctoWalletName, useWallet, } from '@manahippo/aptos-wallet-adapter';
+import { useWalletContext } from '../context'
+import { BloctoWalletName } from '@manahippo/aptos-wallet-adapter';
 import Cusmenu from "./Cusmenu";
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
 import { shortenAddress } from '../utils'
@@ -69,7 +70,7 @@ function AnimationLink({ children, path, disabled = false }) {
 
 const Landing = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { connect, disconnect, connected, account } = useWallet();
+  const { connect, disconnect, connected, account } = useWalletContext();
   const [copyToClipboard] = useCopyToClipboard();
 
   const address = account && account.address;

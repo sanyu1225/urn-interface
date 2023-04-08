@@ -30,11 +30,10 @@ const Merchant = ({ isSupportWebp }) => {
                     base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
                     desktop: isSupportWebp ? HomeBgWebp : HomeBg
                 }}
-                w="100%"
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
-                h={{ base: '768px', mid: '900px', desktop: '1080px' }}
-                minW={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
+                minH={{ base: '768px', mid: '900px', desktop: '1080px' }}
+                w={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
                 position="relative"
             >
                 <Box

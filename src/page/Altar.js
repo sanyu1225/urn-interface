@@ -6,6 +6,7 @@ import { Box, Flex, Text, Button, Grid, Image } from '@chakra-ui/react';
 import Layout from '../layout';
 import HomeBg from '../assets/images/altar/altar_bg.png';
 import { gql, useQuery } from 'urql';
+import { useWalletContext } from '../context'
 import HomeBgWebp from '../assets/images/altar/altar_bg.webp';
 import HomeBaseBg from '../assets/images/altar/altar_1440.jpg';
 import HomeBaseBgWebp from '../assets/images/altar/altar_1440.webp';
@@ -92,6 +93,7 @@ const query = gql`
         name
         token_data_id_hash
         collection_data_id_hash
+        default_properties
       }
 
       fragment CollectionDataFields on current_collection_datas {
@@ -107,21 +109,27 @@ const query = gql`
 
 const Altar = ({ isSupportWebp }) => {
     const [showType, setShowType] = useState('');
-    const [result, reexecuteQuery] = useQuery({
-        query,
-        variables: { address: '0x4ef96daa47a306111e877f792cd0b0682e881dde126a51f0e5e439f95c760eae', offset: 0, limit: 12 },
-    });
-    const { data, fetching, error } = result;
-    console.log('data: ', data);
+    const { connected } = useWalletContext()
 
-    useEffect(() => {
-        reexecuteQuery();
-    }, [reexecuteQuery]);
+    // const [result, reexecuteQuery] = useQuery({
+    //     query,
+    //     variables: { address: '0x7b251d07fcd75d1a9ea04875d81717fd096d8edcb945a6fab60e5bb2496dea2b', offset: 0, limit: 12 },
+    //     // variables: { address: '0x4ef96daa47a306111e877f792cd0b0682e881dde126a51f0e5e439f95c760eae', offset: 0, limit: 12 },
+    // });
+    // const { data, fetching, error } = result;
+    // console.log('data: ', data);
+
+    // useEffect(() => {
+    //     console.log('connected: ', connected);
+    //     if (connected) {
+    //         // reexecuteQuery();
+    //     }
+    // }, [connected]);
 
 
     const showItemHandler = (item) => {
         console.log('item: ', item);
-        reexecuteQuery()
+        // reexecuteQuery()
     }
     return (
         <Layout>

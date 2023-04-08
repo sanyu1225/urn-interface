@@ -12,7 +12,7 @@ import HomeBaseBgWebp from '../assets/images/faq/faq_1440.webp';
 import StoneImg from '../assets/images/faq/faq_stone.png'
 import StoneImgWebp from '../assets/images/faq/faq_stone.webp'
 import { ReactComponent as MediaIcon } from '../assets/images/faq/Media.svg';
-import KeyboardAudio from '../assets/keyboard.mp3'
+import KeyboardAudio from '../assets/music/keyboard.mp3'
 
 const FAQ_LIST = [{
     title: 'What will I earn?'

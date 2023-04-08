@@ -11,7 +11,7 @@ export function useWalletContext() {
 }
 
 export function ContextProvider({ children }) {
-    const { connect, connected, signAndSubmitTransaction } = useWallet()
+    const { connect, connected, signAndSubmitTransaction, account, disconnect } = useWallet()
     const { toastSeccess, toastError } = useCusToast()
     const [isLoading, setLoading] = useState(false);
 
@@ -67,8 +67,10 @@ export function ContextProvider({ children }) {
         connect,
         connected,
         signAndSubmitTransaction,
-        isLoading
-    }), [connect, connected, mint, signAndSubmitTransaction, isLoading]);
+        isLoading,
+        account,
+        disconnect
+    }), [connect, connected, mint, signAndSubmitTransaction, isLoading, account, disconnect]);
 
 
     return (
