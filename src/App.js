@@ -22,8 +22,8 @@ import { supportWebp } from './utils'
 const wallets = [
   new BloctoWalletAdapter({
     network: WalletAdapterNetwork.Testnet,
-    bloctoAppId: '9307ddb3-e4cc-4ebf-bbca-fc0ec99288a7'
-    // bloctoAppId: 'c9aae963-60fc-4066-b8f9-21eda88d384a'
+    // bloctoAppId: '9307ddb3-e4cc-4ebf-bbca-fc0ec99288a7'
+    bloctoAppId: 'c9aae963-60fc-4066-b8f9-21eda88d384a'
   }),
 ];
 

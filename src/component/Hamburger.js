@@ -7,6 +7,7 @@ import { useWalletContext } from '../context'
 import { BloctoWalletName } from '@manahippo/aptos-wallet-adapter';
 import Cusmenu from "./Cusmenu";
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
+import useWindowSize from '../hooks/useWindowSize';
 import { shortenAddress } from '../utils'
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { ReactComponent as CloseIcon } from '../assets/images/icons/Close.svg';
@@ -72,11 +73,18 @@ const Landing = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { connect, disconnect, connected, account } = useWalletContext();
   const [copyToClipboard] = useCopyToClipboard();
+  const [width] = useWindowSize();
 
   const address = account && account.address;
 
   return (
-    <Grid textAlign="right" position="absolute" top="32px" zIndex={2} right="32px" gridAutoFlow="column">
+    <Grid textAlign="right" position="absolute" top="32px" zIndex={2}
+      right={{
+        base: `${(width - 1024) / 2 + 32}px`,
+        mid: `${(width - 1440) / 2 + 32}px`,
+        desktop: `${(width - 1920) / 2 + 32}px`
+      }} gridAutoFlow="column"
+    >
       {
         connected ? (
           <Cusmenu buttonText="Wallet">

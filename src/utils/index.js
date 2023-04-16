@@ -21,3 +21,24 @@ export function shortenAddress(address, chars = 4) {
     if (!address) return new Error('No address provided')
     return `${address.slice(0, chars)}...${address.slice(-chars)}`
 }
+
+export function throttle(func, delay) {
+    let timerId;
+    let lastTime;
+
+    return function throttled(...args) {
+        const now = Date.now();
+        const timeSinceLastCall = now - lastTime;
+
+        if (!lastTime || timeSinceLastCall >= delay) {
+            func.apply(this, args);
+            lastTime = now;
+        } else if (!timerId) {
+            timerId = setTimeout(() => {
+                func.apply(this, args);
+                lastTime = Date.now();
+                timerId = null;
+            }, delay - timeSinceLastCall);
+        }
+    };
+}
