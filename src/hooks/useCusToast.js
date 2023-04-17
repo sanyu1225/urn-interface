@@ -27,6 +27,9 @@ const useCusToast = () => {
         toastInstance({
             title,
             isClosable: true,
+            containerStyle: {
+                maxWidth: '100%'
+            },
             render: ({ onClose }) => (
                 <Flex
                     bg="#292229"
@@ -43,7 +46,7 @@ const useCusToast = () => {
                         <Box w="16px" h="16px">
                             {typeIcon.success}
                         </Box>
-                        <Text color="#FFF3CD" pl="10px" fontWeight={400} fontSize="14px">
+                        <Text color="#FFF3CD" p="0 10px" fontWeight={400} fontSize="14px">
                             {title}
                         </Text>
                     </Flex>
@@ -58,6 +61,9 @@ const useCusToast = () => {
         toastInstance({
             title,
             isClosable: true,
+            containerStyle: {
+                maxWidth: '100%'
+            },
             render: ({ onClose }) => (
                 <Flex
                     bg="#292229"
@@ -74,7 +80,7 @@ const useCusToast = () => {
                         <Box w="16px" h="16px">
                             {typeIcon.error}
                         </Box>
-                        <Text color="#FFF3CD" pl="10px" fontWeight={400} fontSize="14px">
+                        <Text color="#FFF3CD" p="0 10px" fontWeight={400} fontSize="14px">
                             {title}
                         </Text>
                     </Flex>
@@ -89,6 +95,9 @@ const useCusToast = () => {
         toastInstance({
             title,
             isClosable: true,
+            containerStyle: {
+                maxWidth: '100%'
+            },
             render: ({ onClose }) => (
                 <Flex
                     bg="#292229"
@@ -105,7 +114,7 @@ const useCusToast = () => {
                         <Box w="16px" h="16px">
                             {typeIcon.loading}
                         </Box>
-                        <Text color="#FFF3CD" pl="10px" fontWeight={400} fontSize="14px">
+                        <Text color="#FFF3CD" p="0 10px" fontWeight={400} fontSize="14px">
                             {title}
                         </Text>
                     </Flex>
