@@ -71,7 +71,7 @@ function AnimationLink({ children, path, disabled = false }) {
   );
 }
 
-const Landing = () => {
+const Hamburger = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { connect, disconnect, connected, account } = useWalletContext();
   const [copyToClipboard] = useCopyToClipboard();
@@ -192,4 +192,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default Hamburger;

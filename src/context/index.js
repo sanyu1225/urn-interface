@@ -14,6 +14,7 @@ export function useWalletContext() {
 export function ContextProvider({ children }) {
     const { connect, connected, signAndSubmitTransaction, account, disconnect } = useWallet();
     const [isLoading, setLoading] = useState(false);
+    const [isPlayBackground, setIsPlayBackground] = useState(true);
     const { toastSeccess, toastError } = useCusToast();
 
     const checkLogin = async () => {
@@ -73,8 +74,10 @@ export function ContextProvider({ children }) {
         isLoading,
         account,
         disconnect,
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }), [connect, connected, mint, signAndSubmitTransaction, isLoading, account, disconnect]);
+        isPlayBackground,
+        setIsPlayBackground,
+        // eslint-disable-next-line react-hooks/exhaustive-deps, max-len
+    }), [connect, connected, mint, signAndSubmitTransaction, isLoading, account, disconnect, isPlayBackground]);
 
     return (
         <Context.Provider value={value}>

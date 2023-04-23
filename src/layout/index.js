@@ -1,10 +1,11 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, useMediaQuery } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import Hamburger from '../component/Hamburger';
-import useWindowSize from '../hooks/useWindowSize';
+import BackgroundMusic from '@/component/BackgoundMusic';
 
 const Layout = ({ children }) => {
-    const [width] = useWindowSize();
+    const [isDesktop] = useMediaQuery('(min-width: 1024px)');
+
     return (
         <Flex justify="center" bgColor="#14181b">
             <Flex
@@ -16,8 +17,11 @@ const Layout = ({ children }) => {
                 m="0 auto"
             >
                 {
-                    width > 1024 && (
-                        <Hamburger />
+                    isDesktop && (
+                        <>
+                            <Hamburger />
+                            <BackgroundMusic />
+                        </>
                     )
                 }
                 {children}
