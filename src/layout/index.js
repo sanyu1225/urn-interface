@@ -1,7 +1,6 @@
-import React from 'react';
 import { Flex } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import Hamburger from '../component/Hamburger'
+import Hamburger from '../component/Hamburger';
 import useWindowSize from '../hooks/useWindowSize';
 
 const Layout = ({ children }) => {
@@ -24,10 +23,10 @@ const Layout = ({ children }) => {
                 {children}
             </Flex>
         </Flex>
-    )
-}
+    );
+};
 
 Layout.prototype = {
     children: PropTypes.node.isRequired,
-}
-export default Layout
+};
+export default Layout;

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Text, keyframes } from '@chakra-ui/react';
-
 
 const TypingCursor = keyframes`
   from {
@@ -25,7 +24,7 @@ const Cursor = () => (
 );
 
 function Typewriter({ speed, content, onComplete }) {
-    const [text, setText] = useState("");
+    const [text, setText] = useState('');
     const [index, setIndex] = useState(0);
     const [isComplete, setIsComplete] = useState(false);
 
@@ -35,15 +34,15 @@ function Typewriter({ speed, content, onComplete }) {
             if (index >= content.length) {
                 if (typeof onComplete === 'function') {
                     onComplete();
-                    setIsComplete(true)
+                    setIsComplete(true);
                 }
                 return;
             }
 
             // 取得下一個文字
             const nextChar = content[index];
-            setText(prevText => prevText + nextChar);
-            setIndex(prevIndex => prevIndex + 1);
+            setText((prevText) => prevText + nextChar);
+            setIndex((prevIndex) => prevIndex + 1);
         }, speed);
 
         return () => clearTimeout(timer);
@@ -69,10 +68,10 @@ function Typewriter({ speed, content, onComplete }) {
 Typewriter.propTypes = {
     speed: PropTypes.number,
     content: PropTypes.string.isRequired,
-}
+};
 
 Typewriter.defaultProps = {
     speed: 100, // 100ms
-}
+};
 
 export default Typewriter;

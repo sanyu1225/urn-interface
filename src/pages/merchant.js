@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button } from '@chakra-ui/react';
-import { useWalletContext } from '../context'
+import { useWalletContext } from '../context';
 import Layout from '../layout';
 import HomeBg from '../assets/images/merchant/merchant_bg.png';
 import HomeBgWebp from '../assets/images/merchant/merchant_bg.webp';
@@ -16,19 +15,18 @@ import SkullImg from '../assets/images/merchant/merchant_skull.png';
 import SkullImgWebp from '../assets/images/merchant/merchant_skull.webp';
 import BoardBigImg from '../assets/images/merchant/merchant_board_big.png';
 import BoardBigImgWebp from '../assets/images/merchant/merchant_board_big.webp';
-import { ReactComponent as BowlImg } from '../assets/images/merchant/bowl.svg';
-
+import BowlImg from '../assets/images/merchant/bowl.svg';
 
 const Merchant = ({ isSupportWebp }) => {
-    const { mint } = useWalletContext()
+    const { mint } = useWalletContext();
 
     return (
         <Layout>
             <Box
                 maxW="1920px"
                 bgImage={{
-                    base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
-                    desktop: isSupportWebp ? HomeBgWebp : HomeBg
+                    base: isSupportWebp ? HomeBaseBgWebp.src : HomeBaseBg.src,
+                    desktop: isSupportWebp ? HomeBgWebp.src : HomeBg.src,
                 }}
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
@@ -38,7 +36,7 @@ const Merchant = ({ isSupportWebp }) => {
             >
                 <Box
                     bgImage={{
-                        base: isSupportWebp ? BoardSmallImgWebp : BoardSmallImg,
+                        base: isSupportWebp ? BoardSmallImgWebp.src : BoardSmallImg.src,
                     }}
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
@@ -52,7 +50,7 @@ const Merchant = ({ isSupportWebp }) => {
                         <Text w="100%" textAlign="center" color="#794D0B" fontSize="20px" fontWeight={700} mb="0.9rem">
                             Golden urn
                         </Text>
-                        <BowlImg />
+                        <Image src={BowlImg} alt="Bowl" />
                         <Text w="100%" textAlign="center" color="#794D0B" fontSize="14px" fontWeight={500} mb="0.9rem" mt="0.9rem">
                             it&apos;s lame without the golden urn.
                         </Text>
@@ -63,7 +61,7 @@ const Merchant = ({ isSupportWebp }) => {
                 </Box>
                 <Box
                     bgImage={{
-                        base: isSupportWebp ? FurnaceImgWebp : FurnaceImg,
+                        base: isSupportWebp ? FurnaceImgWebp.src : FurnaceImg.src,
                     }}
                     w="24.4rem"
                     bgRepeat="no-repeat"
@@ -85,7 +83,7 @@ const Merchant = ({ isSupportWebp }) => {
                 >
                     <Box
                         bgImage={{
-                            base: isSupportWebp ? BoardBigImgWebp : BoardBigImg
+                            base: isSupportWebp ? BoardBigImgWebp.src : BoardBigImg.src,
                         }}
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
@@ -95,7 +93,7 @@ const Merchant = ({ isSupportWebp }) => {
 
                         <Flex justifyContent="space-evenly" mt={{ base: '8.5rem', desktop: '10rem' }}>
                             <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p="16px" justifyContent="center">
-                                <Text fontSize="20px" fontWeight={700} color="#292229" textAlign="center" w="100%" >
+                                <Text fontSize="20px" fontWeight={700} color="#292229" textAlign="center" w="100%">
                                     Buy shovel
                                 </Text>
                                 <Text mt="12px" fontSize="20px" fontWeight={500} color="#292229" textAlign="center" w="100%">
@@ -120,7 +118,7 @@ const Merchant = ({ isSupportWebp }) => {
                     </Box>
                     <Box
                         bgImage={{
-                            base: isSupportWebp ? SkullImgWebp : SkullImg
+                            base: isSupportWebp ? SkullImgWebp.src : SkullImg.src,
                         }}
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
@@ -131,10 +129,10 @@ const Merchant = ({ isSupportWebp }) => {
 
             </Box>
         </Layout>
-    )
+    );
 };
 
 Merchant.prototype = {
     isSupportWebp: PropTypes.bool.isRequired,
-}
+};
 export default Merchant;

@@ -1,8 +1,9 @@
-import React, { createContext, useContext, useState, useMemo } from "react";
-import { BloctoWalletName, useWallet } from '@manahippo/aptos-wallet-adapter';
+import { createContext, useContext, useState, useMemo } from 'react';
+import { BloctoWalletName } from '@blocto/aptos-wallet-adapter-plugin';
+import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import useCusToast from '../hooks/useCusToast';
 
-import CONTRACT_ADDR from '../constant'
+import CONTRACT_ADDR from '../constant';
 
 const Context = createContext();
 
@@ -11,23 +12,25 @@ export function useWalletContext() {
 }
 
 export function ContextProvider({ children }) {
-    const { connect, connected, signAndSubmitTransaction, account, disconnect } = useWallet()
-    const { toastSeccess, toastError } = useCusToast()
+    const { connect, connected, signAndSubmitTransaction, account, disconnect } = useWallet();
     const [isLoading, setLoading] = useState(false);
+    const { toastSeccess, toastError } = useCusToast();
 
     const checkLogin = async () => {
         if (connected) {
-            return true
+            return true;
         }
-        await connect(BloctoWalletName)
-        return false
-    }
+        await connect(BloctoWalletName);
+        return false;
+    };
 
-    const signAndSubmitTransactionFnc = async (payload,
+    const signAndSubmitTransactionFnc = async (
+        payload,
         options = {
-            max_gas_amount: "20000",
-            gas_unit_price: "200",
-        }) => {
+            max_gas_amount: '20000',
+            gas_unit_price: '200',
+        },
+    ) => {
         try {
             setLoading(true);
             const { hash } = await signAndSubmitTransaction(payload, options);
@@ -39,13 +42,13 @@ export function ContextProvider({ children }) {
             console.log(error);
             return null;
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    };
     const mint = async (functionName) => {
-        const isLogin = await checkLogin()
-        if (!isLogin) return null
-        if (isLoading) return null
+        const isLogin = await checkLogin();
+        if (!isLogin) return null;
+        if (isLoading) return null;
         const shovel = {
             arguments: [],
             function: `${CONTRACT_ADDR}::urn_to_earn::${functionName}`,
@@ -54,24 +57,24 @@ export function ContextProvider({ children }) {
         };
         const hash = await signAndSubmitTransactionFnc(shovel);
         if (hash) {
-            toastSeccess(hash)
+            toastSeccess(hash);
         } else {
-            toastError('error')
+            toastError('error');
         }
-        return null
-    }
+        return null;
+    };
 
     const value = useMemo(() => ({
         mint,
         checkLogin,
-        connect,
+        connect: () => connect(BloctoWalletName),
         connected,
         signAndSubmitTransaction,
         isLoading,
         account,
-        disconnect
+        disconnect,
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }), [connect, connected, mint, signAndSubmitTransaction, isLoading, account, disconnect]);
-
 
     return (
         <Context.Provider value={value}>

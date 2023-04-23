@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button, Grid, Image } from '@chakra-ui/react';
+import { gql, useQuery } from 'urql';
 import Layout from '../layout';
 import HomeBg from '../assets/images/altar/altar_bg.png';
-import { gql, useQuery } from 'urql';
-import { useWalletContext } from '../context'
+import { useWalletContext } from '../context';
 import HomeBgWebp from '../assets/images/altar/altar_bg.webp';
 import HomeBaseBg from '../assets/images/altar/altar_1440.jpg';
 import HomeBaseBgWebp from '../assets/images/altar/altar_1440.webp';
@@ -27,15 +27,15 @@ const CollectionListData = [{
     title: 'Urn list',
     description: 'You can choose the urn.',
     image: UrnItemImg,
-    imageWebp: UrnItemImgWebp,
-    type: 'urn'
+    imageWebp: UrnItemImgWebp.src,
+    type: 'urn',
 }, {
     title: 'Bone list',
-    description: "You can choose the bone.",
+    description: 'You can choose the bone.',
     image: SkullItemImg,
-    imageWebp: SkullItemImgWebp,
-    type: 'bone'
-}]
+    imageWebp: SkullItemImgWebp.src,
+    type: 'bone',
+}];
 
 const CollectionList = ({
     title,
@@ -44,11 +44,11 @@ const CollectionList = ({
     imageWebp,
     type,
     onClick,
-    isSupportWebp
+    isSupportWebp,
 }) => (
     <Flex justifyContent="space-evenly" p="0 30px" mb="20px">
         <Box>
-            <Image src={isSupportWebp ? imageWebp : image} />
+            <Image alt="img" src={isSupportWebp ? imageWebp : image} />
         </Box>
         <Flex wrap="wrap" w="40%" justifyContent="flex-start">
             <Text fontSize="18px" fontWeight={700} color="#FFF3CD" w="100%">
@@ -62,7 +62,7 @@ const CollectionList = ({
             </Button>
         </Flex>
     </Flex>
-)
+);
 
 const query = gql`
       query getAccountCurrentTokens($address: String!, $offset: Int, $limit: Int) {
@@ -105,16 +105,18 @@ const query = gql`
         table_handle
         creator_address
       }
-    `
+    `;
 
 const Altar = ({ isSupportWebp }) => {
     const [showType, setShowType] = useState('');
-    const { connected } = useWalletContext()
+    const { connected } = useWalletContext();
 
     // const [result, reexecuteQuery] = useQuery({
     //     query,
-    //     variables: { address: '0x7b251d07fcd75d1a9ea04875d81717fd096d8edcb945a6fab60e5bb2496dea2b', offset: 0, limit: 12 },
-    //     // variables: { address: '0x4ef96daa47a306111e877f792cd0b0682e881dde126a51f0e5e439f95c760eae', offset: 0, limit: 12 },
+    //     variables: { address:
+    // '0x7b251d07fcd75d1a9ea04875d81717fd096d8edcb945a6fab60e5bb2496dea2b', offset: 0, limit: 12 },
+    //     // variables: { address:
+    // '0x4ef96daa47a306111e877f792cd0b0682e881dde126a51f0e5e439f95c760eae', offset: 0, limit: 12 },
     // });
     // const { data, fetching, error } = result;
     // console.log('data: ', data);
@@ -126,18 +128,17 @@ const Altar = ({ isSupportWebp }) => {
     //     }
     // }, [connected]);
 
-
     const showItemHandler = (item) => {
         console.log('item: ', item);
         // reexecuteQuery()
-    }
+    };
     return (
         <Layout>
             <Box
                 maxW="1920px"
                 bgImage={{
-                    base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
-                    desktop: isSupportWebp ? HomeBgWebp : HomeBg
+                    base: isSupportWebp ? HomeBaseBgWebp.src : HomeBaseBg.src,
+                    desktop: isSupportWebp ? HomeBgWebp.src : HomeBg.src,
                 }}
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
@@ -154,7 +155,7 @@ const Altar = ({ isSupportWebp }) => {
                 >
                     <Box
                         bgImage={{
-                            base: isSupportWebp ? AltarImgWebp : AltarImg,
+                            base: isSupportWebp ? AltarImgWebp.src : AltarImg.src,
                         }}
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
@@ -165,7 +166,7 @@ const Altar = ({ isSupportWebp }) => {
                     />
                     <Box
                         bgImage={{
-                            base: isSupportWebp ? HandImgWebp : HandImg,
+                            base: isSupportWebp ? HandImgWebp.src : HandImg.src,
                         }}
                         minH={{ base: '420px' }}
                         w={{ base: '244px' }}
@@ -188,7 +189,7 @@ const Altar = ({ isSupportWebp }) => {
                                 mt="0.9rem"
                             >
                                 {
-                                    showType === '' ? '- -' : `0 %`
+                                    showType === '' ? '- -' : '0 %'
                                 }
                             </Text>
                             <Button variant="putIn">
@@ -210,7 +211,7 @@ const Altar = ({ isSupportWebp }) => {
                 >
                     <Box
                         bgImage={{
-                            base: isSupportWebp ? BoardImgWebp : BoardImg,
+                            base: isSupportWebp ? BoardImgWebp.src : BoardImg.src,
                         }}
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
@@ -241,7 +242,7 @@ const Altar = ({ isSupportWebp }) => {
                     <Flex
                         mt="1.5rem"
                         bgImage={{
-                            base: isSupportWebp ? CardBrandImgWebp : CardBrandImg,
+                            base: isSupportWebp ? CardBrandImgWebp.src : CardBrandImg.src,
                         }}
                         w="100%"
                         bgRepeat="no-repeat"
@@ -258,10 +259,10 @@ const Altar = ({ isSupportWebp }) => {
 
             </Box>
         </Layout>
-    )
+    );
 };
 
 Altar.prototype = {
     isSupportWebp: PropTypes.bool.isRequired,
-}
+};
 export default Altar;

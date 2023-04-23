@@ -1,10 +1,8 @@
-import React from 'react'
-import { ReactComponent as Loading } from '../assets/images/icons/loading.svg';
-
-
+import Image from 'next/image';
+import Loading from '../assets/images/icons/loading.svg';
 
 const SpinLoading = () => {
-    <Loading />
-}
+    <Image alt="loading" src={Loading} />;
+};
 
-export default SpinLoading
+export default SpinLoading;

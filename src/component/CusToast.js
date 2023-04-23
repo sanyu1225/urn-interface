@@ -1,16 +1,16 @@
-import React from 'react'
-import { Box } from '@chakra-ui/react'
-import { ReactComponent as CloseIcon } from '../assets/images/icons/Close.svg';
+import Image from 'next/image';
+import { Box } from '@chakra-ui/react';
+import CloseIcon from '../assets/images/icons/Close.svg';
 
 const Costoast = ({
     title,
     type,
-    onClose
+    onClose,
 }) => (
     <Box bg="red">
         {title}{type}
-        <CloseIcon onClick={onClose} />
+        <Image alt="close" src={CloseIcon} onClick={onClose} />
     </Box>
-)
+);
 
-export default Costoast
+export default Costoast;

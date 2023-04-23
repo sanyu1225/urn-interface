@@ -1,36 +1,37 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
+import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Grid } from '@chakra-ui/react';
 import Layout from '../layout';
 import Typewriter from '../component/Typewriter';
-import TombstoneImg from '../assets/images/faq/faq_tombstone.png'
-import TombstoneImgWebp from '../assets/images/faq/faq_tombstone.webp'
+import TombstoneImg from '../assets/images/faq/faq_tombstone.png';
+import TombstoneImgWebp from '../assets/images/faq/faq_tombstone.webp';
 import HomeBg from '../assets/images/faq/faq_bg.png';
 import HomeBgWebp from '../assets/images/faq/faq_bg.webp';
 import HomeBaseBg from '../assets/images/faq/faq_1440.png';
 import HomeBaseBgWebp from '../assets/images/faq/faq_1440.webp';
-import StoneImg from '../assets/images/faq/faq_stone.png'
-import StoneImgWebp from '../assets/images/faq/faq_stone.webp'
-import { ReactComponent as MediaIcon } from '../assets/images/faq/Media.svg';
-import KeyboardAudio from '../assets/music/keyboard.mp3'
+import StoneImg from '../assets/images/faq/faq_stone.png';
+import StoneImgWebp from '../assets/images/faq/faq_stone.webp';
+import MediaIcon from '../assets/images/faq/Media.svg';
+import KeyboardAudio from '@/assets/music/keyboard.mp3';
 
 const FAQ_LIST = [{
-    title: 'What will I earn?'
+    title: 'What will I earn?',
 }, {
-    title: 'Fun and a god damn cool NFT'
+    title: 'Fun and a god damn cool NFT',
 }, {
-    title: 'Will you rug?'
+    title: 'Will you rug?',
 }, {
-    title: 'Nah, soft rug at most'
+    title: 'Nah, soft rug at most',
 }, {
-    title: 'What will happen if I fill the urn?'
+    title: 'What will happen if I fill the urn?',
 }, {
-    title: 'Congrats, your grandma lives on-chain permanently.'
-}]
+    title: 'Congrats, your grandma lives on-chain permanently.',
+}];
 
 const FAQ = ({ isSupportWebp }) => {
     const audioRef = useRef();
-    const [info, setInfo] = useState('')
+    const [info, setInfo] = useState('');
 
     const handlePlay = () => {
         audioRef.current.play();
@@ -42,18 +43,18 @@ const FAQ = ({ isSupportWebp }) => {
 
     const showInfo = (item) => {
         // TODO: show info message not title..
-        if (info === item.title) return
-        setInfo(item.title)
-        handlePlay()
-    }
+        if (info === item.title) return;
+        setInfo(item.title);
+        handlePlay();
+    };
 
     return (
         <Layout>
             <Box
                 maxW="1920px"
                 bgImage={{
-                    base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
-                    desktop: isSupportWebp ? HomeBgWebp : HomeBg
+                    base: isSupportWebp ? HomeBaseBgWebp.src : HomeBaseBg.src,
+                    desktop: isSupportWebp ? HomeBgWebp.src : HomeBg.src,
                 }}
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
@@ -80,7 +81,7 @@ const FAQ = ({ isSupportWebp }) => {
                 }
                 <Box
                     bgImage={{
-                        base: isSupportWebp ? StoneImgWebp : StoneImg,
+                        base: isSupportWebp ? StoneImgWebp.src : StoneImg.src,
                     }}
                     w="100%"
                     bgRepeat="no-repeat"
@@ -91,7 +92,7 @@ const FAQ = ({ isSupportWebp }) => {
                 />
                 <Box
                     bgImage={{
-                        base: isSupportWebp ? TombstoneImgWebp : TombstoneImg,
+                        base: isSupportWebp ? TombstoneImgWebp.src : TombstoneImg.src,
                     }}
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
@@ -107,22 +108,22 @@ const FAQ = ({ isSupportWebp }) => {
                         </Text>
                         <Grid w="60%" mt="32px" gap="18px">
                             {
-                                FAQ_LIST.map(item => (
+                                FAQ_LIST.map((item) => (
                                     <Flex
                                         textAlign="left"
                                         key={item.title}
                                         _hover={{
                                             cursor: 'pointer',
                                             transform: 'scale(0.98)',
-                                            color: '#FFF3CD'
+                                            color: '#FFF3CD',
                                         }}
                                         _active={{
                                             transform: 'scale(0.96)',
-                                            color: '#FFF3CD'
+                                            color: '#FFF3CD',
                                         }}
                                         onClick={() => showInfo(item)}
                                     >
-                                        <MediaIcon /> <Text color="#CCC2A1" fontSize="16px" fontWeight={500}>{item.title}</Text>
+                                        <Image src={MediaIcon} alt="media" /><Text color="#CCC2A1" fontSize="16px" fontWeight={500}>{item.title}</Text>
                                     </Flex>
                                 ))
                             }
@@ -132,10 +133,10 @@ const FAQ = ({ isSupportWebp }) => {
 
             </Box>
         </Layout>
-    )
+    );
 };
 
 FAQ.prototype = {
     isSupportWebp: PropTypes.bool.isRequired,
-}
+};
 export default FAQ;

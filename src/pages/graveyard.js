@@ -1,30 +1,30 @@
-import React from 'react';
+import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button, Link } from '@chakra-ui/react';
 import Layout from '../layout';
-import { useWalletContext } from '../context'
+import { useWalletContext } from '../context';
 import HomeBg from '../assets/images/graveyard/graveyard_1920_x2.jpg';
 import HomeBgWebp from '../assets/images/graveyard/graveyard_1920_x2.webp';
 import HomeBaseBg from '../assets/images/graveyard/graveyard_1440_x2.jpg';
 import HomeBaseBgWebp from '../assets/images/graveyard/graveyard_1440_x2.webp';
-import TombstoneImg from '../assets/images/graveyard/tombstone.png'
-import TombstoneImgWebp from '../assets/images/graveyard/tombstone.webp'
-import SignpostImg from '../assets/images/graveyard/signpost.png'
-import SignpostImgWebp from '../assets/images/graveyard/signpost.webp'
-import { ReactComponent as SkullImg } from '../assets/images/graveyard/skull.svg';
+import TombstoneImg from '../assets/images/graveyard/tombstone.png';
+import TombstoneImgWebp from '../assets/images/graveyard/tombstone.webp';
+import SignpostImg from '../assets/images/graveyard/signpost.png';
+import SignpostImgWebp from '../assets/images/graveyard/signpost.webp';
+import SkullImg from '../assets/images/graveyard/skull.svg';
 
 const CustomLink = ({ children, path, mt, disabled = false }) => (
     <Link
         w="100%"
         href={path}
         mt={mt}
-        color={disabled ? "rgba(243, 243, 243, 0.6)" : "#F3F3F3"}
-        cursor={disabled ? "not-allowed" : "pointer"}
+        color={disabled ? 'rgba(243, 243, 243, 0.6)' : '#F3F3F3'}
+        cursor={disabled ? 'not-allowed' : 'pointer'}
         fontSize="18px"
         fontWeight={700}
         lineHeight="22px"
         _hover={{
-            textDecoration: "none",
+            textDecoration: 'none',
             transform: 'scale(0.98)',
         }}
         _active={{
@@ -33,16 +33,16 @@ const CustomLink = ({ children, path, mt, disabled = false }) => (
     >
         {children}
     </Link>
-)
+);
 
 const Graveyard = ({ isSupportWebp }) => {
-    const { mint } = useWalletContext()
+    const { mint } = useWalletContext();
     return (
         <Layout>
             <Box
                 bgImage={{
-                    base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
-                    desktop: isSupportWebp ? HomeBgWebp : HomeBg
+                    base: isSupportWebp ? HomeBaseBgWebp.src : HomeBaseBg.src,
+                    desktop: isSupportWebp ? HomeBgWebp.src : HomeBg.src,
                 }}
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
@@ -52,7 +52,7 @@ const Graveyard = ({ isSupportWebp }) => {
             >
                 <Box
                     bgImage={{
-                        base: isSupportWebp ? TombstoneImgWebp : TombstoneImg,
+                        base: isSupportWebp ? TombstoneImgWebp.src : TombstoneImg.src,
                     }}
                     w="16rem"
                     bgRepeat="no-repeat"
@@ -63,7 +63,7 @@ const Graveyard = ({ isSupportWebp }) => {
                     right={{ base: '37%' }}
                 >
                     <Flex justifyContent="center" mt="6rem" wrap="wrap" p="0 49px">
-                        <SkullImg />
+                        <Image src={SkullImg} alt="skull" />
                         <Text w="100%" textAlign="center" color="#F3F3F3" fontSize="14px" fontWeight={500} mb="14px" mt="14px">
                             Haha...look<br /> what I can get
                         </Text>
@@ -74,7 +74,7 @@ const Graveyard = ({ isSupportWebp }) => {
                 </Box>
                 <Flex
                     bgImage={{
-                        base: isSupportWebp ? SignpostImgWebp : SignpostImg,
+                        base: isSupportWebp ? SignpostImgWebp.src : SignpostImg.src,
                     }}
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
@@ -88,17 +88,17 @@ const Graveyard = ({ isSupportWebp }) => {
                     pt="2.5rem"
                     pl="12rem"
                 >
-                    <CustomLink path="/merchant" >Go to merchant</CustomLink>
+                    <CustomLink path="/merchant">Go to merchant</CustomLink>
                     <CustomLink mt="-9rem" path="/altar">Go to altar</CustomLink>
                     <CustomLink mt="-15rem" path="#" disabled>Go to reincarnation<br />(Coming soon)</CustomLink>
                 </Flex>
 
             </Box>
         </Layout>
-    )
-}
+    );
+};
 
 Graveyard.prototype = {
     isSupportWebp: PropTypes.bool.isRequired,
-}
+};
 export default Graveyard;

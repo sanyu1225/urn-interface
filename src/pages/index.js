@@ -1,25 +1,24 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Text, Button, Grid, Link } from '@chakra-ui/react';
 import Layout from '../layout';
-import HomeBg from '../assets/images/home/home_bg.jpg';
-import HomeBgWebp from '../assets/images/home/home_bg.webp';
-import HomeBaseBg from '../assets/images/home/home_1440.jpg';
-import HomeBaseBgWebp from '../assets/images/home/home_1440.webp';
-import SoilImg from '../assets/images/home/home_soil.png';
-import SoilImgWebp from '../assets/images/home/home_soil.webp';
-import ShovelImg from '../assets/images/home/home_shovel.png';
-import ShovelImgWebp from '../assets/images/home/home_shovel.webp';
-import TombstoneImg from '../assets/images/home/home_tombstone.png';
-import TombstoneImgWebp from '../assets/images/home/home_tombstone.webp';
+import HomeBg from '@/assets/images/home/home_bg.jpg';
+import HomeBgWebp from '@/assets/images/home/home_bg.webp';
+import HomeBaseBg from '@/assets/images/home/home_1440.jpg';
+import HomeBaseBgWebp from '@/assets/images/home/home_1440.webp';
+import SoilImg from '@/assets/images/home/home_soil.png';
+import SoilImgWebp from '@/assets/images/home/home_soil.webp';
+import ShovelImg from '@/assets/images/home/home_shovel.png';
+import ShovelImgWebp from '@/assets/images/home/home_shovel.webp';
+import TombstoneImg from '@/assets/images/home/home_tombstone.png';
+import TombstoneImgWebp from '@/assets/images/home/home_tombstone.webp';
 
 const Landing = ({ isSupportWebp }) => (
   <Layout>
     <Box
       maxW="1920px"
       bgImage={{
-        base: isSupportWebp ? HomeBaseBgWebp : HomeBaseBg,
-        desktop: isSupportWebp ? HomeBgWebp : HomeBg
+        base: isSupportWebp ? HomeBaseBgWebp.src : HomeBaseBg.src,
+        desktop: isSupportWebp ? HomeBgWebp.src : HomeBg.src,
       }}
       bgRepeat="no-repeat"
       bgSize="100% 100%"
@@ -29,7 +28,7 @@ const Landing = ({ isSupportWebp }) => (
     >
       <Box
         bgImage={{
-          base: isSupportWebp ? TombstoneImgWebp : TombstoneImg,
+          base: isSupportWebp ? TombstoneImgWebp.src : TombstoneImg.src,
         }}
         bgRepeat="no-repeat"
         bgSize="100% 100%"
@@ -68,7 +67,7 @@ const Landing = ({ isSupportWebp }) => (
       </Box>
       <Box
         bgImage={{
-          base: isSupportWebp ? ShovelImgWebp : ShovelImg,
+          base: isSupportWebp ? ShovelImgWebp.src : ShovelImg.src,
         }}
         w="17rem"
         bgRepeat="no-repeat"
@@ -80,7 +79,7 @@ const Landing = ({ isSupportWebp }) => (
       />
       <Box
         bgImage={{
-          base: isSupportWebp ? SoilImgWebp : SoilImg,
+          base: isSupportWebp ? SoilImgWebp.src : SoilImg.src,
         }}
         w="100%"
         bgRepeat="no-repeat"
@@ -95,5 +94,6 @@ const Landing = ({ isSupportWebp }) => (
 
 Landing.prototype = {
   isSupportWebp: PropTypes.bool.isRequired,
-}
+};
+
 export default Landing;

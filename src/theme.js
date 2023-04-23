@@ -1,10 +1,10 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme } from '@chakra-ui/react';
 
 export const breakpoints = {
   base: '1024px',
   mid: '1440px',
   desktop: '1920px',
-}
+};
 
 export const theme = extendTheme({
   fonts: {
@@ -96,7 +96,7 @@ export const theme = extendTheme({
             _focusVisible: {
               zIndex: 1,
               borderColor: 'gray03',
-              boxShadow: `0 0 0 1px gray03`,
+              boxShadow: '0 0 0 1px gray03',
               borderWidth: '1.5px',
             },
             _placeholder: {
@@ -122,7 +122,7 @@ export const theme = extendTheme({
           fontSize: '16px',
           fontWeight: '600',
           _hover: {
-            textDecoration: "none",
+            textDecoration: 'none',
             borderColor: 'transparent',
             backgroundColor: '#E3D4A2',
             opacity: 0.8,
@@ -159,7 +159,7 @@ export const theme = extendTheme({
           },
         },
         hamburger: {
-          color: "#FFF3CD",
+          color: '#FFF3CD',
           background: '#292229',
           backgroundColor: '#292229',
           transition: 'all 0.2s ease-in-out',
@@ -190,7 +190,7 @@ export const theme = extendTheme({
           borderRadius: 100,
           fontSize: '16px',
           fontWeight: '600',
-          color: "#794D0B",
+          color: '#794D0B',
           _hover: {
             borderColor: 'transparent',
             backgroundColor: '#F0CE37',
@@ -217,7 +217,7 @@ export const theme = extendTheme({
           borderRadius: 100,
           fontSize: '16px',
           fontWeight: '600',
-          color: "#464646",
+          color: '#464646',
           _hover: {
             borderColor: 'transparent',
             backgroundColor: '#F3F3F3',
@@ -242,7 +242,7 @@ export const theme = extendTheme({
           borderRadius: 100,
           fontSize: '16px',
           fontWeight: '600',
-          color: "#FFF3CD",
+          color: '#FFF3CD',
           _hover: {
             borderColor: 'transparent',
             backgroundColor: '#353135',
@@ -267,10 +267,10 @@ export const theme = extendTheme({
           borderRadius: 100,
           fontSize: '16px',
           fontWeight: '600',
-          color: "#292229",
-          width: "72px",
-          height: "39px",
-          padding: "10px",
+          color: '#292229',
+          width: '72px',
+          height: '39px',
+          padding: '10px',
           _hover: {
             borderColor: 'transparent',
             backgroundColor: '#F6D469',
@@ -319,9 +319,9 @@ export const theme = extendTheme({
           },
         },
       },
-    }
+    },
   },
   breakpoints,
-})
+});
 
-export default theme
+export default theme;
