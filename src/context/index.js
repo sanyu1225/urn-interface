@@ -47,22 +47,25 @@ export function ContextProvider({ children }) {
         }
     };
     const mint = async (functionName) => {
-        const isLogin = await checkLogin();
-        if (!isLogin) return null;
-        if (isLoading) return null;
-        const shovel = {
-            arguments: [],
-            function: `${CONTRACT_ADDR}::urn_to_earn::${functionName}`,
-            type: 'entry_function_payload',
-            type_arguments: [],
-        };
-        const hash = await signAndSubmitTransactionFnc(shovel);
-        if (hash) {
-            toastSeccess(hash);
-        } else {
-            toastError('error');
+        try {
+            const isLogin = await checkLogin();
+            if (!isLogin) return null;
+            if (isLoading) return null;
+            const shovel = {
+                arguments: [],
+                function: `${CONTRACT_ADDR}::urn_to_earn::${functionName}`,
+                type: 'entry_function_payload',
+                type_arguments: [],
+            };
+            const hash = await signAndSubmitTransactionFnc(shovel);
+            if (hash) {
+                toastSeccess(hash);
+            } else {
+                toastError('error');
+            }
+        } catch (error) {
+            toastError(error);
         }
-        return null;
     };
 
     const value = useMemo(() => ({

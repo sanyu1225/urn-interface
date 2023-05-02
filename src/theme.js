@@ -138,24 +138,9 @@ export const theme = extendTheme({
             borderColor: 'transparent',
             boxShadow: 'none',
           },
-        },
-        secondary: {
-          background: 'white',
-          backgroundColor: 'white',
-          color: 'BloctoBlue.Light02',
-          transition: 'all 0.2s ease-in-out',
-          borderRadius: 100,
-          _hover: {
-            borderColor: 'transparent',
-            opacity: 0.8,
-            transform: 'scale(0.98)',
-          },
-          _active: {
-            borderColor: 'transparent',
-            opacity: 0.9,
-          },
-          _focus: {
-            borderColor: 'transparent',
+          _disabled: {
+            cursor: 'not-allowed',
+            backgroundColor: 'gray05',
           },
         },
         hamburger: {
@@ -286,6 +271,35 @@ export const theme = extendTheme({
           _focus: {
             borderColor: 'transparent',
             boxShadow: 'none',
+          },
+        },
+        arrow: {
+          background: '#49473E',
+          backgroundColor: '#49473E',
+          transition: 'all 0.2s ease-in-out',
+          borderRadius: 100,
+          color: '#FFF3CD',
+          fontSize: '16px',
+          fontWeight: '600',
+          _hover: {
+            textDecoration: 'none',
+            borderColor: 'transparent',
+            opacity: 0.8,
+            transform: 'translateY(-50%) scale(0.98)',
+
+          },
+          _active: {
+            borderColor: 'transparent',
+            opacity: 0.9,
+            transform: 'translateY(-50%) scale(0.96)',
+          },
+          _focus: {
+            borderColor: 'transparent',
+            boxShadow: 'none',
+          },
+          _disabled: {
+            cursor: 'not-allowed',
+            backgroundColor: 'gray05',
           },
         },
       },
