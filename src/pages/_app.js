@@ -8,6 +8,10 @@ import {
 import { Client as UrqlClient, Provider as UrqlProvider, cacheExchange, fetchExchange } from 'urql';
 import { BloctoWallet } from '@blocto/aptos-wallet-adapter-plugin';
 import { PetraWallet } from 'petra-plugin-wallet-adapter';
+// import { createMuiTheme, ThemeProvier } from '@material-ui/core/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import MuiTheme from '../muiTheme';
+// import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from '../theme';
 import { ContextProvider } from '../context';
 import { supportWebp } from '../utils';
@@ -68,13 +72,18 @@ export default function App({ Component, pageProps }) {
         <ChakraProvider theme={theme}>
           <ContextProvider>
             <UrqlProvider value={client}>
-              {
-                isDesktop ? (
-                  <Component isSupportWebp={isSupportWebp} {...pageProps} />
-                ) : (
-                  <Mobile />
-                )
-              }
+              <ThemeProvider theme={MuiTheme}>
+                {
+                  isDesktop ? (
+                    <>
+                      {/* <CssBaseline /> */}
+                      <Component isSupportWebp={isSupportWebp} {...pageProps} />
+                    </>
+                  ) : (
+                    <Mobile />
+                  )
+                }
+              </ThemeProvider>
             </UrqlProvider>
           </ContextProvider>
         </ChakraProvider>

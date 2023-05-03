@@ -12,7 +12,11 @@ export function useWalletContext() {
 }
 
 export function ContextProvider({ children }) {
-    const { connect, connected, signAndSubmitTransaction, account, disconnect } = useWallet();
+    const { connect,
+        connected,
+        signAndSubmitTransaction,
+        account, disconnect, wallets } = useWallet();
+    console.log('wallets: ', wallets);
     const [isLoading, setLoading] = useState(false);
     const [isPlayBackground, setIsPlayBackground] = useState(true);
     const { toastSeccess, toastError } = useCusToast();
