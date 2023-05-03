@@ -131,9 +131,7 @@ const Hamburger = ({ hideMenu }) => {
           </MenuItem>
         </Cusmenu>
       ) : (
-        <Button variant="hamburger" mr="14px" onClick={() => connect()}>
-          Connect Wallet
-        </Button>
+        <WalletConnector />
       )}
 
       {!hideMenu && (

@@ -7,6 +7,7 @@ import {
 } from '@aptos-labs/wallet-adapter-react';
 import { Client as UrqlClient, Provider as UrqlProvider, cacheExchange, fetchExchange } from 'urql';
 import { BloctoWallet } from '@blocto/aptos-wallet-adapter-plugin';
+import { PetraWallet } from 'petra-plugin-wallet-adapter';
 import { theme } from '../theme';
 import { ContextProvider } from '../context';
 import { supportWebp } from '../utils';
@@ -22,12 +23,12 @@ const wallets = [
   //   new MSafeWalletAdapter(),
   //   new NightlyWallet(),
   //   new OpenBlockWallet(),
-  //   new PetraWallet(),
   //   new PontemWallet(),
   //   new RiseWallet(),
   //   new TokenPocketWallet(),
   //   new TrustWallet(),
   //   new WelldoneWallet(),
+  new PetraWallet(),
 ];
 const client = new UrqlClient({
   // TODO: set env file for graphql endpoint
