@@ -161,7 +161,7 @@ const FlexBlock = ({ title, collectionName }) => {
 const EventPage = ({ isSupportWebp }) => {
   const { account } = useWalletContext();
   return (
-    <Layout>
+    <Layout hideMenu="true">
       <Box
         maxW="1920px"
         bgImage={{

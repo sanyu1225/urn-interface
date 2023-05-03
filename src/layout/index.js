@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Hamburger from '../component/Hamburger';
 import BackgroundMusic from '@/component/BackgoundMusic';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, hideMenu }) => {
     const [isDesktop] = useMediaQuery('(min-width: 1024px)');
 
     return (
@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
                 {
                     isDesktop && (
                         <>
-                            <Hamburger />
+                            <Hamburger hideMenu={hideMenu} />
                             <BackgroundMusic />
                         </>
                     )
@@ -32,5 +32,6 @@ const Layout = ({ children }) => {
 
 Layout.prototype = {
     children: PropTypes.node.isRequired,
+    hideMenu: PropTypes.bool,
 };
 export default Layout;
