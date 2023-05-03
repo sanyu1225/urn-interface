@@ -74,9 +74,9 @@ const Carousel = ({
                             <Image
                                 w="100px"
                                 h="100px"
-                                src={item.metadata_uri}
-                                alt={`${item.name} image`}
-                                fallbackSrc={fakeImg.src}
+                                src={item?.current_token_data?.metadata_uri}
+                                alt={item?.current_token_data?.metadata_uri}
+                                // fallbackSrc={fakeImg.src}
                                 _hover={{
                                     border: '1px solid #FFF3CD',
                                     borderRadius: '12px',
