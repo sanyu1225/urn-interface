@@ -68,8 +68,29 @@ export function ContextProvider({ children }) {
         }
     };
 
+    const wlMint = async (collectionName) => {
+        const isLogin = await checkLogin();
+        if (!isLogin) return null;
+        if (isLoading) return null;
+        const shovel = {
+            arguments: [collectionName],
+            function: `${CONTRACT_ADDR}::urn_to_earn::wl_mint_shovel`,
+            type: 'entry_function_payload',
+            type_arguments: [],
+        };
+        const hash = await signAndSubmitTransactionFnc(shovel);
+        if (hash) {
+            console.log(hash);
+            toastSeccess(hash);
+        } else {
+            toastError('error');
+        }
+        return null;
+    };
+
     const value = useMemo(() => ({
         mint,
+        wlMint,
         checkLogin,
         connect: () => connect(BloctoWalletName),
         connected,
