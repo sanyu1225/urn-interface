@@ -38,7 +38,7 @@ const WalletConnector = () => {
                 onClose={onClose}
             >
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent p="15px 10px">
                     <ModalHeader>Connect Wallet</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
@@ -53,21 +53,23 @@ const WalletConnector = () => {
                                         _hover={{
                                             bg: 'rgba(0, 0, 0, 0.04)',
                                         }}
-                                        p="1rem 3rem"
+                                        p="1rem 2rem"
+                                        h="4rem"
                                         borderRadius="10px"
+                                        rowGap="20px"
                                     >
                                         <Image w="32px" h="32px" src={wallet.icon} alt={wallet.name} />
-                                        <Text as="span" w="45%">
+                                        <Text as="span" w="38%" textAlign="left">
                                             {wallet.name}
                                         </Text>
-                                        <Box>
+                                        <Box w="40%">
                                             {
                                                 wallet.readyState === 'Installed' || wallet.readyState === 'Loadable' ? (
-                                                    <Button variant="lightGray" onClick={() => onWalletSelect(wallet.name)}>
+                                                    <Button variant="lightGray" h="70%" onClick={() => onWalletSelect(wallet.name)}>
                                                         connect
                                                     </Button>
                                                 ) : (
-                                                    <Button variant="ghost" onClick={() => window.open(wallet.url)}>
+                                                    <Button variant="ghost" h="70%" onClick={() => window.open(wallet.url)}>
                                                         Install
                                                     </Button>
                                                 )
