@@ -7,11 +7,6 @@ import {
 } from '@aptos-labs/wallet-adapter-react';
 import { Client as UrqlClient, Provider as UrqlProvider, cacheExchange, fetchExchange } from 'urql';
 import { BloctoWallet } from '@blocto/aptos-wallet-adapter-plugin';
-import { PetraWallet } from 'petra-plugin-wallet-adapter';
-// import { createMuiTheme, ThemeProvier } from '@material-ui/core/styles';
-import { ThemeProvider } from '@mui/material/styles';
-import MuiTheme from '../muiTheme';
-// import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from '../theme';
 import { ContextProvider } from '../context';
 import { supportWebp } from '../utils';
@@ -27,12 +22,12 @@ const wallets = [
   //   new MSafeWalletAdapter(),
   //   new NightlyWallet(),
   //   new OpenBlockWallet(),
+  //   new PetraWallet(),
   //   new PontemWallet(),
   //   new RiseWallet(),
   //   new TokenPocketWallet(),
   //   new TrustWallet(),
   //   new WelldoneWallet(),
-  new PetraWallet(),
 ];
 const client = new UrqlClient({
   // TODO: set env file for graphql endpoint
@@ -72,18 +67,13 @@ export default function App({ Component, pageProps }) {
         <ChakraProvider theme={theme}>
           <ContextProvider>
             <UrqlProvider value={client}>
-              <ThemeProvider theme={MuiTheme}>
-                {
-                  isDesktop ? (
-                    <>
-                      {/* <CssBaseline /> */}
-                      <Component isSupportWebp={isSupportWebp} {...pageProps} />
-                    </>
-                  ) : (
-                    <Mobile />
-                  )
-                }
-              </ThemeProvider>
+              {
+                isDesktop ? (
+                  <Component isSupportWebp={isSupportWebp} {...pageProps} />
+                ) : (
+                  <Mobile />
+                )
+              }
             </UrqlProvider>
           </ContextProvider>
         </ChakraProvider>
