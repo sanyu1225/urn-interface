@@ -31,6 +31,9 @@ dependencies:
   next:
     specifier: 13.3.0
     version: 13.3.0(react-dom@18.2.0)(react@18.2.0)
+  petra-plugin-wallet-adapter:
+    specifier: ^0.1.3
+    version: 0.1.3
   prop-types:
     specifier: ^15.8.1
     version: 15.8.1
@@ -88,6 +91,15 @@ packages:
     peerDependenciesMeta:
       graphql:
         optional: true
+    dev: false
+
+  /@aptos-labs/wallet-adapter-core@0.1.7:
+    resolution: {integrity: sha512-g3HvX31kuFT5HqEe9Vh0ZgV1u0Otsfx54yeAwL7RO8CioBVBjYELhMsOYz0BOjecmAKhQ14G60VU8MqDyzYkIA==}
+    dependencies:
+      aptos: 1.8.4
+      eventemitter3: 4.0.7
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /@aptos-labs/wallet-adapter-core@0.2.3:
@@ -3714,6 +3726,15 @@ packages:
   /path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
+
+  /petra-plugin-wallet-adapter@0.1.3:
+    resolution: {integrity: sha512-AiqcaF8U3rGQWJdfz2gVychCgM76iJKVFxLkew6NBiK8Om0QPCRO9XMWvcNU87jzSjX3Ze8bhiHiUkvtm5aDEw==}
+    dependencies:
+      '@aptos-labs/wallet-adapter-core': 0.1.7
+      aptos: 1.8.4
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}

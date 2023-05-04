@@ -6,7 +6,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Grid, Flex, Box, Button, keyframes, Text, Divider, Link, MenuItem } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
-import { WalletConnector } from '@aptos-labs/wallet-adapter-mui-design';
+import WalletConnector from '@/component/WalletConnector';
 import { useWalletContext } from '../context';
 import Cusmenu from './Cusmenu';
 import useCopyToClipboard from '@/hooks/useCopyToClipboard';
@@ -131,9 +131,13 @@ const Hamburger = ({ hideMenu }) => {
           </MenuItem>
         </Cusmenu>
       ) : (
-        <Button variant="hamburger" mr="14px" onClick={() => connect()}>
-          Connect Wallet
-        </Button>
+        <Box mr="14px">
+          <WalletConnector />
+        </Box>
+        // only blocto wallet connect ⬇️
+        // <Button variant="hamburger" mr="14px" onClick={() => connect()}>
+        //   Connect Wallet
+        // </Button>
       )}
 
       {!hideMenu && (
