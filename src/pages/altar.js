@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
 import { useQuery } from 'urql';
 import { isEmpty } from '@/plugin/lodash';
-import { query as queryAltarData } from '../constant';
+import { queryAltarData } from '../constant';
 import Layout from '../layout';
 import HomeBg from '../assets/images/altar/altar_bg.png';
 import { useWalletContext } from '../context';
@@ -268,24 +268,14 @@ const Altar = ({ isSupportWebp }) => {
                                 ) : (
                                     <Carousel
                                         NftList={showItem}
-                                        choiseBone={choiseBone}
+                                        choiseItem={showItem.name === 'urn' ? choiseUrn : choiseBone}
                                         selectItem={(item) => {
                                             console.log('item: ', item);
                                             if (showItem.name === 'urn') {
                                                 setChoiseUrn(item);
                                             }
                                             if (showItem.name === 'bone') {
-                                                const boneArr = [...choiseBone];
-                                                boneArr.push(item);
-                                                setChoiseBone([...new Set(boneArr)]);
-                                                const index = choiseBone.findIndex((b) => b.token_data_id_hash === item.token_data_id_hash);
-                                                if (index !== -1) {
-                                                    const boneArr = [...choiseBone];
-                                                    boneArr.splice(index, 1);
-                                                    setChoiseBone(boneArr);
-                                                } else {
-                                                    setChoiseBone([...choiseBone, item]);
-                                                }
+                                                setChoiseBone(item);
                                             }
                                         }}
                                     />

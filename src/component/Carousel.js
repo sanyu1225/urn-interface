@@ -11,7 +11,7 @@ import fakeImg from '@/assets/images/altar/fake_img.png';
 const Carousel = ({
     NftList,
     selectItem,
-    choiseBone,
+    choiseItem,
 }) => {
     const [swiper, setSwiper] = useState(null);
     const [swiperIndex, setSwiperIndex] = useState(0);
@@ -83,7 +83,7 @@ const Carousel = ({
                                     cursor: 'pointer',
                                 }}
                                 borderRadius="12px"
-                                border={choiseBone.findIndex((b) => b.token_data_id_hash === item.token_data_id_hash) !== -1 ? '1px solid #FFF3CD' : 'none'}
+                                border={choiseItem.token_data_id_hash === item.token_data_id_hash ? '1px solid #FFF3CD' : 'none'}
                             />
                             <Text
                                 position="absolute"
