@@ -40,7 +40,7 @@ export function ContextProvider({ children }) {
             }
             throw new Error('hash is null');
         } catch (error) {
-            console.log(error);
+            console.error(error);
             return null;
         } finally {
             setLoading(false);

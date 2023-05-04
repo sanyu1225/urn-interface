@@ -44,8 +44,7 @@ const Altar = ({ isSupportWebp }) => {
     const { data, fetching, error } = result;
     console.log('data: ', data);
     const UrnList = data && data?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden urm');
-    // TODO: ask rick about bone name
-    const boneNameList = ['chest', 'leg'];
+    const boneNameList = ['arm', 'leg', 'hip', 'chest', 'skull', 'shard', 'golden arm', 'golden leg', 'golden hip', 'golden chest', 'golden skull', 'knife'];
     const boneList = data && data?.current_token_ownerships?.filter((item) => boneNameList.includes(item?.name));
 
     useEffect(() => {

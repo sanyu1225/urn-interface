@@ -50,7 +50,7 @@ const useCusToast = () => {
                         </Text>
                     </Flex>
                     <Box cursor="pointer">
-                        <CloseIcon onClick={onClose} />
+                        <Image src={CloseIcon} alt="close_icon" onClick={onClose} />
                     </Box>
                 </Flex>
             ),
@@ -83,7 +83,7 @@ const useCusToast = () => {
                         </Text>
                     </Flex>
                     <Box cursor="pointer">
-                        <CloseIcon onClick={onClose} />
+                        <Image src={CloseIcon} alt="close_icon" onClick={onClose} />
                     </Box>
                 </Flex>
             ),
@@ -116,7 +116,7 @@ const useCusToast = () => {
                         </Text>
                     </Flex>
                     <Box cursor="pointer">
-                        <CloseIcon onClick={onClose} />
+                        <Image src={CloseIcon} alt="close_icon" onClick={onClose} />
                     </Box>
                 </Flex>
             ),
