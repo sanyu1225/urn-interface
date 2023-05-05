@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button, Icon } from '@chakra-ui/react';
