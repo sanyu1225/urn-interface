@@ -38,10 +38,10 @@ const WalletConnector = () => {
                 onClose={onClose}
             >
                 <ModalOverlay />
-                <ModalContent p="15px 10px">
-                    <ModalHeader>Connect Wallet</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
+                <ModalContent p="28px" bg="#292229">
+                    <ModalHeader p="0 0 20px 0px" alignItems="center" color="#FFF3CD">Connect Wallet</ModalHeader>
+                    <ModalCloseButton m="20px" color="#FFF3CD" />
+                    <ModalBody p="0">
                         <Grid gap="10px">
                             {
                                 wallets.map((wallet) => (
@@ -49,27 +49,29 @@ const WalletConnector = () => {
                                         key={wallet.name}
                                         justifyContent="space-between"
                                         alignItems="center"
-                                        bg="rgb(228, 228, 231)"
+                                        bg="#352D35"
                                         _hover={{
-                                            bg: 'rgba(0, 0, 0, 0.04)',
+                                            bg: '#484148',
                                         }}
-                                        p="1rem 2rem"
-                                        h="4rem"
+                                        p="12px 24px"
+                                        h="72px"
                                         borderRadius="10px"
-                                        rowGap="20px"
+                                        rowGap="16px"
                                     >
-                                        <Image w="32px" h="32px" src={wallet.icon} alt={wallet.name} />
-                                        <Text as="span" w="38%" textAlign="left">
-                                            {wallet.name}
-                                        </Text>
-                                        <Box w="40%">
+                                        <Flex alignItems="center" rowGap="20px">
+                                            <Image w="32px" h="32px" src={wallet.icon} alt={wallet.name} />
+                                            <Text ml="20px" as="span" w="" textAlign="left" textColor="#FFF3CD" fontWeight={600}>
+                                                {wallet.name}
+                                            </Text>
+                                        </Flex>
+                                        <Box>
                                             {
                                                 wallet.readyState === 'Installed' || wallet.readyState === 'Loadable' ? (
-                                                    <Button variant="lightGray" h="70%" onClick={() => onWalletSelect(wallet.name)}>
+                                                    <Button variant="lightGray" w="100px" textAlign="center" p="10px 18px" bg="#FFF3CD" bgColor="#FFF3CD" color="#292229" h="70%" onClick={() => onWalletSelect(wallet.name)}>
                                                         connect
                                                     </Button>
                                                 ) : (
-                                                    <Button variant="ghost" h="70%" onClick={() => window.open(wallet.url)}>
+                                                    <Button w="100px" variant="ghost" textAlign="center" color="#FFF3CD" h="70%" _hover={{ textColor: '#E3D4A2' }} onClick={() => window.open(wallet.url)}>
                                                         Install
                                                     </Button>
                                                 )

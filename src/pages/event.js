@@ -20,78 +20,87 @@ const FlexBlock = ({ title, collectionName }) => {
   const [buttonText, setButtonText] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const requests = [];
-      const quota = fetch('https://fullnode.testnet.aptoslabs.com/v1/view', {
+  const fetchData = async () => {
+    const requests = [];
+    const quota = fetch('https://fullnode.testnet.aptoslabs.com/v1/view', {
+      method: 'POST',
+      body: JSON.stringify({
+        function: `${CONTRACT_ADDR}::whitelist::get_collection_left_quota`,
+        type_arguments: [],
+        arguments: [collectionName],
+      }),
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+    requests.push(quota);
+    if (account && account?.address) {
+      const isWhitelistAndMinted = fetch('https://fullnode.testnet.aptoslabs.com/v1/view', {
         method: 'POST',
         body: JSON.stringify({
-          function: `${CONTRACT_ADDR}::whitelist::get_collection_left_quota`,
+          function: `${CONTRACT_ADDR}::whitelist::view_is_whitelisted_and_minted`,
           type_arguments: [],
-          arguments: [collectionName],
+          arguments: [collectionName, account.address],
         }),
         headers: {
           'content-type': 'application/json',
         },
       });
-      requests.push(quota);
-      if (account && account?.address) {
-        const isWhitelistAndMinted = fetch('https://fullnode.testnet.aptoslabs.com/v1/view', {
-          method: 'POST',
-          body: JSON.stringify({
-            function: `${CONTRACT_ADDR}::whitelist::view_is_whitelisted_and_minted`,
-            type_arguments: [],
-            arguments: [collectionName, account.address],
-          }),
-          headers: {
-            'content-type': 'application/json',
-          },
-        });
-        requests.push(isWhitelistAndMinted);
-      }
-      const [qResponse, wResponse] = await Promise.all(requests);
-      setIsLoading(false);
-      const quotaResponse = await qResponse.json();
-      if (Array.isArray(quotaResponse)) {
-        setDesc(`Free: ${quotaResponse[0]}\n50% off: ${quotaResponse[1]}`);
-      } else {
-        console.log(`quotaResponse should be array instead of ${quotaResponse}`);
-      }
-      if (wResponse) {
-        console.log(`💥 account?.address: ${JSON.stringify(account?.address, null, '	')}`);
-        try {
-          const isWhitelistAndMintedResponse = await wResponse.json();
-          if (Array.isArray(isWhitelistAndMintedResponse)) {
-            const mintable = isWhitelistAndMintedResponse[1];
-            const whitelisted = isWhitelistAndMintedResponse[0];
-            if (mintable) {
-              setButtonText(whitelisted ? 'Claim' : 'Not eligible');
-              setIsDisabled(!whitelisted);
-            } else if (whitelisted) {
-              setButtonText('Minted');
-              setIsDisabled(true);
-            } else {
-              setButtonText('Not eligible');
-              setIsDisabled(true);
-            }
+      requests.push(isWhitelistAndMinted);
+    }
+    const [qResponse, wResponse] = await Promise.all(requests);
+    const quotaResponse = await qResponse.json();
+    if (Array.isArray(quotaResponse)) {
+      setDesc(`Free: ${quotaResponse[0]}\n50% off: ${quotaResponse[1]}`);
+    } else {
+      console.log(`quotaResponse should be array instead of ${quotaResponse}`);
+    }
+    if (wResponse) {
+      console.log(`💥 account?.address: ${JSON.stringify(account?.address, null, '	')}`);
+      try {
+        const isWhitelistAndMintedResponse = await wResponse.json();
+        if (Array.isArray(isWhitelistAndMintedResponse)) {
+          const mintable = isWhitelistAndMintedResponse[1];
+          const whitelisted = isWhitelistAndMintedResponse[0];
+          console.log(`💥 quotaResponse[0] + quotaResponse[1]: ${JSON.stringify(quotaResponse[0] + quotaResponse[1], null, '	')}`);
+          if (mintable) {
+            setButtonText(whitelisted ? 'Claim' : 'Not eligible');
+            setIsDisabled(!whitelisted);
+          } else if (whitelisted) {
+            setButtonText('Minted');
+            setIsDisabled(true);
+          } else if (Number(quotaResponse[0]) + Number(quotaResponse[1]) === 0) {
+            setButtonText('Sold out');
+            setIsDisabled(true);
           } else {
-            setButtonText('some thing wrong');
-            console.log(
-              `isWhitelistResponse should be array instead of ${isWhitelistAndMintedResponse}`
-            );
+            setButtonText('Not eligible');
+            setIsDisabled(true);
           }
-        } catch (error) {
+        } else {
           setButtonText('some thing wrong');
-          console.log(error);
+          console.log(
+            `isWhitelistResponse should be array instead of ${isWhitelistAndMintedResponse}`
+          );
         }
+      } catch (error) {
+        setButtonText('some thing wrong');
+        console.log(error);
       }
-    };
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, [account]);
 
+  const mint = async () => {
+    await wlMint(collectionName);
+    fetchData();
+  };
+
   let buttonContent;
   if (!connected) {
-    buttonContent = <Text>Not connceted</Text>;
+    buttonContent = <Text>Not connected</Text>;
   } else if (isLoading) {
     buttonContent = (
       <Icon viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -148,7 +157,7 @@ const FlexBlock = ({ title, collectionName }) => {
       </Text>
       <Button
         variant="primary"
-        onClick={() => wlMint(collectionName)}
+        onClick={mint}
         h="47px"
         isDisabled={isDisabled}
       >
@@ -183,7 +192,7 @@ const EventPage = ({ isSupportWebp }) => {
           flexDirection="column"
           justifyContent="start"
           rowGap="60px"
-          p="12vh"
+          p="15vh"
         >
           <Flex width="670px" flexDirection="column">
             <Flex
@@ -198,7 +207,7 @@ const EventPage = ({ isSupportWebp }) => {
               <Text lineHeight="39px">Grab a god damn shovel and dig some shit!</Text>
               <Text fontSize="20px" whiteSpace="pre-line">
                 {
-                  "Snapshot already taken, check if you're eligible.\nEach NFT partners got reserved free or discounted mint quota. First come first serve."
+                  "Snapshot already taken, check if you're eligible.\nEach NFT partner got reserved free or discounted mint quota. First come first serve."
                 }
               </Text>
             </Flex>
