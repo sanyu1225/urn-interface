@@ -47,6 +47,8 @@ const FlexBlock = ({ title, collectionName }) => {
         },
       });
       requests.push(isWhitelistAndMinted);
+    } else {
+      setIsDisabled(true);
     }
     const [qResponse, wResponse] = await Promise.all(requests);
     const quotaResponse = await qResponse.json();
@@ -95,7 +97,7 @@ const FlexBlock = ({ title, collectionName }) => {
 
   const mint = async () => {
     await wlMint(collectionName);
-    fetchData();
+    await fetchData();
   };
 
   let buttonContent;
