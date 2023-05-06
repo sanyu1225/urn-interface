@@ -24,6 +24,7 @@
     "@tp-lab/aptos-wallet-adapter": "^1.0.1",
     "@trustwallet/aptos-wallet-adapter": "^0.1.6",
     "@welldone-studio/aptos-wallet-adapter": "^0.1.2",
+    "aptos": "^1.8.5",
     "fewcha-plugin-wallet-adapter": "^0.1.2",
     "file-loader": "^6.2.0",
     "framer-motion": "^10.12.2",

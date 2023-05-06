@@ -1,9 +1,15 @@
 import { createContext, useContext, useState, useMemo } from 'react';
-import { BloctoWalletName } from '@blocto/aptos-wallet-adapter-plugin';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
+import { AptosClient } from 'aptos';
 import useCusToast from '../hooks/useCusToast';
 
 import CONTRACT_ADDR from '../constant';
+
+export const TESTNET_NODE_URL = 'https://fullnode.testnet.aptoslabs.com/v1';
+
+const aptosClient = new AptosClient(TESTNET_NODE_URL, {
+  WITH_CREDENTIALS: false,
+});
 
 const Context = createContext();
 
@@ -15,13 +21,12 @@ export function ContextProvider({ children }) {
     const { connect, connected, signAndSubmitTransaction, account, disconnect } = useWallet();
     const [isLoading, setLoading] = useState(false);
     const [isPlayBackground, setIsPlayBackground] = useState(true);
-    const { toastSeccess, toastError } = useCusToast();
+    const { toastSeccess, toastError, toastLoading } = useCusToast();
 
     const checkLogin = async () => {
         if (connected) {
             return true;
         }
-        await connect(BloctoWalletName);
         return false;
     };
 
@@ -79,22 +84,33 @@ export function ContextProvider({ children }) {
             type_arguments: [],
         };
         const hash = await signAndSubmitTransactionFnc(shovel);
+        toastLoading('pending confirmation');
         if (hash) {
             console.log(hash);
-            toastSeccess(hash);
+            try {
+                await waitForTransaction(hash);
+                toastSeccess(hash);
+            } catch (error) {
+                console.log(error);
+                toastError(JSON.stringify(error));
+            }
         } else {
             toastError('error');
         }
-        return null;
+    };
+
+    const waitForTransaction = async (txhash) => {
+        await aptosClient.waitForTransaction(txhash);
     };
 
     const value = useMemo(() => ({
         mint,
         wlMint,
         checkLogin,
-        connect: () => connect(BloctoWalletName),
+        connect,
         connected,
         signAndSubmitTransaction,
+        waitForTransaction,
         isLoading,
         account,
         disconnect,
