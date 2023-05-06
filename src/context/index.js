@@ -73,7 +73,7 @@ export function ContextProvider({ children }) {
         }
     };
 
-    const wlMint = async (collectionName) => {
+    const wlMint = async (collectionName, toastId) => {
         const isLogin = await checkLogin();
         if (!isLogin) return null;
         if (isLoading) return null;
@@ -84,18 +84,18 @@ export function ContextProvider({ children }) {
             type_arguments: [],
         };
         const hash = await signAndSubmitTransactionFnc(shovel);
-        toastLoading('pending confirmation');
         if (hash) {
             console.log(hash);
+            toastLoading('pending confirmation', toastId);
             try {
                 await waitForTransaction(hash);
-                toastSeccess(hash);
+                toastSeccess(hash, toastId);
             } catch (error) {
                 console.log(error);
-                toastError(JSON.stringify(error));
+                toastError(JSON.stringify(error), toastId);
             }
         } else {
-            toastError('error');
+            toastError('hash not found', toastId);
         }
     };
 

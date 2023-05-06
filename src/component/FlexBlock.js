@@ -88,7 +88,8 @@ const FlexBlock = ({ title, collectionName }) => {
     }, [account]);
   
     const mint = async () => {
-      await wlMint(collectionName);
+      const toastId = Date.now();
+      await wlMint(collectionName, toastId);
       await fetchData();
     };
   

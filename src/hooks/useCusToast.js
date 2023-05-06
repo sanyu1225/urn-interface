@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRef } from 'react';
 import { useToast, Box, Flex, Text, keyframes } from '@chakra-ui/react';
 import CloseIcon from '../assets/images/icons/Close.svg';
 import SuccessfulIcon from '../assets/images/icons/successful.svg';
@@ -22,105 +23,124 @@ const typeIcon = {
 
 const useCusToast = () => {
     const toastInstance = useToast();
+    const toastIdRef = useRef();
 
-    const toastSeccess = (title) => {
-        toastInstance({
-            title,
-            isClosable: true,
-            containerStyle: {
-                maxWidth: '100%',
-            },
-            render: ({ onClose }) => (
-                <Flex
-                    bg="#292229"
-                    justifyContent="space-between"
-                    h="52px"
-                    p="0 16px"
-                    border="1px solid #49473E"
-                    alignItems="center"
-                    borderRadius="12px"
-                    boxShadow="0px 0px 12px rgba(0, 0, 0, 0.05)"
-                >
-                    <Flex alignItems="center">
-                        <Box w="16px" h="16px">
-                            {typeIcon.success}
-                        </Box>
-                        <Text color="#FFF3CD" p="0 10px" fontWeight={400} fontSize="14px">
-                            {title}
-                        </Text>
-                    </Flex>
-                    <Box cursor="pointer">
-                        <Image src={CloseIcon} alt="close_icon" onClick={onClose} />
+    const toastSeccess = (title, id) => {
+        const render = ({ onClose }) => (
+            <Flex
+                bg="#292229"
+                justifyContent="space-between"
+                h="52px"
+                p="0 16px"
+                border="1px solid #49473E"
+                alignItems="center"
+                borderRadius="12px"
+                boxShadow="0px 0px 12px rgba(0, 0, 0, 0.05)"
+            >
+                <Flex alignItems="center">
+                    <Box w="16px" h="16px">
+                        {typeIcon.success}
                     </Box>
+                    <Text color="#FFF3CD" p="0 10px" fontWeight={400} fontSize="14px">
+                        {title}
+                    </Text>
                 </Flex>
-            ),
-        });
+                <Box cursor="pointer">
+                    <Image src={CloseIcon} alt="close_icon" onClick={onClose} />
+                </Box>
+            </Flex>
+        );
+        if (toastInstance.isActive(id) && toastIdRef.current && toastIdRef.current === id) {
+            toastInstance.update(toastIdRef.current, { title, render });
+        } else {
+            toastIdRef.current = toastInstance({
+                id,
+                title,
+                isClosable: true,
+                containerStyle: {
+                    maxWidth: '100%',
+                },
+                render,
+            });
+        }
     };
-    const toastError = (title) => {
-        toastInstance({
-            title,
-            isClosable: true,
-            containerStyle: {
-                maxWidth: '100%',
-            },
-            render: ({ onClose }) => (
-                <Flex
-                    bg="#292229"
-                    justifyContent="space-between"
-                    h="52px"
-                    p="0 16px"
-                    border="1px solid #49473E"
-                    alignItems="center"
-                    borderRadius="12px"
-                    boxShadow="0px 0px 12px rgba(0, 0, 0, 0.05)"
-                >
-                    <Flex alignItems="center">
-                        <Box w="16px" h="16px">
-                            {typeIcon.error}
-                        </Box>
-                        <Text color="#FFF3CD" p="0 10px" fontWeight={400} fontSize="14px">
-                            {title}
-                        </Text>
-                    </Flex>
-                    <Box cursor="pointer">
-                        <Image src={CloseIcon} alt="close_icon" onClick={onClose} />
+    const toastError = (title, id) => {
+        const render = ({ onClose }) => (
+            <Flex
+                bg="#292229"
+                justifyContent="space-between"
+                h="52px"
+                p="0 16px"
+                border="1px solid #49473E"
+                alignItems="center"
+                borderRadius="12px"
+                boxShadow="0px 0px 12px rgba(0, 0, 0, 0.05)"
+            >
+                <Flex alignItems="center">
+                    <Box w="16px" h="16px">
+                        {typeIcon.error}
                     </Box>
+                    <Text color="#FFF3CD" p="0 10px" fontWeight={400} fontSize="14px">
+                        {title}
+                    </Text>
                 </Flex>
-            ),
-        });
+                <Box cursor="pointer">
+                    <Image src={CloseIcon} alt="close_icon" onClick={onClose} />
+                </Box>
+            </Flex>
+        );
+        if (toastInstance.isActive(id) && toastIdRef.current && toastIdRef.current === id) {
+            toastInstance.update(toastIdRef.current, { title, render });
+        } else {
+            toastIdRef.current = toastInstance({
+                id,
+                title,
+                isClosable: true,
+                containerStyle: {
+                    maxWidth: '100%',
+                },
+                render,
+            });
+        }
     };
-    const toastLoading = (title) => {
-        toastInstance({
-            title,
-            isClosable: true,
-            containerStyle: {
-                maxWidth: '100%',
-            },
-            render: ({ onClose }) => (
-                <Flex
-                    bg="#292229"
-                    justifyContent="space-between"
-                    h="52px"
-                    p="0 16px"
-                    border="1px solid #49473E"
-                    alignItems="center"
-                    borderRadius="12px"
-                    boxShadow="0px 0px 12px rgba(0, 0, 0, 0.05)"
-                >
-                    <Flex alignItems="center">
-                        <Box w="16px" h="16px">
-                            {typeIcon.loading}
-                        </Box>
-                        <Text color="#FFF3CD" p="0 10px" fontWeight={400} fontSize="14px">
-                            {title}
-                        </Text>
-                    </Flex>
-                    <Box cursor="pointer">
-                        <Image src={CloseIcon} alt="close_icon" onClick={onClose} />
+    const toastLoading = (title, id) => {
+        const render = ({ onClose }) => (
+            <Flex
+                bg="#292229"
+                justifyContent="space-between"
+                h="52px"
+                p="0 16px"
+                border="1px solid #49473E"
+                alignItems="center"
+                borderRadius="12px"
+                boxShadow="0px 0px 12px rgba(0, 0, 0, 0.05)"
+            >
+                <Flex alignItems="center">
+                    <Box w="16px" h="16px">
+                        {typeIcon.loading}
                     </Box>
+                    <Text color="#FFF3CD" p="0 10px" fontWeight={400} fontSize="14px">
+                        {title}
+                    </Text>
                 </Flex>
-            ),
-        });
+                <Box cursor="pointer">
+                    <Image src={CloseIcon} alt="close_icon" onClick={onClose} />
+                </Box>
+            </Flex>
+        );
+        if (toastInstance.isActive(id) && toastIdRef.current && toastIdRef.current === id) {
+            toastInstance.update(toastIdRef.current, { title, render });
+        } else {
+            toastIdRef.current = toastInstance({
+                id,
+                title,
+                isClosable: true,
+                containerStyle: {
+                    maxWidth: '100%',
+                },
+                render,
+            });
+        }
     };
 
     return {
