@@ -5,8 +5,10 @@ import { useWalletContext } from '../context';
 import Layout from '../layout';
 import HomeBg from '../assets/images/merchant/merchant_bg.png';
 import HomeBgWebp from '../assets/images/merchant/merchant_bg.webp';
-import HomeBaseBg from '../assets/images/merchant/merchant_1440.png';
-import HomeBaseBgWebp from '../assets/images/merchant/merchant_1440.webp';
+import HomeBaseBg from '../assets/images/merchant/merchant_1024.jpg';
+import HomeBaseBgWebp from '../assets/images/merchant/merchant_1024.webp';
+import Home1440Bg from '../assets/images/merchant/merchant_1440.png';
+import Home1440BgWebp from '../assets/images/merchant/merchant_1440.webp';
 import FurnaceImg from '../assets/images/merchant/merchant_furnace.png';
 import FurnaceImgWebp from '../assets/images/merchant/merchant_furnace.webp';
 import BoardSmallImg from '../assets/images/merchant/merchant_board_small.png';
@@ -26,6 +28,7 @@ const Merchant = ({ isSupportWebp }) => {
                 maxW="1920px"
                 bgImage={{
                     base: isSupportWebp ? HomeBaseBgWebp.src : HomeBaseBg.src,
+                    mid: isSupportWebp ? Home1440BgWebp.src : Home1440Bg.src,
                     desktop: isSupportWebp ? HomeBgWebp.src : HomeBg.src,
                 }}
                 bgRepeat="no-repeat"
@@ -43,8 +46,8 @@ const Merchant = ({ isSupportWebp }) => {
                     w={{ base: '246px' }}
                     h={{ base: '358px' }}
                     position="absolute"
-                    bottom="32vh"
-                    right={{ base: '12%' }}
+                    bottom={{ base: '32vh', mid: '34vh', desktop: '32vh' }}
+                    right={{ base: '12%', mid: '3.5%', desktop: '12%' }}
                 >
                     <Flex justifyContent="center" mt="4rem" wrap="wrap" p="0 49px" pb="2.3rem">
                         <Text w="100%" textAlign="center" color="#794D0B" fontSize="20px" fontWeight={700} mb="0.9rem">
@@ -69,7 +72,7 @@ const Merchant = ({ isSupportWebp }) => {
                     minH={{ base: '42.3vh' }}
                     position="absolute"
                     bottom="0px"
-                    right={{ base: '19%' }}
+                    right={{ base: '19%', mid: '12%', desktop: '19%' }}
                 />
                 <Flex
                     wrap="wrap"

@@ -36,7 +36,7 @@ const Landing = ({ isSupportWebp }) => (
         minH={{ base: '355px', mid: '417px', desktop: '478px' }}
         position="absolute"
         bottom={{ base: 0 }}
-        right="29.5%"
+        right={{ base: '29.5%', desktop: '29.5%' }}
         textAlign="center"
         pt="3%"
       >

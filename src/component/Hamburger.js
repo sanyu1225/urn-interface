@@ -48,24 +48,28 @@ function AnimationLink({ children, path, disabled = false }) {
       _hover={{
         textDecoration: 'none',
       }}
-      // FIXME: hover animation.
-      sx={!disabled && !isActive ? {
-        '&::before': {
-          content: '">"',
-          fontSize: 16,
-          opacity: 0,
-          marginLeft: -12,
-          transition: 'all 0.3s ease',
-          marginRight: '12px',
-        },
-        '&:hover::before': {
-          opacity: 1,
-          marginLeft: 0,
-        },
-      } : {}}
+
     >
       {isActive && <Box mr="12px">&gt;</Box>}
-      <Text as="span" mr={disabled ? '0' : '2px'} fontSize={disabled ? '14px' : '18px'}>
+      <Text
+        as="span"
+        mr={disabled ? '0' : '2px'}
+        fontSize={disabled ? '14px' : '18px'}
+        // FIXME: hover animation.
+        sx={!disabled && !isActive ? {
+          '&::before': {
+            content: '">"',
+            fontSize: 16,
+            opacity: 0,
+            marginLeft: -12,
+            transition: 'all 0.3s ease ',
+            marginRight: '12px',
+          },
+          '&:hover::before': {
+            opacity: 1,
+          },
+        } : {}}
+      >
         {children}
       </Text>
     </Link>

@@ -8,7 +8,7 @@ import CONTRACT_ADDR from '../constant';
 export const TESTNET_NODE_URL = 'https://fullnode.testnet.aptoslabs.com/v1';
 
 const aptosClient = new AptosClient(TESTNET_NODE_URL, {
-  WITH_CREDENTIALS: false,
+    WITH_CREDENTIALS: false,
 });
 
 const Context = createContext();
@@ -51,18 +51,19 @@ export function ContextProvider({ children }) {
             setLoading(false);
         }
     };
-    const mint = async (functionName) => {
+
+    // FIXME for default contract function name
+    const mint = async (functionName, args = []) => {
         try {
             const isLogin = await checkLogin();
-            if (!isLogin) return null;
-            if (isLoading) return null;
-            const shovel = {
-                arguments: [],
+            if (!isLogin || isLoading) return null;
+            const params = {
+                arguments: args,
                 function: `${CONTRACT_ADDR}::urn_to_earn::${functionName}`,
                 type: 'entry_function_payload',
                 type_arguments: [],
             };
-            const hash = await signAndSubmitTransactionFnc(shovel);
+            const hash = await signAndSubmitTransactionFnc(params);
             if (hash) {
                 toastSeccess(hash);
             } else {
