@@ -59,9 +59,9 @@ const EventPage = ({ isSupportWebp }) => {
           </Flex>
           <Flex width="432px" flexDirection="column">
             <Flex w="100%" wrap="wrap" justifyContent="center" gap="32px">
-              <FlexBlock title="Aptomingos" collectionName="Aptomingos" />
-              <FlexBlock title="Aptos Monkeys" collectionName="Aptos Monkeys" />
-              <FlexBlock title="Blocto" collectionName="Blocto" />
+              <FlexBlock title="Goblintown" collectionName="Aptomingos" />
+              <FlexBlock title="PEPE" collectionName="Aptos Monkeys" />
+              <FlexBlock title="Pogai" collectionName="Blocto" />
               {/* <FlexBlock
                 title="Urn2earn"
                 collectionName="Urn2earn"
