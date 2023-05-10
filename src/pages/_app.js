@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { ChakraProvider, useMediaQuery } from '@chakra-ui/react';

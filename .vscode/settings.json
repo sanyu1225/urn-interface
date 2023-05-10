@@ -2,9 +2,9 @@
     "editor.tabSize": 4,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "eslint.validate": ["javascript","typescript","typescriptreact"],
-    "editor.formatOnSave": true,
     "eslint.alwaysShowStatus": true,
+    "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
-    },
+    }
 }
