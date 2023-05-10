@@ -51,7 +51,7 @@ const Merchant = ({ isSupportWebp }) => {
                 >
                     <Flex
                         justifyContent="center"
-                        mt={{ base: '3rem', mid: '4rem' }}
+                        mt={{ base: '3rem', mid: '4.5rem', desktop: '5rem' }}
                         wrap="wrap"
                         p={{ base: '0 29px', mid: '0 49px' }}
                         pb="2.3rem"
@@ -62,7 +62,7 @@ const Merchant = ({ isSupportWebp }) => {
                             color="#794D0B"
                             fontSize={{ base: '16px', mid: '20px' }}
                             fontWeight={700}
-                            mb={{ base: '10px', mid: '0.9rem' }}
+                            mb={{ base: '10px', mid: '14px', desktop: '14px' }}
 
                         >
                             Golden urn
@@ -74,8 +74,8 @@ const Merchant = ({ isSupportWebp }) => {
                             color="#794D0B"
                             fontSize="14px"
                             fontWeight={500}
-                            mb={{ base: '10px', mid: '0.9rem' }}
-                            mt={{ base: '10px', mid: '0.9rem' }}
+                            mb={{ base: '10px', mid: '14px', desktop: '14px' }}
+                            mt={{ base: '10px', mid: '14px', desktop: '14px' }}
                             lineHeight={{ base: '20px' }}
                         >
                             it&apos;s lame without the golden urn.
@@ -89,7 +89,7 @@ const Merchant = ({ isSupportWebp }) => {
                     bgImage={{
                         base: isSupportWebp ? FurnaceImgWebp.src : FurnaceImg.src,
                     }}
-                    w={{ base: '287px', mid: '24.4rem' }}
+                    w={{ base: '287px', mid: '389px', desktop: '24.4rem' }}
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
                     minH={{ base: '42.3vh' }}
@@ -114,9 +114,9 @@ const Merchant = ({ isSupportWebp }) => {
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
                         w={{ base: '436px', mid: '556px', desktop: '556px' }}
-                        h={{ base: '319px', mid: '365px', desktop: '406px' }}
+                        h={{ base: '319px', mid: '406px', desktop: '406px' }}
                     >
-                        <Flex justifyContent="space-evenly" mt={{ base: '8rem', mid: '8.5rem', desktop: '10rem' }}>
+                        <Flex justifyContent="space-evenly" mt={{ base: '8rem', mid: '10rem', desktop: '10rem' }}>
                             <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p={{ base: '14px', mid: '16px' }} justifyContent="center">
                                 <Text fontSize={{ base: '16px', mid: '20px' }} fontWeight={700} color="#292229" textAlign="center" w="100%">
                                     Buy shovel
