@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
-import { Box, Flex, Text, Button, Link, Grid } from '@chakra-ui/react';
+import { Box, Flex, Text, Button, Link } from '@chakra-ui/react';
 import Layout from '../layout';
 import { useWalletContext } from '../context';
 import HomeBg from '../assets/images/graveyard/graveyard_1920_x2.jpg';
@@ -12,8 +12,6 @@ import Home1440Bg from '../assets/images/graveyard/graveyard_1440_x2.jpg';
 import Home1440BgWebp from '../assets/images/graveyard/graveyard_1440_x2.webp';
 import TombstoneImg from '../assets/images/graveyard/tombstone.png';
 import TombstoneImgWebp from '../assets/images/graveyard/tombstone.webp';
-import SignpostImg from '../assets/images/graveyard/graveyard_signpost.png';
-import SignpostImgWebp from '../assets/images/graveyard/graveyard_signpost.webp';
 import SkullImg from '../assets/images/graveyard/skull.svg';
 import SignpostImg1 from '../assets/images/graveyard/signpost_1.png';
 import SignpostImg1Webp from '../assets/images/graveyard/signpost_1.webp';
