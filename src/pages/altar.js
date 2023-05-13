@@ -11,8 +11,10 @@ import HomeBg from '../assets/images/altar/altar_bg.png';
 import { useWalletContext } from '../context';
 import Carousel from '@/component/Carousel';
 import HomeBgWebp from '../assets/images/altar/altar_bg.webp';
-import HomeBaseBg from '../assets/images/altar/altar_1440.jpg';
-import HomeBaseBgWebp from '../assets/images/altar/altar_1440.webp';
+import HomeBaseBg from '../assets/images/altar/altar_1024.jpg';
+import HomeBaseBgWebp from '../assets/images/altar/altar_1024.webp';
+import Home1440Bg from '../assets/images/altar/altar_1440.jpg';
+import Home1440BgWebp from '../assets/images/altar/altar_1440.webp';
 import CardBrandImg from '../assets/images/altar/cardbrand.png';
 import CardBrandImgWebp from '../assets/images/altar/cardbrand.webp';
 import SkullItemImg from '../assets/images/altar/skull_item.png';
@@ -83,6 +85,7 @@ const Altar = ({ isSupportWebp }) => {
                 maxW="1920px"
                 bgImage={{
                     base: isSupportWebp ? HomeBaseBgWebp.src : HomeBaseBg.src,
+                    mid: isSupportWebp ? Home1440BgWebp.src : Home1440Bg.src,
                     desktop: isSupportWebp ? HomeBgWebp.src : HomeBg.src,
                 }}
                 bgRepeat="no-repeat"
@@ -92,11 +95,11 @@ const Altar = ({ isSupportWebp }) => {
                 position="relative"
             >
                 <Box
-                    w="436px"
+                    w={{ base: '323px', mid: '436px' }}
                     position="absolute"
                     minH={{ base: '688px' }}
                     bottom="9vh"
-                    right={{ base: '10%', desktop: '22%' }}
+                    right={{ base: '7%', desktop: '22%' }}
                 >
                     <Box
                         bgImage={{
@@ -104,8 +107,8 @@ const Altar = ({ isSupportWebp }) => {
                         }}
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
-                        w={{ base: '314px' }}
-                        minH={{ base: '537px' }}
+                        w={{ base: '233px', mid: '314px' }}
+                        minH={{ base: '400px', mid: '537px' }}
                         position="absolute"
                         bottom="0"
                     />
@@ -113,13 +116,13 @@ const Altar = ({ isSupportWebp }) => {
                         bgImage={{
                             base: isSupportWebp ? HandImgWebp.src : HandImg.src,
                         }}
-                        minH={{ base: '420px' }}
-                        w={{ base: '244px' }}
+                        h={{ base: '360px', mid: '420px' }}
+                        w={{ base: '244px', mid: '244px' }}
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
                         position="absolute"
                         bottom="32vh"
-                        top={{ base: '1rem' }}
+                        top={{ base: '100px', mid: '1rem' }}
                         right={{ base: '0' }}
                     >
                         <Flex justifyContent="flex-end" mt="4rem" wrap="wrap" pr="2rem">
@@ -155,12 +158,12 @@ const Altar = ({ isSupportWebp }) => {
 
                 <Flex
                     wrap="wrap"
-                    w={{ base: '393px' }}
+                    w={{ base: '353px', mid: '393px' }}
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
                     position="absolute"
-                    top="12%"
-                    left={{ base: '6.5%', mid: '24.5%' }}
+                    top={{ base: '50px', mid: '12%' }}
+                    left={{ base: '6.5%', mid: '16.5%', desktop: '24.5%' }}
                 >
                     <Box
                         bgImage={{
@@ -169,12 +172,20 @@ const Altar = ({ isSupportWebp }) => {
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
                         w="100%"
-                        minH={{ base: '544px' }}
+                        minH={{ base: '489px', mid: '544px' }}
                     >
                         <Text color="#fff5ce" fontWeight={700} fontSize="24px" w="100%" mt="8%" textAlign="center">
                             Collection list
                         </Text>
-                        <Text mb="32px" color="#fff5ce" fontWeight={500} fontSize="16px" w="100%" mt="12%" textAlign="center">
+                        <Text
+                            mb={{ base: '20px', mid: '32px' }}
+                            color="#fff5ce"
+                            fontWeight={500}
+                            fontSize="16px"
+                            w="100%"
+                            mt={{ base: '25px', mid: '12%' }}
+                            textAlign="center"
+                        >
                             Come on, bro. Your family need a rez.
                         </Text>
                         <Flex justifyContent="space-evenly" p="0 30px" mb="20px">
@@ -240,14 +251,14 @@ const Altar = ({ isSupportWebp }) => {
                         </Flex>
                     </Box>
                     <Flex
-                        mt="1.5rem"
+                        mt={{ base: '24px', mid: '1.5rem' }}
                         bgImage={{
                             base: isSupportWebp ? CardBrandImgWebp.src : CardBrandImg.src,
                         }}
                         w="100%"
                         bgRepeat="no-repeat"
                         bgSize="100% 100%"
-                        h="167px"
+                        h={{ base: '150px', mid: '167px' }}
                         justifyContent="center"
                         alignItems="center"
                     >
