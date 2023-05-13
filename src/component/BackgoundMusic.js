@@ -35,8 +35,8 @@ const BackgroundMusic = () => {
     return (
         <Grid
             textAlign="right"
-            position="absolute"
-            bottom="80px"
+            position="fixed"
+            bottom="40px"
             zIndex={2}
             right={{
                 base: `${(width - 1024) / 2 + 32}px`,
