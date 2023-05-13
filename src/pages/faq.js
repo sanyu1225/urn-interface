@@ -6,10 +6,12 @@ import Layout from '../layout';
 import Typewriter from '../component/Typewriter';
 import TombstoneImg from '../assets/images/faq/faq_tombstone.png';
 import TombstoneImgWebp from '../assets/images/faq/faq_tombstone.webp';
-import HomeBg from '../assets/images/faq/faq_bg.png';
-import HomeBgWebp from '../assets/images/faq/faq_bg.webp';
-import HomeBaseBg from '../assets/images/faq/faq_1440.png';
-import HomeBaseBgWebp from '../assets/images/faq/faq_1440.webp';
+import HomeBaseBg from '../assets/images/faq/faq_1024.jpg';
+import HomeBaseBgWebp from '../assets/images/faq/faq_1024.webp';
+import Home1440Bg from '../assets/images/faq/faq_1440.png';
+import Home1440BgWebp from '../assets/images/faq/faq_1440.webp';
+import HomeBg1920 from '../assets/images/faq/faq_bg.png';
+import HomeBg1920Webp from '../assets/images/faq/faq_bg.webp';
 import StoneImg from '../assets/images/faq/faq_stone.png';
 import StoneImgWebp from '../assets/images/faq/faq_stone.webp';
 import MediaIcon from '../assets/images/faq/Media.svg';
@@ -54,7 +56,8 @@ const FAQ = ({ isSupportWebp }) => {
                 maxW="1920px"
                 bgImage={{
                     base: isSupportWebp ? HomeBaseBgWebp.src : HomeBaseBg.src,
-                    desktop: isSupportWebp ? HomeBgWebp.src : HomeBg.src,
+                    mid: isSupportWebp ? Home1440BgWebp.src : Home1440Bg.src,
+                    desktop: isSupportWebp ? HomeBg1920Webp.src : HomeBg1920.src,
                 }}
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
@@ -89,6 +92,7 @@ const FAQ = ({ isSupportWebp }) => {
                     minH={{ base: '220px', mid: '220px', desktop: '294px' }}
                     position="absolute"
                     bottom="0"
+                    zIndex={1}
                 />
                 <Box
                     bgImage={{
@@ -96,17 +100,17 @@ const FAQ = ({ isSupportWebp }) => {
                     }}
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
-                    w={{ base: '684px' }}
-                    minH={{ base: '906px' }}
+                    w={{ base: '512px', mid: '684px' }}
+                    h={{ base: '678', mid: '906px' }}
                     position="absolute"
                     bottom="0"
-                    left={{ base: '35%' }}
+                    left={{ base: '30%', mid: '31%', desktop: '35%' }}
                 >
-                    <Grid position="absolute" bottom="15%" textAlign="center" justifyItems="center" w="85%">
-                        <Text color="#FFF3CD" fontSize="28px" fontWeight={700}>
+                    <Grid position="absolute" bottom={{ base: '11%', mid: '15%' }} textAlign="center" justifyItems="center" w="85%">
+                        <Text color="#FFF3CD" fontSize={{ base: '24px', mid: '28px' }} fontWeight={700}>
                             Need some help?
                         </Text>
-                        <Grid w="60%" mt="32px" gap="18px">
+                        <Grid w="55%" zIndex={2} mt={{ base: '20px', mid: '32px' }} gap={{ base: '10px', mid: '18px' }}>
                             {
                                 FAQ_LIST.map((item) => (
                                     <Flex
@@ -123,7 +127,8 @@ const FAQ = ({ isSupportWebp }) => {
                                         }}
                                         onClick={() => showInfo(item)}
                                     >
-                                        <Image src={MediaIcon} alt="media" /><Text color="#CCC2A1" fontSize="16px" fontWeight={500}>{item.title}</Text>
+                                        <Image src={MediaIcon} alt="media" />
+                                        <Text color="#CCC2A1" fontSize={{ base: '14px', mid: '16px' }} fontWeight={500}>{item.title}</Text>
                                     </Flex>
                                 ))
                             }
