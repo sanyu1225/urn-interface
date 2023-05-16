@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
@@ -22,6 +23,7 @@ import { WelldoneWallet } from '@welldone-studio/aptos-wallet-adapter';
 import { theme } from '../theme';
 import { ContextProvider } from '../context';
 import { supportWebp } from '../utils';
+import Loading from '../component/LoadingPage';
 import Mobile from '../component/Mobile';
 
 const wallets = [
@@ -50,9 +52,10 @@ const client = new UrqlClient({
 export default function App({ Component, pageProps }) {
   const [isDesktop] = useMediaQuery('(min-width: 1024px)');
   const [isSupportWebp, setIsSupportWebp] = useState(true);
-
+  const [isLoading, setIsloading] = useState(true);
   useEffect(() => {
     setIsSupportWebp(supportWebp());
+    setIsloading(false);
   }, []);
 
   return (
@@ -79,13 +82,17 @@ export default function App({ Component, pageProps }) {
         <ChakraProvider theme={theme}>
           <ContextProvider>
             <UrqlProvider value={client}>
-              {
-                isDesktop ? (
-                  <Component isSupportWebp={isSupportWebp} {...pageProps} />
-                ) : (
-                  <Mobile />
-                )
-              }
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <>
+                  {isDesktop ? (
+                    <Component isSupportWebp={isSupportWebp} {...pageProps} />
+                  ) : (
+                    <Mobile />
+                  )}
+                </>
+              )}
             </UrqlProvider>
           </ContextProvider>
         </ChakraProvider>
