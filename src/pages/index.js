@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import { Box, Text, Button, Grid, Link } from '@chakra-ui/react';
 import Layout from '../layout';
-import HomeBg from '@/assets/images/home/home_bg.jpg';
-import HomeBgWebp from '@/assets/images/home/home_bg.webp';
-import HomeBaseBg from '@/assets/images/home/home_1440.jpg';
-import HomeBaseBgWebp from '@/assets/images/home/home_1440.webp';
+import HomeBg from '@/assets/images/home/home_1024.jpg';
+import HomeBgWebp from '@/assets/images/home/home_1024.webp';
+import Home1440Bg from '@/assets/images/home/home_1440_x2.jpg';
+import Home1440BgWebp from '@/assets/images/home/home_1440_x2.webp';
+import Home1920Bg from '@/assets/images/home/home_1920_x2.jpg';
+import Home1920BgWebp from '@/assets/images/home/home_1920_x2.webp';
 import SoilImg from '@/assets/images/home/home_soil.png';
 import SoilImgWebp from '@/assets/images/home/home_soil.webp';
 import ShovelImg from '@/assets/images/home/home_shovel.png';
@@ -17,8 +19,9 @@ const Landing = ({ isSupportWebp }) => (
     <Box
       maxW="1920px"
       bgImage={{
-        base: isSupportWebp ? HomeBaseBgWebp.src : HomeBaseBg.src,
-        desktop: isSupportWebp ? HomeBgWebp.src : HomeBg.src,
+        base: isSupportWebp ? HomeBgWebp.src : HomeBg.src,
+        mid: isSupportWebp ? Home1440BgWebp.src : Home1440Bg.src,
+        desktop: isSupportWebp ? Home1920Bg.src : Home1920BgWebp.src,
       }}
       bgRepeat="no-repeat"
       bgSize="100% 100%"

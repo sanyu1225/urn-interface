@@ -37,10 +37,7 @@ const CustomLink = ({ children, right, top, path, transform, disabled = false })
         lineHeight="22px"
         _hover={{
             textDecoration: 'none',
-            transform: 'scale(0.98)',
-            _disabled: {
-                transform: 'scale(0.8)',
-            },
+            transform: disabled ? 'scale(0.78)' : 'scale(0.98)',
         }}
         _active={{
             transform: 'scale(0.96)',

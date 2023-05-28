@@ -11,12 +11,12 @@ function useWindowSize(throttleTime = 300) {
         }, throttleTime);
 
         const handleClientLoad = () => {
-            setSize([window.innerWidth, window.innerHeight]);
+            handleResize(); // 立即调用 handleResize
         };
 
         if (typeof window !== 'undefined') {
             window.addEventListener('resize', handleResize);
-            timeoutId = setTimeout(handleClientLoad, 500);
+            timeoutId = setTimeout(handleClientLoad, 200);
         }
 
         return () => {

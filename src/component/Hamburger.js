@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { Grid, Flex, Box, Button, keyframes, Text, Divider, Link, MenuItem } from '@chakra-ui/react';
+import { Grid, Flex, Box, Button, keyframes, Text, Divider, Link, MenuItem, useOutsideClick } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import WalletConnector from '@/component/WalletConnector';
 import { useWalletContext } from '../context';
@@ -19,16 +19,8 @@ import TgIcon from '@/assets/images/icons/Tg.svg';
 import CopyIcon from '@/assets/images/icons/Copy.svg';
 import LogoutIcon from '@/assets/images/icons/Logout.svg';
 
-const display = keyframes`
-    from {
-        opacity: 0;
-        height: 0;
-    }
-    to {
-        opacity: 1;
-        height: 644px;
-    }`;
-const displayAnimation = `${display} 1 0.2s linear`;
+const animationDuration = '0.2s';
+const animationTiming = 'linear';
 
 // eslint-disable-next-line react/prop-types
 function AnimationLink({ children, path, disabled = false }) {
@@ -81,8 +73,19 @@ const Hamburger = ({ hideMenu }) => {
   const { connect, disconnect, connected, account } = useWalletContext();
   const [copyToClipboard] = useCopyToClipboard();
   const [width] = useWindowSize();
+  const ref = useRef();
 
+  useOutsideClick({
+    ref,
+    handler: () => setIsOpen(false),
+  });
   const address = account && account.address;
+
+  const containerStyle = {
+    opacity: isOpen ? 1 : 0,
+    transition: 'opacity 0.2s linear',
+    display: isOpen ? 'block' : 'none',
+  };
 
   return (
     <Grid
@@ -146,62 +149,70 @@ const Hamburger = ({ hideMenu }) => {
 
       {!hideMenu && (
         <Box position="relative">
-          <Box w="100%">
+          <Box w="100%" zIndex={isOpen ? 1 : 2}>
             <Button w="54px" variant="hamburger" onClick={() => setIsOpen((state) => !state)}>
               <HamburgerIcon color="#FFF3CD" />
             </Button>
           </Box>
 
-          {isOpen && (
-            <Box
-              p="28px"
-              animation={displayAnimation}
-              borderRadius="10px"
-              h="644px"
-              w="280px"
-              bg="#292229"
-              position="absolute"
-              right="0"
-              top="0"
-              color="#FFF3CD"
-              fontWeight={700}
-              fontSize="18px"
-            >
-              <Flex w="100%" justifyContent="flex-end">
+          <Box
+            ref={ref}
+            zIndex={isOpen ? 2 : -1}
+            p="28px"
+            style={containerStyle}
+            borderRadius="10px"
+            h="600px"
+            w="280px"
+            bg="#292229"
+            position="absolute"
+            right="0"
+            top="0"
+            color="#FFF3CD"
+            fontWeight={700}
+            fontSize="18px"
+          >
+            <Flex w="100%" justifyContent="flex-end">
+              <Box
+                zIndex={2}
+                cursor="pointer"
+                transition="transform 0.3s ease"
+                _hover={{
+                  transform: 'rotate(90deg)',
+                }}
+              >
                 <Image
                   src={CloseIcon}
                   alt="colse"
-                  cursor="pointer"
                   onClick={() => setIsOpen((state) => !state)}
                 />
+              </Box>
+            </Flex>
+            <Flex alignItems="center" p="12px">
+              <Image src={LogoIcon} alt="loto" />
+              <Text ml="12px">Urn2urn</Text>
+            </Flex>
+            <Grid gap="40px" alignItems="center" wrap="wrap" p="12px">
+              <AnimationLink path="/">Home</AnimationLink>
+              <AnimationLink path="/merchant">Merchant</AnimationLink>
+              <AnimationLink path="/graveyard">Graveyard</AnimationLink>
+              <AnimationLink path="/altar">Altar</AnimationLink>
+              <AnimationLink disabled path="/teleport">
+                Reincarnation *Coming soon
+              </AnimationLink>
+              <AnimationLink path="/faq">FAQ</AnimationLink>
+            </Grid>
+            <Flex wrap="wrap">
+              <Divider mt="40px" mb="25px" borderColor="#FFF3CD" />
+              <Flex w="100%">
+                <Box mr="20px" cursor="pointer">
+                  <Image src={TwitterIcon} alt="twitter" />
+                </Box>
+                <Box cursor="pointer">
+                  <Image src={TgIcon} alt="telegram" />
+                </Box>
               </Flex>
-              <Flex alignItems="center" p="12px">
-                <Image src={LogoIcon} alt="loto" />
-                <Text ml="12px">Urn2urn</Text>
-              </Flex>
-              <Grid gap="40px" alignItems="center" wrap="wrap" p="12px">
-                <AnimationLink path="/">Home</AnimationLink>
-                <AnimationLink path="/merchant">Merchant</AnimationLink>
-                <AnimationLink path="/graveyard">Graveyard</AnimationLink>
-                <AnimationLink path="/altar">Altar</AnimationLink>
-                <AnimationLink disabled path="/teleport">
-                  Reincarnation *Coming soon
-                </AnimationLink>
-                <AnimationLink path="/faq">FAQ</AnimationLink>
-              </Grid>
-              <Flex wrap="wrap">
-                <Divider mt="40px" mb="25px" borderColor="#FFF3CD" />
-                <Flex w="100%">
-                  <Box mr="20px" cursor="pointer">
-                    <Image src={TwitterIcon} alt="twitter" />
-                  </Box>
-                  <Box cursor="pointer">
-                    <Image src={TgIcon} alt="telegram" />
-                  </Box>
-                </Flex>
-              </Flex>
-            </Box>
-          )}
+            </Flex>
+          </Box>
         </Box>
       )}
     </Grid>
