@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button, Link } from '@chakra-ui/react';
+import useSound from 'use-sound';
+import { bounceInAnimation } from '../utils/animation';
 import Layout from '../layout';
 import { useWalletContext } from '../context';
 import HomeBg from '../assets/images/graveyard/graveyard_1920_x2.jpg';
@@ -21,6 +24,10 @@ import SignpostImg3 from '../assets/images/graveyard/signpost_3.png';
 import SignpostImg3Webp from '../assets/images/graveyard/signpost_3.webp';
 import SignpostImg4 from '../assets/images/graveyard/signpost_4.png';
 import SignpostImg4Webp from '../assets/images/graveyard/signpost_4.webp';
+import BoneEffect1Img from '../assets/images/graveyard/bone_effect_1.png';
+import BoneEffect2Img from '../assets/images/graveyard/bone_effect_2.png';
+import ButtImg from '../assets/images/graveyard/butt.png';
+import FartAudio from '../assets/music/fart.mp3';
 
 const CustomLink = ({ children, right, top, path, transform, disabled = false }) => (
     <Link
@@ -49,6 +56,24 @@ const CustomLink = ({ children, right, top, path, transform, disabled = false })
 
 const Graveyard = ({ isSupportWebp }) => {
     const { mint } = useWalletContext();
+    const [showBone, setShowBone] = useState(false);
+    const [showButt, setshowButt] = useState(false);
+    const [playFart] = useSound(FartAudio);
+
+    const tombstoneHandler = () => {
+        if (!showBone && !showButt) {
+            setShowBone(true);
+            setTimeout(() => {
+                setShowBone(false);
+            }, 3500);
+        } else if (showBone && !showButt) {
+            setshowButt(true);
+            playFart();
+            setTimeout(() => {
+                setshowButt(false);
+            }, 3500);
+        }
+    };
     return (
         <Layout>
             <Box
@@ -76,7 +101,13 @@ const Graveyard = ({ isSupportWebp }) => {
                     bottom={{ base: '9%', mid: '8%', desktop: '13%' }}
                     right={{ base: '39%', mid: '39%', desktop: '37%' }}
                 >
-                    <Flex justifyContent="center" mt={{ base: '4.5rem', mid: '6rem' }} wrap="wrap" p="0 49px">
+                    <Flex
+                        onClick={tombstoneHandler}
+                        justifyContent="center"
+                        mt={{ base: '4.5rem', mid: '6rem' }}
+                        wrap="wrap"
+                        p="0 49px"
+                    >
                         <Image src={SkullImg} alt="skull" />
                         <Text
                             p={{ base: '0 10px', mid: '0' }}
@@ -94,7 +125,50 @@ const Graveyard = ({ isSupportWebp }) => {
                             Dig
                         </Button>
                     </Flex>
+                    <Box
+                        bgImage={{
+                            base: BoneEffect1Img.src,
+                        }}
+                        bgRepeat="no-repeat"
+                        bgSize="100% 100%"
+                        w={{ base: '82px' }}
+                        minH={{ base: '68px' }}
+                        position="absolute"
+                        top={{ base: '-4%' }}
+                        left={{ base: '-23%' }}
+                        display={showBone ? 'block' : 'none'}
+                        animation={`${bounceInAnimation} 2s linear `}
+                    />
+                    <Box
+                        bgImage={{
+                            base: BoneEffect2Img.src,
+                        }}
+                        bgRepeat="no-repeat"
+                        bgSize="100% 100%"
+                        w={{ base: '51px' }}
+                        minH={{ base: '55px' }}
+                        position="absolute"
+                        top={{ base: '-14%' }}
+                        left={{ base: '14%' }}
+                        display={showBone ? 'block' : 'none'}
+                        animation={`${bounceInAnimation} 2s linear `}
+                    />
+                    <Box
+                        bgImage={{
+                            base: ButtImg.src,
+                        }}
+                        bgRepeat="no-repeat"
+                        bgSize="100% 100%"
+                        w={{ base: '104px' }}
+                        minH={{ base: '86px' }}
+                        position="absolute"
+                        top={{ base: '-7%' }}
+                        right={{ base: '3%' }}
+                        display={showButt ? 'block' : 'none'}
+                        animation={`${bounceInAnimation} 2s linear `}
+                    />
                 </Box>
+
                 <Box
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"

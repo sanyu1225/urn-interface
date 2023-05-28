@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import { MenuButton, Portal, MenuList, Menu } from '@chakra-ui/react';
+import { MenuButton, Portal, MenuList, Menu, Image, Flex } from '@chakra-ui/react';
+import WalletIcon from '@/assets/images/icons/Wallet.svg';
 
 const Cusmenu = ({ buttonText, children }) => (
     <Menu>
@@ -30,7 +31,11 @@ const Cusmenu = ({ buttonText, children }) => (
                 borderColor: 'transparent',
                 boxShadow: 'none',
             }}
-        >{buttonText}
+        >
+            <Flex gap="12px">
+                <Image alt="wallet" src={WalletIcon.src} />
+                {buttonText}
+            </Flex>
         </MenuButton>
         <Portal>
             <MenuList bg="#292229" borderColor="#292229">

@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { Grid, Flex, Box, Button, keyframes, Text, Divider, Link, MenuItem, useOutsideClick } from '@chakra-ui/react';
+import { Grid, Flex, Box, Button, Text, Divider, Link, MenuItem, useOutsideClick } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import WalletConnector from '@/component/WalletConnector';
 import { useWalletContext } from '../context';
@@ -18,9 +18,6 @@ import TwitterIcon from '@/assets/images/icons/Twitter.svg';
 import TgIcon from '@/assets/images/icons/Tg.svg';
 import CopyIcon from '@/assets/images/icons/Copy.svg';
 import LogoutIcon from '@/assets/images/icons/Logout.svg';
-
-const animationDuration = '0.2s';
-const animationTiming = 'linear';
 
 // eslint-disable-next-line react/prop-types
 function AnimationLink({ children, path, disabled = false }) {

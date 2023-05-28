@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
 import { useQuery } from 'urql';
+import useSound from 'use-sound';
 import { isEmpty } from '@/plugin/lodash';
 import { queryAltarData } from '../constant';
 import Layout from '../layout';
 import HomeBg from '../assets/images/altar/altar_bg.png';
 import { useWalletContext } from '../context';
+import { fadeup } from '@/utils/animation';
 import Carousel from '@/component/Carousel';
 import HomeBgWebp from '../assets/images/altar/altar_bg.webp';
 import HomeBaseBg from '../assets/images/altar/altar_1024.jpg';
@@ -27,11 +29,19 @@ import HandImg from '../assets/images/altar/hand.png';
 import HandImgWebp from '../assets/images/altar/hand.webp';
 import BoardImg from '../assets/images/altar/board.png';
 import BoardImgWebp from '../assets/images/altar/board.webp';
+import GhostImg from '../assets/images/altar/ghost.png';
+import GhostImgWebp from '../assets/images/altar/ghost.webp';
+import LaughAudio from '../assets/music/laugh.mp3';
+import ButtonClickAudio from '../assets/music/clickButton.mp3';
 
 const Altar = ({ isSupportWebp }) => {
     const [showItem, setShowItem] = useState({ name: '', list: [] });
     const [choiseUrn, setChoiseUrn] = useState({});
     const [choiseBone, setChoiseBone] = useState([]);
+    const [showGhost, setShowGhost] = useState(false);
+    const [playLaugh, { stop }] = useSound(LaughAudio);
+    const [playButton] = useSound(ButtonClickAudio);
+
     const { connected, account } = useWalletContext();
     const address = account && account.address;
 
@@ -56,6 +66,7 @@ const Altar = ({ isSupportWebp }) => {
     }, [connected, reexecuteQuery]);
 
     const showItemHandler = async (item) => {
+        playButton();
         if (item === 'urn') {
             console.log('UrnList: ', UrnList);
             setShowItem({
@@ -73,11 +84,21 @@ const Altar = ({ isSupportWebp }) => {
 
     const putInHandler = () => {
         console.log('todo put in contract.', choiseBone);
+        playButton();
     };
 
     useEffect(() => {
         console.log('showItem: ', showItem);
     }, [showItem]);
+
+    const showGhostHandler = () => {
+        playLaugh();
+        setShowGhost(true);
+        setTimeout(() => {
+            setShowGhost(false);
+            stop();
+        }, 5000);
+    };
 
     return (
         <Layout>
@@ -111,6 +132,21 @@ const Altar = ({ isSupportWebp }) => {
                         minH={{ base: '400px', mid: '537px' }}
                         position="absolute"
                         bottom="0"
+                        onClick={showGhostHandler}
+                    />
+                    <Box
+                        bgImage={{
+                            base: isSupportWebp ? GhostImgWebp.src : GhostImg.src,
+                        }}
+                        bgRepeat="no-repeat"
+                        bgSize="100% 100%"
+                        w={{ base: '203px' }}
+                        minH={{ base: '212px' }}
+                        position="absolute"
+                        left="-50px"
+                        top="60px"
+                        display={showGhost ? 'block' : 'none'}
+                        animation={`${fadeup} 2s linear `}
                     />
                     <Box
                         bgImage={{
