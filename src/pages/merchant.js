@@ -122,6 +122,7 @@ const Merchant = ({ isSupportWebp }) => {
                     bottom="0px"
                     right={{ base: '13%', mid: '12%', desktop: '19%' }}
                     onClick={clickFireHandler}
+                    cursor="pointer"
                 />
                 <Box
                     bgImage={{

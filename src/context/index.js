@@ -66,9 +66,10 @@ export function ContextProvider({ children }) {
             const hash = await signAndSubmitTransactionFnc(params);
             if (hash) {
                 toastSeccess(hash);
-            } else {
-                toastError('error');
+                return hash;
             }
+            toastError('error');
+            return null;
         } catch (error) {
             toastError(error);
         }

@@ -100,9 +100,10 @@ const Graveyard = ({ isSupportWebp }) => {
                     position="absolute"
                     bottom={{ base: '9%', mid: '8%', desktop: '13%' }}
                     right={{ base: '39%', mid: '39%', desktop: '37%' }}
+                    onClick={tombstoneHandler}
+                    cursor="pointer"
                 >
                     <Flex
-                        onClick={tombstoneHandler}
                         justifyContent="center"
                         mt={{ base: '4.5rem', mid: '6rem' }}
                         wrap="wrap"

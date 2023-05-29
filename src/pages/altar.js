@@ -2,16 +2,16 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import useSound from 'use-sound';
 import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
 import { useQuery } from 'urql';
-import useSound from 'use-sound';
 import { isEmpty } from '@/plugin/lodash';
 import { queryAltarData } from '../constant';
-import Layout from '../layout';
-import HomeBg from '../assets/images/altar/altar_bg.png';
 import { useWalletContext } from '../context';
-import { fadeup } from '@/utils/animation';
+import Layout from '../layout';
 import Carousel from '@/component/Carousel';
+import { fadeup } from '@/utils/animation';
+import HomeBg from '../assets/images/altar/altar_bg.png';
 import HomeBgWebp from '../assets/images/altar/altar_bg.webp';
 import HomeBaseBg from '../assets/images/altar/altar_1024.jpg';
 import HomeBaseBgWebp from '../assets/images/altar/altar_1024.webp';
@@ -42,7 +42,7 @@ const Altar = ({ isSupportWebp }) => {
     const [playLaugh, { stop }] = useSound(LaughAudio);
     const [playButton] = useSound(ButtonClickAudio);
 
-    const { connected, account } = useWalletContext();
+    const { connected, account, mint } = useWalletContext();
     const address = account && account.address;
 
     const [result, reexecuteQuery] = useQuery({
@@ -82,8 +82,18 @@ const Altar = ({ isSupportWebp }) => {
         }
     };
 
-    const putInHandler = () => {
+    const putInHandler = async () => {
         console.log('todo put in contract.', choiseBone);
+        console.log('todo put in contract.', choiseUrn);
+        const params = [
+            choiseUrn.property_version, choiseBone.property_version, choiseBone.current_token_data.name,
+        ];
+        const res = await mint('burn_and_fill', params);
+        console.log('res: ', res);
+        if (res) {
+            console.log('todo reload nft.');
+            reexecuteQuery();
+        }
         playButton();
     };
 
@@ -133,6 +143,7 @@ const Altar = ({ isSupportWebp }) => {
                         position="absolute"
                         bottom="0"
                         onClick={showGhostHandler}
+                        cursor="pointer"
                     />
                     <Box
                         bgImage={{
@@ -158,7 +169,7 @@ const Altar = ({ isSupportWebp }) => {
                         bgSize="100% 100%"
                         position="absolute"
                         bottom="32vh"
-                        top={{ base: '100px', mid: '1rem' }}
+                        top={{ base: '100px', mid: '5px' }}
                         right={{ base: '0' }}
                     >
                         <Flex justifyContent="flex-end" mt="4rem" wrap="wrap" pr="2rem">
@@ -173,10 +184,10 @@ const Altar = ({ isSupportWebp }) => {
                                 mt="0.9rem"
                             >
                                 {
-                                    choiseUrn?.current_token_data?.default_properties?.ASH ?? '- -'
+                                    choiseUrn?.token_properties?.ash ?? '- -'
                                 }
                                 {
-                                    choiseUrn?.current_token_data?.default_properties?.ASH && ' %'
+                                    choiseUrn?.token_properties?.ash && ' %'
                                 }
                             </Text>
                             <Button
@@ -316,7 +327,6 @@ const Altar = ({ isSupportWebp }) => {
                                         NftList={showItem}
                                         choiseItem={showItem.name === 'urn' ? choiseUrn : choiseBone}
                                         selectItem={(item) => {
-                                            console.log('item: ', item);
                                             if (showItem.name === 'urn') {
                                                 setChoiseUrn(item);
                                             }
