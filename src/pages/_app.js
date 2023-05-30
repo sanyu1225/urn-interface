@@ -27,21 +27,21 @@ import Loading from '../component/LoadingPage';
 import Mobile from '../component/Mobile';
 
 const wallets = [
-  // new BloctoWallet({
-  //   network: NetworkName.Testnet,
-  //   bloctoAppId: '6d85f56e-5f2e-46cd-b5f2-5cf9695b4d46',
-  // }),
-  // new FewchaWallet(),
-  // new MartianWallet(),
-  // new MSafeWalletAdapter(),
-  // new NightlyWallet(),
-  // new OpenBlockWallet(),
+  new BloctoWallet({
+    network: NetworkName.Testnet,
+    bloctoAppId: '6d85f56e-5f2e-46cd-b5f2-5cf9695b4d46',
+  }),
+  new FewchaWallet(),
+  new MartianWallet(),
+  new MSafeWalletAdapter(),
+  new NightlyWallet(),
+  new OpenBlockWallet(),
   new PetraWallet(),
-  // new PontemWallet(),
-  // new RiseWallet(),
-  // new TokenPocketWallet(),
-  // new TrustWallet(),
-  // new WelldoneWallet(),
+  new PontemWallet(),
+  new RiseWallet(),
+  new TokenPocketWallet(),
+  new TrustWallet(),
+  new WelldoneWallet(),
 ];
 const client = new UrqlClient({
   // TODO: set env file for graphql endpoint
