@@ -29,7 +29,7 @@ import Mobile from '../component/Mobile';
 const wallets = [
   new BloctoWallet({
     network: NetworkName.Testnet,
-    bloctoAppId: '6d85f56e-5f2e-46cd-b5f2-5cf9695b4d46',
+    bloctoAppId: '40782999-0ff5-48ab-848d-0369cb2582d7',
   }),
   new FewchaWallet(),
   new MartianWallet(),
