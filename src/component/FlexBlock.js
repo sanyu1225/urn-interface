@@ -48,7 +48,7 @@ const FlexBlock = ({ title, collectionName }) => {
       if (Array.isArray(quotaResponse)) {
         setDesc(`Free: ${quotaResponse[0]}\n50% off: ${quotaResponse[1]}`);
       } else {
-        console.log(`quotaResponse should be array instead of ${quotaResponse}`);
+        console.log(`quotaResponse should be array instead of ${JSON.stringify(quotaResponse, null, '	')}`);
       }
       if (wResponse) {
         console.log(`💥 account?.address: ${JSON.stringify(account?.address, null, '	')}`);
@@ -73,7 +73,7 @@ const FlexBlock = ({ title, collectionName }) => {
           } else {
             setButtonText('some thing wrong');
             console.log(
-              `isWhitelistResponse should be array instead of ${isWhitelistAndMintedResponse}`
+              `isWhitelistResponse should be array instead of ${JSON.stringify(isWhitelistAndMintedResponse, null, '	')}`
             );
           }
         } catch (error) {

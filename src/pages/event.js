@@ -62,11 +62,7 @@ const EventPage = ({ isSupportWebp }) => {
               <FlexBlock title="Goblintown" collectionName="Aptomingos" />
               <FlexBlock title="PEPE" collectionName="Aptos Monkeys" />
               <FlexBlock title="Pogai" collectionName="Blocto" />
-              {/* <FlexBlock
-                title="Urn2earn"
-                collectionName="Urn2earn"
-                userAddress="0x880f255dea4800fcea4b640cc6a9dfdb711f6d75a89719d7e06f936d3b8dbaea"
-              /> */}
+              <FlexBlock title="Urn2earn" collectionName="urn2earn" />
             </Flex>
           </Flex>
         </Flex>
