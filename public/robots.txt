@@ -1,3 +1,9 @@
-# https://www.robotstxt.org/robotstxt.html
+# *
 User-agent: *
-Disallow:
+Allow: /
+
+# Host
+Host: https://urn2earn.fun
+
+# Sitemaps
+Sitemap: https://urn2earn.fun/sitemap.xml
