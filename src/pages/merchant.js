@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button } from '@chakra-ui/react';
@@ -36,37 +36,26 @@ const Merchant = ({ isSupportWebp }) => {
     const [isShovelEnabled, setIsShovelEnabled] = useState(false);
     const [isUrnEnabled, setIsUrnEnabled] = useState(false);
 
-    const checkMintEnabled = useCallback(() => {
-        const check = async () => {
-            const aptBalance = await getAptBalance();
-            if (!aptBalance) return;
-            if (aptBalance > BigInt(shovelMintingPrice)) {
-                setIsShovelEnabled(true);
-            } else {
-                setIsShovelEnabled(false);
-            }
-            if (aptBalance > BigInt(urnMintingPrice)) {
-                setIsUrnEnabled(true);
-            } else {
-                setIsUrnEnabled(false);
-            }
-        };
-        check();
+    const checkMintEnabled = useCallback(async () => {
+        const aptBalance = await getAptBalance();
+        if (!aptBalance) return;
+        setIsShovelEnabled(aptBalance > BigInt(shovelMintingPrice));
+        setIsUrnEnabled(aptBalance > BigInt(urnMintingPrice));
     }, [getAptBalance]);
 
-    const mintShovelButtonText = () => {
+    const mintShovelButtonText = useMemo(() => {
         if (connected) {
             return isShovelEnabled ? 'Buy shovel' : 'Poor guy';
         }
         return 'connect wallet';
-    };
+    }, [connected, isShovelEnabled]);
 
-    const mintUrnButtonText = () => {
+    const mintUrnButtonText = useMemo(() => {
         if (connected) {
             return isUrnEnabled ? 'Buy urn' : 'Poor guy';
         }
         return 'connect wallet';
-    };
+    }, [connected, isUrnEnabled]);
 
     useEffect(() => {
         if (!connected) return;
@@ -219,7 +208,7 @@ const Merchant = ({ isSupportWebp }) => {
                                     }}
                                     isDisabled={!isShovelEnabled}
                                 >
-                                    {mintShovelButtonText()}
+                                    {mintShovelButtonText}
                                 </Button>
                             </Flex>
                             <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p={{ base: '14px', mid: '16px' }} justifyContent="center">
@@ -241,7 +230,7 @@ const Merchant = ({ isSupportWebp }) => {
                                     }}
                                     isDisabled={!isUrnEnabled}
                                 >
-                                    {mintUrnButtonText()}
+                                    {mintUrnButtonText}
                                 </Button>
                             </Flex>
                         </Flex>
