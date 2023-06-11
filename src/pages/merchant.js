@@ -25,8 +25,8 @@ import BowlImg from '../assets/images/merchant/bowl.svg';
 import ButtonClickAudio from '../assets/music/clickButton.mp3';
 import FireAudio from '../assets/music/fire.mp3';
 
-const shovelMintingPrice = '1000000';
-const urnMintingPrice = '10000000';
+export const shovelMintingPrice = '1000000';
+export const urnMintingPrice = '10000000';
 
 const Merchant = ({ isSupportWebp }) => {
     const { mint, connected, getAptBalance, waitForTransaction } = useWalletContext();
