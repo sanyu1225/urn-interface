@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button } from '@chakra-ui/react';
@@ -36,20 +36,23 @@ const Merchant = ({ isSupportWebp }) => {
     const [isShovelEnabled, setIsShovelEnabled] = useState(false);
     const [isUrnEnabled, setIsUrnEnabled] = useState(false);
 
-    const checkMintEnabled = async () => {
-        const aptBalance = await getAptBalance();
-        if (!aptBalance) return;
-        if (aptBalance > BigInt(shovelMintingPrice)) {
-            setIsShovelEnabled(true);
-        } else {
-            setIsShovelEnabled(false);
-        }
-        if (aptBalance > BigInt(urnMintingPrice)) {
-            setIsUrnEnabled(true);
-        } else {
-            setIsUrnEnabled(false);
-        }
-    };
+    const checkMintEnabled = useCallback(() => {
+        const check = async () => {
+            const aptBalance = await getAptBalance();
+            if (!aptBalance) return;
+            if (aptBalance > BigInt(shovelMintingPrice)) {
+                setIsShovelEnabled(true);
+            } else {
+                setIsShovelEnabled(false);
+            }
+            if (aptBalance > BigInt(urnMintingPrice)) {
+                setIsUrnEnabled(true);
+            } else {
+                setIsUrnEnabled(false);
+            }
+        };
+        check();
+    }, [getAptBalance]);
 
     const mintShovelButtonText = () => {
         if (connected) {
@@ -68,7 +71,7 @@ const Merchant = ({ isSupportWebp }) => {
     useEffect(() => {
         if (!connected) return;
         checkMintEnabled();
-    }, [connected]);
+    }, [connected, checkMintEnabled]);
 
     const clickFireHandler = () => {
         setShowFire(true);
