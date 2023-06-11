@@ -7,7 +7,7 @@ import 'swiper/swiper.min.css';
 import { Box, Flex, IconButton, Image, Text } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { isEmpty } from '@/plugin/lodash';
-import fakeImg from '@/assets/images/altar/fake_img.png';
+import placeholderImg from '@/assets/images/altar/placeholder_img.png';
 
 const Carousel = ({
     NftList,
@@ -78,7 +78,7 @@ const Carousel = ({
                                 h="100px"
                                 src={item?.current_token_data?.metadata_uri}
                                 alt={item?.current_token_data?.metadata_uri}
-                                fallbackSrc={fakeImg.src}
+                                fallbackSrc={placeholderImg.src}
                                 _hover={{
                                     border: '1px solid #FFF3CD',
                                     borderRadius: '12px',
@@ -113,7 +113,7 @@ const Carousel = ({
                                         h="100px"
                                         src={item.current_token_data?.metadata_uri}
                                         alt={item.current_token_data?.metadata_uri}
-                                        fallbackSrc={fakeImg.src}
+                                        fallbackSrc={placeholderImg.src}
                                         _hover={{
                                             border: '1px solid #FFF3CD',
                                             borderRadius: '12px',
