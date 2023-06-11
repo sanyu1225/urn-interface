@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { Box, Flex, Text, Button } from '@chakra-ui/react';
@@ -25,11 +25,50 @@ import BowlImg from '../assets/images/merchant/bowl.svg';
 import ButtonClickAudio from '../assets/music/clickButton.mp3';
 import FireAudio from '../assets/music/fire.mp3';
 
+const shovelMintingPrice = '1000000';
+const urnMintingPrice = '10000000';
+
 const Merchant = ({ isSupportWebp }) => {
-    const { mint } = useWalletContext();
+    const { mint, connected, getAptBalance, waitForTransaction } = useWalletContext();
     const [playButton] = useSound(ButtonClickAudio);
     const [playFire, { stop }] = useSound(FireAudio);
     const [showFire, setShowFire] = useState(false);
+    const [isShovelEnabled, setIsShovelEnabled] = useState(false);
+    const [isUrnEnabled, setIsUrnEnabled] = useState(false);
+
+    const checkMintEnabled = async () => {
+        const aptBalance = await getAptBalance();
+        if (!aptBalance) return;
+        if (aptBalance > BigInt(shovelMintingPrice)) {
+            setIsShovelEnabled(true);
+        } else {
+            setIsShovelEnabled(false);
+        }
+        if (aptBalance > BigInt(urnMintingPrice)) {
+            setIsUrnEnabled(true);
+        } else {
+            setIsUrnEnabled(false);
+        }
+    };
+
+    const mintShovelButtonText = () => {
+        if (connected) {
+            return isShovelEnabled ? 'Buy shovel' : 'Poor guy';
+        }
+        return 'connect wallet';
+    };
+
+    const mintUrnButtonText = () => {
+        if (connected) {
+            return isUrnEnabled ? 'Buy urn' : 'Poor guy';
+        }
+        return 'connect wallet';
+    };
+
+    useEffect(() => {
+        if (!connected) return;
+        checkMintEnabled();
+    }, [connected]);
 
     const clickFireHandler = () => {
         setShowFire(true);
@@ -160,7 +199,7 @@ const Merchant = ({ isSupportWebp }) => {
                         <Flex justifyContent="space-evenly" mt={{ base: '8rem', mid: '10rem', desktop: '10rem' }}>
                             <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p={{ base: '14px', mid: '16px' }} justifyContent="center">
                                 <Text fontSize={{ base: '16px', mid: '20px' }} fontWeight={700} color="#292229" textAlign="center" w="100%">
-                                    Buy shovel
+                                    Buy shovel / {Number(shovelMintingPrice) / Number(10 ** 8)} APT
                                 </Text>
                                 <Text mt={{ base: '10px', mid: '12px' }} fontSize={{ base: '14px', mid: '20px' }} fontWeight={500} color="#292229" textAlign="center" w="100%">
                                     Every grave robber needs a shovel.
@@ -169,17 +208,20 @@ const Merchant = ({ isSupportWebp }) => {
                                     height={{ base: '47px' }}
                                     mt={{ base: '10px', mid: '12px' }}
                                     variant="dark"
-                                    onClick={() => {
-                                        mint('mint_shovel');
+                                    onClick={async () => {
+                                        const tx = await mint('mint_shovel');
+                                        await waitForTransaction(tx);
                                         playButton();
+                                        checkMintEnabled();
                                     }}
+                                    isDisabled={!isShovelEnabled}
                                 >
-                                    Buy shovel
+                                    {mintShovelButtonText()}
                                 </Button>
                             </Flex>
                             <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p={{ base: '14px', mid: '16px' }} justifyContent="center">
                                 <Text fontSize={{ base: '16px', mid: '20px' }} fontWeight={700} color="#292229" textAlign="center" w="100%">
-                                    Buy urn
+                                    Buy urn / {Number(urnMintingPrice) / Number(10 ** 8)} APT
                                 </Text>
                                 <Text mt={{ base: '10px', mid: '12px' }} fontSize={{ base: '14px', mid: '20px' }} fontWeight={500} color="#292229" textAlign="center" w="100%">
                                     I think... you need an urn for bones.
@@ -188,12 +230,15 @@ const Merchant = ({ isSupportWebp }) => {
                                     height={{ base: '47px' }}
                                     mt={{ base: '10px', mid: '12px' }}
                                     variant="dark"
-                                    onClick={() => {
-                                        mint('mint_urn');
+                                    onClick={async () => {
+                                        const tx = await mint('mint_urn');
+                                        await waitForTransaction(tx);
                                         playButton();
+                                        checkMintEnabled();
                                     }}
+                                    isDisabled={!isUrnEnabled}
                                 >
-                                    Buy urn
+                                    {mintUrnButtonText()}
                                 </Button>
                             </Flex>
                         </Flex>

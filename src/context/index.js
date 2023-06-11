@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useMemo } from 'react';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
-import { AptosClient } from 'aptos';
+import { AptosClient, CoinClient } from 'aptos';
 import useCusToast from '../hooks/useCusToast';
 
 import CONTRACT_ADDR from '../constant';
@@ -10,6 +10,8 @@ export const TESTNET_NODE_URL = 'https://fullnode.testnet.aptoslabs.com/v1';
 const aptosClient = new AptosClient(TESTNET_NODE_URL, {
     WITH_CREDENTIALS: false,
 });
+
+const coinClient = new CoinClient(aptosClient);
 
 const Context = createContext();
 
@@ -28,6 +30,14 @@ export function ContextProvider({ children }) {
             return true;
         }
         return false;
+    };
+
+    const getAptBalance = async () => {
+        if (!connected) return null;
+        if (!account) return null;
+        if (!account.address) return null;
+        const balance = await coinClient.checkBalance(account.address);
+        return balance;
     };
 
     const signAndSubmitTransactionFnc = async (
@@ -111,6 +121,7 @@ export function ContextProvider({ children }) {
         checkLogin,
         connect,
         connected,
+        getAptBalance,
         signAndSubmitTransaction,
         waitForTransaction,
         isLoading,
