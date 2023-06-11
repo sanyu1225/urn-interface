@@ -110,6 +110,19 @@ const Altar = ({ isSupportWebp }) => {
         }, 5000);
     };
 
+    const isUrnEnabled = () => {
+        if (!connected) return false;
+        return UrnList && UrnList.length > 0;
+    };
+
+    const urnButtonText = () => {
+        if (!connected) return 'Connect wallet';
+        if (UrnList && UrnList.length > 0) {
+            return 'Select urn';
+        }
+        return 'Buy one first';
+    };
+
     return (
         <Layout>
             <Box
@@ -267,10 +280,10 @@ const Altar = ({ isSupportWebp }) => {
                                     mt="12px"
                                     variant="primary"
                                     onClick={() => showItemHandler('urn')}
-                                    isDisabled={!connected}
+                                    isDisabled={!isUrnEnabled()}
                                     isLoading={fetching}
                                 >
-                                    Select urn
+                                    {urnButtonText()}
                                 </Button>
                             </Flex>
                         </Flex>
@@ -292,7 +305,7 @@ const Altar = ({ isSupportWebp }) => {
                                     isDisabled={!connected || isEmpty(choiseUrn)}
                                     isLoading={fetching}
                                 >
-                                    Select bone
+                                    {connected ? 'Select bone' : 'Connect wallet' }
                                 </Button>
                             </Flex>
                         </Flex>
