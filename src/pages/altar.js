@@ -62,6 +62,10 @@ const Altar = ({ isSupportWebp }) => {
     useEffect(() => {
         if (connected) {
             reexecuteQuery();
+        } else {
+            setChoiseUrn({});
+            setChoiseBone([]);
+            setShowItem({ name: '', list: [] });
         }
     }, [connected, reexecuteQuery]);
 
@@ -305,7 +309,7 @@ const Altar = ({ isSupportWebp }) => {
                                     isDisabled={!connected || isEmpty(choiseUrn)}
                                     isLoading={fetching}
                                 >
-                                    {connected ? 'Select bone' : 'Connect wallet' }
+                                    {connected ? 'Select bone' : 'Connect wallet'}
                                 </Button>
                             </Flex>
                         </Flex>
