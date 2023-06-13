@@ -1,6 +1,7 @@
 import { gql } from 'urql';
 
-const CONTRACT_ADDR = '0x190a7f50fe50d55ffb80c014066a35aec2f3e0419d747df4e947aad00b53b18d';
+const CONTRACT_ADDR = process.env.REACT_CONTRACT_ADDRESS
+  || '0x190a7f50fe50d55ffb80c014066a35aec2f3e0419d747df4e947aad00b53b18d';
 
 export default CONTRACT_ADDR;
 
