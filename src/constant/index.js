@@ -1,6 +1,6 @@
 import { gql } from 'urql';
 
-const CONTRACT_ADDR = '0xc9e7e612afec0ebf928da3a0f297ae53d3598d7d33cfac7b1072a605dd672961';
+const CONTRACT_ADDR = '0x190a7f50fe50d55ffb80c014066a35aec2f3e0419d747df4e947aad00b53b18d';
 
 export default CONTRACT_ADDR;
 
