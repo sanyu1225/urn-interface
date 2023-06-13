@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
@@ -48,6 +49,15 @@ const client = new UrqlClient({
   url: 'https://indexer-testnet.staging.gcp.aptosdev.com/v1/graphql',
   exchanges: [cacheExchange, fetchExchange],
 });
+
+console.log(`
+ _   _             _____  _____
+| | | |           / __  \|  ___|
+| | | |_ __ _ __  \`' / /'| |__  __ _ _ __ _ __
+| | | | '__| '_ \   / /  | __|/ _\` | '__| '_ \\
+| |_| | |  | | | |./ /___| |__| (_| | |  | | | |
+ \___/ |_|  |_| |_|\_____/\____/\__,_|_|  |_| |_|
+`);
 
 export default function App({ Component, pageProps }) {
   const [isDesktop] = useMediaQuery('(min-width: 1024px)');
