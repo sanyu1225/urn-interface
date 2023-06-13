@@ -48,6 +48,7 @@ const client = new UrqlClient({
   // TODO: set env file for graphql endpoint
   url: 'https://indexer-testnet.staging.gcp.aptosdev.com/v1/graphql',
   exchanges: [cacheExchange, fetchExchange],
+  requestPolicy: 'network-only', // disable cache
 });
 
 console.log(`
