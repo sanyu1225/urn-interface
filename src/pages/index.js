@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import NextLink from 'next/link';
 import { Box, Text, Button, Grid, Link } from '@chakra-ui/react';
 import Layout from '../layout';
 import HomeBg from '@/assets/images/home/home_1024.jpg';
@@ -51,7 +52,7 @@ const Landing = ({ isSupportWebp }) => (
         </Text>
         <Grid w="100%" justifyContent="center">
           <Button
-            as={Link}
+            as={NextLink}
             href="/graveyard"
             zIndex={2}
             mt="20px"
