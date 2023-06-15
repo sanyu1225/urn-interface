@@ -51,15 +51,6 @@ const client = new UrqlClient({
   requestPolicy: 'network-only', // disable cache
 });
 
-console.log(`
- _   _             _____  _____
-| | | |           / __  \|  ___|
-| | | |_ __ _ __  \`' / /'| |__  __ _ _ __ _ __
-| | | | '__| '_ \   / /  | __|/ _\` | '__| '_ \\
-| |_| | |  | | | |./ /___| |__| (_| | |  | | | |
- \___/ |_|  |_| |_|\_____/\____/\__,_|_|  |_| |_|
-`);
-
 export default function App({ Component, pageProps }) {
   const [isDesktop] = useMediaQuery('(min-width: 1024px)');
   const [isSupportWebp, setIsSupportWebp] = useState(true);
