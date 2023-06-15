@@ -193,6 +193,7 @@ const Hamburger = ({ hideMenu }) => {
               <AnimationLink path="/merchant">Merchant</AnimationLink>
               <AnimationLink path="/graveyard">Graveyard</AnimationLink>
               <AnimationLink path="/altar">Altar</AnimationLink>
+              <AnimationLink path="/robbery">Robbery</AnimationLink>
               <AnimationLink disabled path="/teleport">
                 Reincarnation *Coming soon
               </AnimationLink>

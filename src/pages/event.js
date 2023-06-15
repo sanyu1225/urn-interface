@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import Layout from '../layout';
-import FlexBlock from '../component/FlexBlock';
+import WhitelistFlexBlock from '../component/WhitelistFlexBlock';
 import { useWalletContext } from '../context';
 import EventBg from '../assets/images/event/event_1920.jpg';
 import EventBgWebp from '../assets/images/event/event_1920.webp';
@@ -14,7 +14,6 @@ import Event1024BgWebp from '../assets/images/event/event_1024.webp';
 
 // eslint-disable react/jsx-boolean-value
 const EventPage = ({ isSupportWebp }) => {
-  const { account } = useWalletContext();
   return (
     <Layout hideMenu="true">
       <Box
@@ -59,10 +58,10 @@ const EventPage = ({ isSupportWebp }) => {
           </Flex>
           <Flex width="432px" flexDirection="column">
             <Flex w="100%" wrap="wrap" justifyContent="center" gap="32px">
-              <FlexBlock title="Goblintown" collectionName="Aptomingos" />
-              <FlexBlock title="PEPE" collectionName="Aptos Monkeys" />
-              <FlexBlock title="Pogai" collectionName="Blocto" />
-              <FlexBlock title="Urn2earn" collectionName="urn2earn" />
+              <WhitelistFlexBlock title="Goblintown" collectionName="Aptomingos" />
+              <WhitelistFlexBlock title="PEPE" collectionName="Aptos Monkeys" />
+              <WhitelistFlexBlock title="Pogai" collectionName="Blocto" />
+              <WhitelistFlexBlock title="Urn2earn" collectionName="urn2earn" />
             </Flex>
           </Flex>
         </Flex>

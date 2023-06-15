@@ -6,15 +6,15 @@ import { useWalletContext } from '../context';
 import CONTRACT_ADDR from '../constant';
 import shovelMintingPrice from '../pages/merchant';
 
-const FlexBlock = ({ title, collectionName }) => {
+const WhitelistFlexBlock = ({ title, collectionName }) => {
     const { connected, getAptBalance, wlMint, account, waitForTransaction } = useWalletContext();
-    const BAR_COUNT = 12;
     const [desc, setDesc] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [buttonText, setButtonText] = useState('');
     const [isDisabled, setIsDisabled] = useState(true);
   
     const fetchData = async () => {
+      setIsLoading(true);
       const requests = [];
       const quota = fetch('https://fullnode.testnet.aptoslabs.com/v1/view', {
         method: 'POST',
@@ -99,7 +99,11 @@ const FlexBlock = ({ title, collectionName }) => {
         setIsLoading(false);
       }
     };
+
     useEffect(() => {
+      if (!account) {
+        return;
+      }
       fetchData();
     }, [account]);
   
@@ -108,31 +112,6 @@ const FlexBlock = ({ title, collectionName }) => {
       await wlMint(collectionName, toastId);
       await fetchData();
     };
-  
-    let buttonContent;
-    if (!connected) {
-      buttonContent = <Text>Not connected</Text>;
-    } else if (isLoading) {
-      buttonContent = (
-        <Icon viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-          {Array.from(new Array(BAR_COUNT), (value, index) => index).map((index) => (
-            <g key={index} transform={`rotate(${index * (360 / BAR_COUNT)} 50 50)`}>
-              <rect x={47} y={12} rx={4} ry={4} width={6} height={18}>
-                <animate
-                  attributeName="opacity"
-                  values="1;0"
-                  dur="1s"
-                  begin={`${index * (1 / BAR_COUNT) - 1}s`}
-                  repeatCount="indefinite"
-                />
-              </rect>
-            </g>
-          ))}
-        </Icon>
-      );
-    } else {
-      buttonContent = <Text>{buttonText}</Text>;
-    }
   
     return (
       <Flex
@@ -171,16 +150,17 @@ const FlexBlock = ({ title, collectionName }) => {
           onClick={mint}
           h="47px"
           isDisabled={isDisabled}
+          isLoading={isLoading}
         >
-          {buttonContent}
+          <Text>{connected ? buttonText : "Not connected"}</Text>
         </Button>
       </Flex>
     );
   };
 
-  FlexBlock.prototype = {
+  WhitelistFlexBlock.prototype = {
     title: PropTypes.string.isRequired,
     collectionName: PropTypes.string.isRequired,
   };
 
-  export default FlexBlock;
+  export default WhitelistFlexBlock;
