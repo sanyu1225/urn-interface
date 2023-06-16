@@ -2,7 +2,7 @@
 import { useQuery } from 'urql';
 import PropTypes from 'prop-types';
 import { Button } from '@chakra-ui/react';
-import { queryAltarData, CREATOR_ADDRESS } from '../constant';
+import { queryUrnData, CREATOR_ADDRESS } from '../constant';
 import { useWalletContext } from '../context';
 import useSound from 'use-sound';
 import ButtonClickAudio from '../assets/music/clickButton.mp3';
@@ -15,7 +15,7 @@ const RobButton = ({ choiseUrnPropertyVersion, victimAddress, isDisabled, isLoad
     console.log(`💥 victimAddress: ${JSON.stringify(victimAddress, null, '	')}`);
   
     const [victimResult, reexecuteQuery] = useQuery({
-        query: queryAltarData,
+        query: queryUrnData,
         variables: {
             address: victimAddress,
             offset: 0,
