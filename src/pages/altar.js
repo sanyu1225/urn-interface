@@ -6,7 +6,7 @@ import useSound from 'use-sound';
 import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
 import { useQuery } from 'urql';
 import { isEmpty } from '@/plugin/lodash';
-import { queryAltarData, CREATOR_ADDRESS } from '../constant';
+import { queryAltarData, queryUrnData, CREATOR_ADDRESS } from '../constant';
 import { useWalletContext } from '../context';
 import Layout from '../layout';
 import Carousel from '@/component/Carousel';
@@ -54,9 +54,20 @@ const Altar = ({ isSupportWebp }) => {
         },
     });
 
+    const [urnResult, reexecuteUrnQuery] = useQuery({
+        query: queryUrnData,
+        variables: {
+            address,
+            offset: 0,
+            creator_address: CREATOR_ADDRESS,
+        },
+    });
+
     const { data, fetching, error } = result;
     console.log('data: ', data);
-    const UrnList = data && data?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden urm');
+    const { urnData, urnFetching } = urnResult;
+    console.log('urnData: ', urnData);
+    const UrnList = urnData && urnData?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden urm');
     const boneNameList = ['arm', 'leg', 'hip', 'chest', 'skull', 'shard', 'golden arm', 'golden leg', 'golden hip', 'golden chest', 'golden skull', 'knife'];
     const boneList = data && data?.current_token_ownerships?.filter((item) => boneNameList.includes(item?.name));
 

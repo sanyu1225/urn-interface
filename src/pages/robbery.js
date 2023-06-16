@@ -7,7 +7,7 @@ import { Box, Flex, Text, Button, Input } from '@chakra-ui/react';
 // import { Box, Flex, Text, Button, Input, Image, Grid } from '@chakra-ui/react';
 import RobButton from 'src/component/RobBlock';
 import { isEmpty } from '@/plugin/lodash';
-import { queryAltarData, CREATOR_ADDRESS } from '../constant';
+import { queryUrnData, CREATOR_ADDRESS } from '../constant';
 import { useWalletContext } from '../context';
 import Layout from '../layout';
 import HomeBaseBg from '../assets/images/robbery/robbery_1024.jpg';
@@ -73,7 +73,7 @@ const Robbery = ({ isSupportWebp }) => {
     const address = account && account.address;
 
     const [result, reexecuteQuery] = useQuery({
-        query: queryAltarData,
+        query: queryUrnData,
         variables: {
             address,
             offset: 0,
