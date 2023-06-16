@@ -65,21 +65,22 @@ const Altar = ({ isSupportWebp }) => {
 
     const { data, fetching, error } = result;
     console.log('data: ', data);
-    const { urnData, urnFetching } = urnResult;
+    const { urnData, urnFetching, urnError } = urnResult;
     console.log('urnData: ', urnData);
-    const UrnList = urnData && urnData?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden urm');
+    const UrnList = urnData && urnData?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden urn');
     const boneNameList = ['arm', 'leg', 'hip', 'chest', 'skull', 'shard', 'golden arm', 'golden leg', 'golden hip', 'golden chest', 'golden skull', 'knife'];
     const boneList = data && data?.current_token_ownerships?.filter((item) => boneNameList.includes(item?.name));
 
     useEffect(() => {
         if (connected) {
             reexecuteQuery();
+            reexecuteUrnQuery();
         } else {
             setChoiseUrn({});
             setChoiseBone([]);
             setShowItem({ name: '', list: [] });
         }
-    }, [connected, reexecuteQuery]);
+    }, [connected, reexecuteQuery, reexecuteUrnQuery]);
 
     const showItemHandler = async (item) => {
         playButton();
@@ -109,6 +110,7 @@ const Altar = ({ isSupportWebp }) => {
         if (res) {
             console.log('todo reload nft.');
             reexecuteQuery();
+            reexecuteUrnQuery();
         }
         playButton();
     };
