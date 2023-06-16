@@ -49,7 +49,6 @@ const Altar = ({ isSupportWebp }) => {
         query: queryAltarData,
         variables: {
             address,
-            offset: 0,
             creator_address: CREATOR_ADDRESS,
         },
     });
