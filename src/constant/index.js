@@ -9,7 +9,7 @@ export default CONTRACT_ADDR;
 export const queryAltarData = gql`
   query CurrentTokens($address: String, $offset: Int,$creator_address: String) {
     current_token_ownerships(
-        where: {owner_address: {_eq: $address}, amount: {_gt: "0"}, table_type: {_eq: "0x3::token::TokenStore"}, current_token_data: {name: {_neq: "urn"}}, collection_name: {_eq: "urn"},creator_address: {_eq: $creator_address}}
+        where: {owner_address: {_eq: $address}, amount: {_gt: "0"}, table_type: {_eq: "0x3::token::TokenStore"}, current_token_data: {name: {}}, collection_name: {_eq: "urn"},creator_address: {_eq: $creator_address}}
         offset: $offset
     ) {
         token_data_id_hash

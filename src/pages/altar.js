@@ -6,7 +6,7 @@ import useSound from 'use-sound';
 import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
 import { useQuery } from 'urql';
 import { isEmpty } from '@/plugin/lodash';
-import { queryAltarData, queryUrnData, CREATOR_ADDRESS } from '../constant';
+import { queryAltarData, CREATOR_ADDRESS } from '../constant';
 import { useWalletContext } from '../context';
 import Layout from '../layout';
 import Carousel from '@/component/Carousel';
@@ -54,33 +54,33 @@ const Altar = ({ isSupportWebp }) => {
         },
     });
 
-    const [urnResult, reexecuteUrnQuery] = useQuery({
-        query: queryUrnData,
-        variables: {
-            address,
-            offset: 0,
-            creator_address: CREATOR_ADDRESS,
-        },
-    });
+    // const [urnResult, reexecuteUrnQuery] = useQuery({
+    //     query: queryUrnData,
+    //     variables: {
+    //         address,
+    //         offset: 0,
+    //         creator_address: CREATOR_ADDRESS,
+    //     },
+    // });
 
     const { data, fetching, error } = result;
     console.log('data: ', data);
-    const { urnData, urnFetching, urnError } = urnResult;
-    console.log('urnData: ', urnData);
-    const UrnList = urnData && urnData?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden urn');
+    // const { urnData, urnFetching, urnError } = urnResult;
+    // console.log('urnData: ', urnData);
+    const UrnList = data && data?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden urn');
     const boneNameList = ['arm', 'leg', 'hip', 'chest', 'skull', 'shard', 'golden arm', 'golden leg', 'golden hip', 'golden chest', 'golden skull', 'knife'];
     const boneList = data && data?.current_token_ownerships?.filter((item) => boneNameList.includes(item?.name));
 
     useEffect(() => {
         if (connected) {
             reexecuteQuery();
-            reexecuteUrnQuery();
+            // reexecuteUrnQuery();
         } else {
             setChoiseUrn({});
             setChoiseBone([]);
             setShowItem({ name: '', list: [] });
         }
-    }, [connected, reexecuteQuery, reexecuteUrnQuery]);
+    }, [connected, reexecuteQuery]);
 
     const showItemHandler = async (item) => {
         playButton();
@@ -110,7 +110,7 @@ const Altar = ({ isSupportWebp }) => {
         if (res) {
             console.log('todo reload nft.');
             reexecuteQuery();
-            reexecuteUrnQuery();
+            // reexecuteUrnQuery();
         }
         playButton();
     };
