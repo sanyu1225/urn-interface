@@ -188,12 +188,12 @@ const Merchant = ({ isSupportWebp }) => {
                         w={{ base: '436px', mid: '556px', desktop: '556px' }}
                         h={{ base: '319px', mid: '406px', desktop: '406px' }}
                     >
-                        <Flex justifyContent="space-evenly" mt={{ base: '8rem', mid: '10rem', desktop: '10rem' }}>
+                        <Flex justifyContent="center" gap="24px" mt={{ base: '8rem', mid: '11rem', desktop: '11rem' }}>
                             <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p={{ base: '14px', mid: '16px' }} justifyContent="center">
-                                <Text fontSize={{ base: '16px', mid: '20px' }} fontWeight={700} color="#292229" textAlign="center" w="100%">
+                                <Text fontSize={{ base: '13px', mid: '18px' }} fontWeight={700} color="#292229" textAlign="center" w="100%">
                                     Buy shovel / {Number(shovelMintingPrice) / Number(10 ** 8)} APT
                                 </Text>
-                                <Text mt={{ base: '10px', mid: '12px' }} fontSize={{ base: '14px', mid: '20px' }} fontWeight={500} color="#292229" textAlign="center" w="100%">
+                                <Text mt={{ base: '10px', mid: '12px' }} fontSize={{ base: '14px', mid: '14px' }} fontWeight={500} color="#292229" textAlign="center" w="100%">
                                     Every grave robber needs a shovel.
                                 </Text>
                                 <Button
@@ -212,10 +212,10 @@ const Merchant = ({ isSupportWebp }) => {
                                 </Button>
                             </Flex>
                             <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p={{ base: '14px', mid: '16px' }} justifyContent="center">
-                                <Text fontSize={{ base: '16px', mid: '20px' }} fontWeight={700} color="#292229" textAlign="center" w="100%">
+                                <Text fontSize={{ base: '13px', mid: '18px' }} fontWeight={700} color="#292229" textAlign="center" w="100%">
                                     Buy urn / {Number(urnMintingPrice) / Number(10 ** 8)} APT
                                 </Text>
-                                <Text mt={{ base: '10px', mid: '12px' }} fontSize={{ base: '14px', mid: '20px' }} fontWeight={500} color="#292229" textAlign="center" w="100%">
+                                <Text mt={{ base: '10px', mid: '12px' }} fontSize={{ base: '14px', mid: '14px' }} fontWeight={500} color="#292229" textAlign="center" w="100%">
                                     I think... you need an urn for bones.
                                 </Text>
                                 <Button
