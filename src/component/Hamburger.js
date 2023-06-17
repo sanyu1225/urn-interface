@@ -158,7 +158,6 @@ const Hamburger = ({ hideMenu }) => {
             p="28px"
             style={containerStyle}
             borderRadius="10px"
-            h="600px"
             w="280px"
             bg="#292229"
             position="absolute"
