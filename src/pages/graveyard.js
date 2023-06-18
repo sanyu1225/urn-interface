@@ -91,8 +91,8 @@ const Graveyard = ({ isSupportWebp }) => {
     const { data, fetching, error } = result;
     const shovelAmount = (data && data.current_token_ownerships[0]?.amount) ?? 0;
 
-    console.log(`💥 data: ${JSON.stringify(data, null, '	')}`);
-    console.log(`💥 queryShovelData error: ${JSON.stringify(error, null, '	')}`);
+    console.log(`💥 data: ${JSON.stringify(data, null, ' ')}`);
+    console.log(`💥 queryShovelData error: ${JSON.stringify(error, null, ' ')}`);
 
     const digButtonText = () => {
         if (connected) {
