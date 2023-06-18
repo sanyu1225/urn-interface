@@ -38,7 +38,11 @@ const Merchant = ({ isSupportWebp }) => {
 
     const checkMintEnabled = useCallback(async () => {
         const aptBalance = await getAptBalance();
-        if (!aptBalance) return;
+        if (!aptBalance) {
+            setIsShovelEnabled(false);
+            setIsUrnEnabled(false);
+            return;
+        }
         setIsShovelEnabled(aptBalance > BigInt(shovelMintingPrice));
         setIsUrnEnabled(aptBalance > BigInt(urnMintingPrice));
     }, [getAptBalance]);
