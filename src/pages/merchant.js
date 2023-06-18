@@ -1,40 +1,44 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
-import { Box, Flex, Text, Button } from '@chakra-ui/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useQuery } from 'urql';
 import useSound from 'use-sound';
-import { useWalletContext } from '../context';
-import { fadeIn } from '../utils/animation';
-import Layout from '../layout';
-import HomeBg from '../assets/images/merchant/merchant_bg.png';
-import HomeBgWebp from '../assets/images/merchant/merchant_bg.webp';
+
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import BowlImg from '../assets/images/merchant/bowl.svg';
+import FireImg from '../assets/images/merchant/fire.png';
 import HomeBaseBg from '../assets/images/merchant/merchant_1024.jpg';
 import HomeBaseBgWebp from '../assets/images/merchant/merchant_1024.webp';
 import Home1440Bg from '../assets/images/merchant/merchant_1440.png';
 import Home1440BgWebp from '../assets/images/merchant/merchant_1440.webp';
-import FurnaceImg from '../assets/images/merchant/merchant_furnace.png';
-import FurnaceImgWebp from '../assets/images/merchant/merchant_furnace.webp';
-import BoardSmallImg from '../assets/images/merchant/merchant_board_small.png';
-import BoardSmallImgWebp from '../assets/images/merchant/merchant_board_small.webp';
-import SkullImg from '../assets/images/merchant/merchant_skull.png';
-import SkullImgWebp from '../assets/images/merchant/merchant_skull.webp';
+import HomeBg from '../assets/images/merchant/merchant_bg.png';
+import HomeBgWebp from '../assets/images/merchant/merchant_bg.webp';
 import BoardBigImg from '../assets/images/merchant/merchant_board_big.png';
 import BoardBigImgWebp from '../assets/images/merchant/merchant_board_big.webp';
-import FireImg from '../assets/images/merchant/fire.png';
-import BowlImg from '../assets/images/merchant/bowl.svg';
+import BoardSmallImg from '../assets/images/merchant/merchant_board_small.png';
+import BoardSmallImgWebp from '../assets/images/merchant/merchant_board_small.webp';
+import FurnaceImg from '../assets/images/merchant/merchant_furnace.png';
+import FurnaceImgWebp from '../assets/images/merchant/merchant_furnace.webp';
+import SkullImg from '../assets/images/merchant/merchant_skull.png';
+import SkullImgWebp from '../assets/images/merchant/merchant_skull.webp';
 import ButtonClickAudio from '../assets/music/clickButton.mp3';
 import FireAudio from '../assets/music/fire.mp3';
+import { CREATOR_ADDRESS, getItemQuery } from '../constant';
+import { useWalletContext } from '../context';
+import Layout from '../layout';
+import { fadeIn } from '../utils/animation';
 
 export const shovelMintingPrice = '1000000';
 export const urnMintingPrice = '10000000';
 
 const Merchant = ({ isSupportWebp }) => {
-    const { mint, connected, getAptBalance, waitForTransaction } = useWalletContext();
+    const { mint, connected, account, getAptBalance, waitForTransaction } = useWalletContext();
     const [playButton] = useSound(ButtonClickAudio);
     const [playFire, { stop }] = useSound(FireAudio);
     const [showFire, setShowFire] = useState(false);
     const [isShovelEnabled, setIsShovelEnabled] = useState(false);
     const [isUrnEnabled, setIsUrnEnabled] = useState(false);
+    const address = account && account.address;
 
     const checkMintEnabled = useCallback(async () => {
         const aptBalance = await getAptBalance();
@@ -74,6 +78,20 @@ const Merchant = ({ isSupportWebp }) => {
             stop();
         }, 5000);
     };
+
+    const [result, reexecuteQuery] = useQuery({
+        query: getItemQuery('shard'),
+        variables: {
+            address,
+            creator_address: CREATOR_ADDRESS,
+        },
+    });
+
+    const { data, fetching, error } = result;
+    const shardAmount = data?.current_token_ownerships[0]?.amount ?? 0;
+
+    console.log(`💥 data: ${JSON.stringify(data, null, ' ')}`);
+    console.log(`💥 query shard data error: ${JSON.stringify(error, null, ' ')}`);
 
     return (
         <Layout>
@@ -116,7 +134,6 @@ const Merchant = ({ isSupportWebp }) => {
                             fontSize={{ base: '16px', mid: '20px' }}
                             fontWeight={700}
                             mb={{ base: '10px', mid: '14px', desktop: '14px' }}
-
                         >
                             Golden urn
                         </Text>
@@ -131,15 +148,21 @@ const Merchant = ({ isSupportWebp }) => {
                             mt={{ base: '10px', mid: '14px', desktop: '14px' }}
                             lineHeight={{ base: '20px' }}
                         >
-                            it&apos;s lame without the golden urn.
+                            it&apos;s lame without the golden urn. {shardAmount}/10
                         </Text>
                         <Button
                             variant="gold"
-                            onClick={() => {
-                                mint('mint_golden_bone');
+                            onClick={async () => {
+                                const hash = await mint('forge');
+                                if (hash) {
+                                    await waitForTransaction(hash);
+                                }
+                                reexecuteQuery();
                                 playFire();
                             }}
                             w={{ base: '140px', mid: '148px' }}
+                            isLoading={fetching}
+                            isDisabled={!connected || shardAmount < 10}
                         >
                             Forge
                         </Button>
@@ -193,11 +216,31 @@ const Merchant = ({ isSupportWebp }) => {
                         h={{ base: '319px', mid: '406px', desktop: '406px' }}
                     >
                         <Flex justifyContent="center" gap="24px" mt={{ base: '8rem', mid: '11rem', desktop: '11rem' }}>
-                            <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p={{ base: '14px', mid: '16px' }} justifyContent="center">
-                                <Text fontSize={{ base: '13px', mid: '18px' }} fontWeight={700} color="#292229" textAlign="center" w="100%">
+                            <Flex
+                                wrap="wrap"
+                                w="40%"
+                                bg="#FCD791"
+                                borderRadius="20px"
+                                p={{ base: '14px', mid: '16px' }}
+                                justifyContent="center"
+                            >
+                                <Text
+                                    fontSize={{ base: '13px', mid: '18px' }}
+                                    fontWeight={700}
+                                    color="#292229"
+                                    textAlign="center"
+                                    w="100%"
+                                >
                                     Buy shovel / {Number(shovelMintingPrice) / Number(10 ** 8)} APT
                                 </Text>
-                                <Text mt={{ base: '10px', mid: '12px' }} fontSize={{ base: '14px', mid: '14px' }} fontWeight={500} color="#292229" textAlign="center" w="100%">
+                                <Text
+                                    mt={{ base: '10px', mid: '12px' }}
+                                    fontSize={{ base: '14px', mid: '14px' }}
+                                    fontWeight={500}
+                                    color="#292229"
+                                    textAlign="center"
+                                    w="100%"
+                                >
                                     Every grave robber needs a shovel.
                                 </Text>
                                 <Button
@@ -215,11 +258,31 @@ const Merchant = ({ isSupportWebp }) => {
                                     {mintShovelButtonText}
                                 </Button>
                             </Flex>
-                            <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p={{ base: '14px', mid: '16px' }} justifyContent="center">
-                                <Text fontSize={{ base: '13px', mid: '18px' }} fontWeight={700} color="#292229" textAlign="center" w="100%">
+                            <Flex
+                                wrap="wrap"
+                                w="40%"
+                                bg="#FCD791"
+                                borderRadius="20px"
+                                p={{ base: '14px', mid: '16px' }}
+                                justifyContent="center"
+                            >
+                                <Text
+                                    fontSize={{ base: '13px', mid: '18px' }}
+                                    fontWeight={700}
+                                    color="#292229"
+                                    textAlign="center"
+                                    w="100%"
+                                >
                                     Buy urn / {Number(urnMintingPrice) / Number(10 ** 8)} APT
                                 </Text>
-                                <Text mt={{ base: '10px', mid: '12px' }} fontSize={{ base: '14px', mid: '14px' }} fontWeight={500} color="#292229" textAlign="center" w="100%">
+                                <Text
+                                    mt={{ base: '10px', mid: '12px' }}
+                                    fontSize={{ base: '14px', mid: '14px' }}
+                                    fontWeight={500}
+                                    color="#292229"
+                                    textAlign="center"
+                                    w="100%"
+                                >
                                     I think... you need an urn for bones.
                                 </Text>
                                 <Button
@@ -249,7 +312,6 @@ const Merchant = ({ isSupportWebp }) => {
                         h={{ base: '381px', mid: '517px' }}
                     />
                 </Flex>
-
             </Box>
         </Layout>
     );
