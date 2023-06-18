@@ -1,32 +1,34 @@
-import { useState, useEffect } from 'react';
-// import { useState, useEffect, useRef} from 'react';
-import useSound from 'use-sound';
 import PropTypes from 'prop-types';
-import { useQuery } from 'urql';
-import { Box, Flex, Text, Button, Input } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 // import { Box, Flex, Text, Button, Input, Image, Grid } from '@chakra-ui/react';
 import RobButton from 'src/component/RobBlock';
-import { isEmpty } from '@/plugin/lodash';
-import { queryUrnData, CREATOR_ADDRESS } from '../constant';
-import { useWalletContext } from '../context';
-import Layout from '../layout';
+import { useQuery } from 'urql';
+// import { useState, useEffect, useRef} from 'react';
+import useSound from 'use-sound';
+
+import { Box, Button, Flex, Input, Text } from '@chakra-ui/react';
+import CardBrandImg from '../assets/images/altar/cardbrand.png';
+import CardBrandImgWebp from '../assets/images/altar/cardbrand.webp';
+import Robber from '../assets/images/robbery/robber.png';
+import RobberWebp from '../assets/images/robbery/robber.webp';
 import HomeBaseBg from '../assets/images/robbery/robbery_1024.jpg';
 import HomeBaseBgWebp from '../assets/images/robbery/robbery_1024.webp';
 import Home1440Bg from '../assets/images/robbery/robbery_1440.jpg';
 import Home1440BgWebp from '../assets/images/robbery/robbery_1440.webp';
 import HomeBg1920 from '../assets/images/robbery/robbery_1920.jpg';
 import HomeBg1920Webp from '../assets/images/robbery/robbery_1920.webp';
-import Robber from '../assets/images/robbery/robber.png';
-import RobberWebp from '../assets/images/robbery/robber.webp';
+import ButtonClickAudio from '../assets/music/clickButton.mp3';
+import { CREATOR_ADDRESS, queryAllUrnData } from '../constant';
+import { useWalletContext } from '../context';
+import Layout from '../layout';
+
 // import RobberyBrand from '../assets/images/robbery/robbery_brand.png';
 // import RobberyBrandWebp from '../assets/images/robbery/robbery_brand.webp';
 // import CopyIcon from '@/assets/images/icons/CopyLight.svg';
 // import useCopyToClipboard from '@/hooks/useCopyToClipboard';
 // import { shortenAddress } from '@/utils';
 import Carousel from '@/component/Carousel';
-import CardBrandImg from '../assets/images/altar/cardbrand.png';
-import CardBrandImgWebp from '../assets/images/altar/cardbrand.webp';
-import ButtonClickAudio from '../assets/music/clickButton.mp3';
+import { isEmpty } from '@/plugin/lodash';
 
 // const fakeAddressList = [{
 //     address: '0x1234567890123456789012345678901234567890',
@@ -73,7 +75,7 @@ const Robbery = ({ isSupportWebp }) => {
     const address = account && account.address;
 
     const [result, reexecuteQuery] = useQuery({
-        query: queryUrnData,
+        query: queryAllUrnData,
         variables: {
             address,
             offset: 0,
@@ -83,7 +85,7 @@ const Robbery = ({ isSupportWebp }) => {
 
     const { data, fetching } = result;
     console.log('data: ', data);
-    const UrnList = data && data?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden urm');
+    const UrnList = data && data?.current_token_ownerships;
 
     useEffect(() => {
         if (connected) {
@@ -95,9 +97,7 @@ const Robbery = ({ isSupportWebp }) => {
 
     const robHandler = async () => {
         console.log('todo put in contract.', choiseUrn);
-        const params = [
-            choiseUrn.property_version,
-        ];
+        const params = [choiseUrn.property_version];
         const res = await mint('random_rob', params);
         console.log('res: ', res);
         if (res) {
@@ -148,86 +148,86 @@ const Robbery = ({ isSupportWebp }) => {
                     justifyContent="center"
                 >
                     <Flex
-                    w="600px"
-                    h="500px"
-                    flexDirection="column"
-                    p="20px"
-                    bg="#292229"
-                    borderRadius="20px"
-                    border="1px solid #FFF3CD"
-                    rowGap="20px"
-                    justifyContent="space-evenly"
-                    >
-                    <Text
-                        fontSize="20px"
-                        fontWeight={500}
-                        color="#FFF3CD"
-                        textAlign="center"
-                        w="100%"
-                        lineHeight="28px"
-                        whiteSpace="pre-line"
-                    >
-                        Stop digging like a dumb ass, rob random
-        fuckers make your life easier.
-                    </Text>
-                    <Flex
-                        bgImage={{
-                            base: isSupportWebp ? CardBrandImgWebp.src : CardBrandImg.src,
-                        }}
-                        w="100%"
-                        bgRepeat="no-repeat"
-                        bgSize="100% 100%"
-                        h={{ base: '150px', mid: '167px' }}
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        {
-                            (
-                                isEmpty(UrnList) ? (
-                                    <Text color="#FFF3CD" textAlign="center" fontSize="16px" fontWeight={400}>
-                                        Poor guy. You don&apos;t have anything.
-                                    </Text>
-                                ) : (
-                                    <Carousel
-                                        NftList={{
-                                            name: 'urn',
-                                            list: UrnList,
-                                        }}
-                                        choiseItem={choiseUrn}
-                                        selectItem={setChoiseUrn}
-                                    />
-                                )
-                            )
-                        }
-                    </Flex>
-                    <Flex
-                        flexDirection="row"
+                        w="600px"
+                        h="500px"
+                        flexDirection="column"
                         p="20px"
-                        columnGap="16px"
+                        bg="#292229"
+                        borderRadius="20px"
+                        border="1px solid #FFF3CD"
+                        rowGap="20px"
                         justifyContent="space-evenly"
-                        alignItems="center"
                     >
-                        <Button
-                            variant="primary"
-                            onClick={robHandler}
-                            h="47px"
-                            isDisabled={!isUrnEnabled()}
-                            isLoading={fetching}
+                        <Text
+                            fontSize="20px"
+                            fontWeight={500}
+                            color="#FFF3CD"
+                            textAlign="center"
+                            w="100%"
+                            lineHeight="28px"
+                            whiteSpace="pre-line"
                         >
-                            {urnButtonText(true)}
-                        </Button>
-                        <Flex width="1px" height="80%" bg="#FFF3CD" />
-                        <Flex flexDirection="column" rowGap="16px">
-                            <Input color="#FFF3CD" placeholder="who's the fucker?" value={victimAddress} onChange={(e) => setVictimAddress(e.target.value)} />
-                            <RobButton
-                                choiseUrnPropertyVersion={choiseUrn.property_version}
-                                victimAddress={victimAddress}
+                            Stop digging like a dumb ass, rob random fuckers make your life easier.
+                        </Text>
+                        <Flex
+                            bgImage={{
+                                base: isSupportWebp ? CardBrandImgWebp.src : CardBrandImg.src,
+                            }}
+                            w="100%"
+                            bgRepeat="no-repeat"
+                            bgSize="100% 100%"
+                            h={{ base: '150px', mid: '167px' }}
+                            justifyContent="center"
+                            alignItems="center"
+                        >
+                            {isEmpty(UrnList) ? (
+                                <Text color="#FFF3CD" textAlign="center" fontSize="16px" fontWeight={400}>
+                                    Poor guy. You don&apos;t have anything.
+                                </Text>
+                            ) : (
+                                <Carousel
+                                    NftList={{
+                                        name: 'urn',
+                                        list: UrnList,
+                                    }}
+                                    choiseItem={choiseUrn}
+                                    selectItem={setChoiseUrn}
+                                />
+                            )}
+                        </Flex>
+                        <Flex
+                            flexDirection="row"
+                            p="20px"
+                            columnGap="16px"
+                            justifyContent="space-evenly"
+                            alignItems="center"
+                        >
+                            <Button
+                                variant="primary"
+                                onClick={robHandler}
+                                h="47px"
                                 isDisabled={!isUrnEnabled()}
                                 isLoading={fetching}
-                                buttonText={urnButtonText(false)}
-                            />
+                            >
+                                {urnButtonText(true)}
+                            </Button>
+                            <Flex width="1px" height="80%" bg="#FFF3CD" />
+                            <Flex flexDirection="column" rowGap="16px">
+                                <Input
+                                    color="#FFF3CD"
+                                    placeholder="who's the fucker?"
+                                    value={victimAddress}
+                                    onChange={(e) => setVictimAddress(e.target.value)}
+                                />
+                                <RobButton
+                                    choiseUrnPropertyVersion={choiseUrn.property_version}
+                                    victimAddress={victimAddress}
+                                    isDisabled={!isUrnEnabled()}
+                                    isLoading={fetching}
+                                    buttonText={urnButtonText(false)}
+                                />
+                            </Flex>
                         </Flex>
-                    </Flex>
                     </Flex>
                     <Flex justify="flex-end" w="100%">
                         <Box
