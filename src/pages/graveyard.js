@@ -6,7 +6,6 @@ import { useQuery } from 'urql';
 import useSound from 'use-sound';
 
 import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
-
 import BoneEffect1Img from '../assets/images/graveyard/bone_effect_1.png';
 import BoneEffect2Img from '../assets/images/graveyard/bone_effect_2.png';
 import ButtImg from '../assets/images/graveyard/butt.png';
@@ -28,7 +27,7 @@ import SkullImg from '../assets/images/graveyard/skull.svg';
 import TombstoneImg from '../assets/images/graveyard/tombstone.png';
 import TombstoneImgWebp from '../assets/images/graveyard/tombstone.webp';
 import FartAudio from '../assets/music/fart.mp3';
-import { CREATOR_ADDRESS, queryShovelData } from '../constant';
+import { CREATOR_ADDRESS, getItemQuery } from '../constant';
 import { useWalletContext } from '../context';
 import Layout from '../layout';
 import { bounceInAnimation } from '../utils/animation';
@@ -81,7 +80,7 @@ const Graveyard = ({ isSupportWebp }) => {
     };
 
     const [result, reexecuteQuery] = useQuery({
-        query: queryShovelData,
+        query: getItemQuery('shovel'),
         variables: {
             address,
             creator_address: CREATOR_ADDRESS,
@@ -92,6 +91,7 @@ const Graveyard = ({ isSupportWebp }) => {
     const shovelAmount = (data && data.current_token_ownerships[0]?.amount) ?? 0;
 
     console.log(`💥 data: ${JSON.stringify(data, null, ' ')}`);
+    console.log(`💥 shovelAmount: ${JSON.stringify(shovelAmount, null, '  ')}`);
     console.log(`💥 queryShovelData error: ${JSON.stringify(error, null, ' ')}`);
 
     const digButtonText = () => {
