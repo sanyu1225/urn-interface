@@ -1,43 +1,47 @@
 /* eslint-disable max-len */
+
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import useSound from 'use-sound';
-import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'urql';
-import { isEmpty } from '@/plugin/lodash';
-import { queryAltarData, CREATOR_ADDRESS } from '../constant';
-import { useWalletContext } from '../context';
-import Layout from '../layout';
-import Carousel from '@/component/Carousel';
-import { fadeup } from '@/utils/animation';
-import HomeBg from '../assets/images/altar/altar_bg.png';
-import HomeBgWebp from '../assets/images/altar/altar_bg.webp';
+import useSound from 'use-sound';
+
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import AltarImg from '../assets/images/altar/altar.png';
+import AltarImgWebp from '../assets/images/altar/altar.webp';
 import HomeBaseBg from '../assets/images/altar/altar_1024.jpg';
 import HomeBaseBgWebp from '../assets/images/altar/altar_1024.webp';
 import Home1440Bg from '../assets/images/altar/altar_1440.jpg';
 import Home1440BgWebp from '../assets/images/altar/altar_1440.webp';
+import HomeBg from '../assets/images/altar/altar_bg.png';
+import HomeBgWebp from '../assets/images/altar/altar_bg.webp';
+import BoardImg from '../assets/images/altar/board.png';
+import BoardImgWebp from '../assets/images/altar/board.webp';
 import CardBrandImg from '../assets/images/altar/cardbrand.png';
 import CardBrandImgWebp from '../assets/images/altar/cardbrand.webp';
+import GhostImg from '../assets/images/altar/ghost.png';
+import GhostImgWebp from '../assets/images/altar/ghost.webp';
+import HandImg from '../assets/images/altar/hand.png';
+import HandImgWebp from '../assets/images/altar/hand.webp';
 import SkullItemImg from '../assets/images/altar/skull_item.png';
 import SkullItemImgWebp from '../assets/images/altar/skull_item.webp';
 import UrnItemImg from '../assets/images/altar/urn_item.png';
 import UrnItemImgWebp from '../assets/images/altar/urn_item.webp';
-import AltarImg from '../assets/images/altar/altar.png';
-import AltarImgWebp from '../assets/images/altar/altar.webp';
-import HandImg from '../assets/images/altar/hand.png';
-import HandImgWebp from '../assets/images/altar/hand.webp';
-import BoardImg from '../assets/images/altar/board.png';
-import BoardImgWebp from '../assets/images/altar/board.webp';
-import GhostImg from '../assets/images/altar/ghost.png';
-import GhostImgWebp from '../assets/images/altar/ghost.webp';
-import LaughAudio from '../assets/music/laugh.mp3';
 import ButtonClickAudio from '../assets/music/clickButton.mp3';
+import LaughAudio from '../assets/music/laugh.mp3';
+import { CREATOR_ADDRESS, queryAltarData } from '../constant';
+import { useWalletContext } from '../context';
+import Layout from '../layout';
+
+import Carousel from '@/component/Carousel';
+import { isEmpty } from '@/plugin/lodash';
+import { fadeup } from '@/utils/animation';
 
 const Altar = ({ isSupportWebp }) => {
     const [showItem, setShowItem] = useState({ name: '', list: [] });
     const [choiseUrn, setChoiseUrn] = useState({});
     const [choiseBone, setChoiseBone] = useState([]);
+    const [boneList, setBoneList] = useState([]);
     const [showGhost, setShowGhost] = useState(false);
     const [playLaugh, { stop }] = useSound(LaughAudio);
     const [playButton] = useSound(ButtonClickAudio);
@@ -53,33 +57,35 @@ const Altar = ({ isSupportWebp }) => {
         },
     });
 
-    // const [urnResult, reexecuteUrnQuery] = useQuery({
-    //     query: queryUrnData,
-    //     variables: {
-    //         address,
-    //         offset: 0,
-    //         creator_address: CREATOR_ADDRESS,
-    //     },
-    // });
-
     const { data, fetching, error } = result;
     console.log('data: ', data);
-    // const { urnData, urnFetching, urnError } = urnResult;
-    // console.log('urnData: ', urnData);
+    console.log('error: ', error);
     const UrnList = data && data?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden urn');
-    const boneNameList = ['arm', 'leg', 'hip', 'chest', 'skull', 'shard', 'golden arm', 'golden leg', 'golden hip', 'golden chest', 'golden skull', 'knife'];
-    const boneList = data && data?.current_token_ownerships?.filter((item) => boneNameList.includes(item?.name));
 
     useEffect(() => {
         if (connected) {
             reexecuteQuery();
-            // reexecuteUrnQuery();
         } else {
             setChoiseUrn({});
             setChoiseBone([]);
             setShowItem({ name: '', list: [] });
         }
     }, [connected, reexecuteQuery]);
+
+    useEffect(() => {
+        if (choiseUrn?.length === 0) {
+            return;
+        }
+        let boneNameList = [];
+        if (choiseUrn.name === 'urn') {
+            boneNameList = ['arm', 'leg', 'hip', 'chest', 'skull'];
+        }
+        if (choiseUrn.name === 'golden urn') {
+            boneNameList = ['golden arm', 'golden leg', 'golden hip', 'golden chest', 'golden skull'];
+        }
+        const boneList = data && data?.current_token_ownerships?.filter((item) => boneNameList.includes(item?.name));
+        setBoneList(boneList);
+    }, [choiseUrn, data]);
 
     const showItemHandler = async (item) => {
         playButton();
@@ -101,15 +107,12 @@ const Altar = ({ isSupportWebp }) => {
     const putInHandler = async () => {
         console.log('todo put in contract.', choiseBone);
         console.log('todo put in contract.', choiseUrn);
-        const params = [
-            choiseUrn.property_version, choiseBone.property_version, choiseBone.current_token_data.name,
-        ];
+        const params = [choiseUrn.property_version, choiseBone.property_version, choiseBone.current_token_data.name];
         const res = await mint('burn_and_fill', params);
         console.log('res: ', res);
         if (res) {
             console.log('todo reload nft.');
             reexecuteQuery();
-            // reexecuteUrnQuery();
         }
         playButton();
     };
@@ -213,12 +216,8 @@ const Altar = ({ isSupportWebp }) => {
                                 mb="0.9rem"
                                 mt="0.9rem"
                             >
-                                {
-                                    choiseUrn?.token_properties?.ash ?? '- -'
-                                }
-                                {
-                                    choiseUrn?.token_properties?.ash && ' %'
-                                }
+                                {choiseUrn?.token_properties?.ash ?? '- -'}
+                                {choiseUrn?.token_properties?.ash && ' %'}
                             </Text>
                             <Button
                                 variant="putIn"
@@ -230,7 +229,6 @@ const Altar = ({ isSupportWebp }) => {
                             </Button>
                         </Flex>
                     </Box>
-
                 </Box>
 
                 <Flex
@@ -268,23 +266,18 @@ const Altar = ({ isSupportWebp }) => {
                         <Flex justifyContent="space-evenly" p="0 30px" mb="20px">
                             <Box position="relative">
                                 <Image alt="img" src={isSupportWebp ? UrnItemImgWebp.src : UrnItemImg.src} />
-                                {
-                                    !isEmpty(choiseUrn?.current_token_data?.default_properties?.ASH) && (
-                                        <Text
-                                            position="absolute"
-                                            top="10px"
-                                            right="10px"
-                                            fontSize="12px"
-                                            color="#FFF3CD"
-                                            fontWeight="600"
-                                        >
-                                            {
-                                                choiseUrn?.current_token_data?.default_properties?.ASH
-                                            }%
-                                        </Text>
-                                    )
-                                }
-
+                                {!isEmpty(choiseUrn?.current_token_data?.default_properties?.ASH) && (
+                                    <Text
+                                        position="absolute"
+                                        top="10px"
+                                        right="10px"
+                                        fontSize="12px"
+                                        color="#FFF3CD"
+                                        fontWeight="600"
+                                    >
+                                        {choiseUrn?.current_token_data?.default_properties?.ASH}%
+                                    </Text>
+                                )}
                             </Box>
                             <Flex wrap="wrap" w="40%" justifyContent="flex-start">
                                 <Text fontSize="18px" fontWeight={700} color="#FFF3CD" w="100%">
@@ -339,38 +332,32 @@ const Altar = ({ isSupportWebp }) => {
                         justifyContent="center"
                         alignItems="center"
                     >
-                        {
-                            isEmpty(showItem.name) && (
+                        {isEmpty(showItem.name) && (
+                            <Text color="#FFF3CD" textAlign="center" fontSize="16px" fontWeight={400}>
+                                Hey, you are not select yet. Need some help?
+                            </Text>
+                        )}
+                        {!isEmpty(showItem.name)
+                            && (isEmpty(showItem.list) ? (
                                 <Text color="#FFF3CD" textAlign="center" fontSize="16px" fontWeight={400}>
-                                    Hey, you are not select yet. Need some help?
+                                    Poor guy. You don&apos;t have anything.
                                 </Text>
-                            )
-                        }
-                        {
-                            !(isEmpty(showItem.name)) && (
-                                isEmpty(showItem.list) ? (
-                                    <Text color="#FFF3CD" textAlign="center" fontSize="16px" fontWeight={400}>
-                                        Poor guy. You don&apos;t have anything.
-                                    </Text>
-                                ) : (
-                                    <Carousel
-                                        NftList={showItem}
-                                        choiseItem={showItem.name === 'urn' ? choiseUrn : choiseBone}
-                                        selectItem={(item) => {
-                                            if (showItem.name === 'urn') {
-                                                setChoiseUrn(item);
-                                            }
-                                            if (showItem.name === 'bone') {
-                                                setChoiseBone(item);
-                                            }
-                                        }}
-                                    />
-                                )
-                            )
-                        }
+                            ) : (
+                                <Carousel
+                                    NftList={showItem}
+                                    choiseItem={showItem.name === 'urn' ? choiseUrn : choiseBone}
+                                    selectItem={(item) => {
+                                        if (showItem.name === 'urn') {
+                                            setChoiseUrn(item);
+                                        }
+                                        if (showItem.name === 'bone') {
+                                            setChoiseBone(item);
+                                        }
+                                    }}
+                                />
+                            ))}
                     </Flex>
                 </Flex>
-
             </Box>
         </Layout>
     );
