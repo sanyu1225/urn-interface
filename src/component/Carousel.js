@@ -54,6 +54,8 @@ function Carousel({ NftList, selectItem, choiseItem }) {
                 />
             )}
             <Swiper
+                mousewheel
+                cssMode
                 spaceBetween={14}
                 onSwiper={(s) => {
                     setSwiper(s);
