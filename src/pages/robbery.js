@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useMemo } from 'react';
-// import { useState, useEffect, useRef} from 'react';
 import Image from 'next/image';
 import useSound from 'use-sound';
 import PropTypes from 'prop-types';
@@ -21,10 +20,8 @@ import {
     Textarea,
     Center,
 } from '@chakra-ui/react';
-// import { Box, Flex, Text, Button, Input, Image, Grid } from '@chakra-ui/react';
-import RobButton from 'src/component/RobBlock';
 import { isEmpty } from '@/plugin/lodash';
-import { queryUrnData, CREATOR_ADDRESS } from '../constant';
+import { queryAllUrnData, CREATOR_ADDRESS } from '../constant';
 import { useWalletContext } from '../context';
 import Layout from '../layout';
 import useCusToast from '../hooks/useCusToast';
@@ -79,7 +76,6 @@ const fakeAddressList = [{
 }];
 
 const Robbery = ({ isSupportWebp }) => {
-    console.log('robbery page');
     const [copyToClipboard] = useCopyToClipboard();
     const [choiseUrn, setChoiseUrn] = useState({});
     const [playButton] = useSound(ButtonClickAudio);
@@ -92,7 +88,7 @@ const Robbery = ({ isSupportWebp }) => {
     const { toastError } = useCusToast();
 
     const [result, reexecuteQuery] = useQuery({
-        query: queryUrnData,
+        query: queryAllUrnData,
         variables: {
             address,
             offset: 0,
@@ -100,9 +96,8 @@ const Robbery = ({ isSupportWebp }) => {
         },
     });
 
-    const { data, fetching } = result;
-    console.log('data: ', data);
-    const UrnList = data && data?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden_urm');
+    const { data } = result;
+    const UrnList = data && data?.current_token_ownerships;
 
     useEffect(() => {
         if (connected) {
@@ -266,7 +261,7 @@ const Robbery = ({ isSupportWebp }) => {
                     >
                         {
                             fakeAddressList?.length && fakeAddressList.map((item, index) => (
-                                <Flex flexWrap="wrap" borderBottom="1px solid #383732" mt="12px">
+                                <Flex key={index} flexWrap="wrap" borderBottom="1px solid #383732" mt="12px">
                                     <Flex
                                         justifyContent="flex-start"
                                         w="100%"
