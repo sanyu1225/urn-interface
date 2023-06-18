@@ -60,7 +60,7 @@ const Altar = ({ isSupportWebp }) => {
     const { data, fetching, error } = result;
     console.log('data: ', data);
     console.log('error: ', error);
-    const UrnList = data && data?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden urn');
+    const UrnList = data && data?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden_urn');
 
     useEffect(() => {
         if (connected) {
@@ -80,7 +80,7 @@ const Altar = ({ isSupportWebp }) => {
         if (choiseUrn.name === 'urn') {
             boneNameList = ['arm', 'leg', 'hip', 'chest', 'skull'];
         }
-        if (choiseUrn.name === 'golden urn') {
+        if (choiseUrn.name === 'golden_urn') {
             boneNameList = ['golden arm', 'golden leg', 'golden hip', 'golden chest', 'golden skull'];
         }
         const boneList = data && data?.current_token_ownerships?.filter((item) => boneNameList.includes(item?.name));
