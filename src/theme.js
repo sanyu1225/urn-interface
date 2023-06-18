@@ -58,7 +58,19 @@ export const theme = extendTheme({
         color: '#141414',
       },
     },
+    Textarea: {
+      baseStyle: {
+        color: '#',
+        borderColor: '#FFF3CD',
+      },
+    },
     Input: {
+      baseStyle: {
+        field: {
+          color: '#FFF3CD',
+          borderColor: '#FFF3CD',
+        },
+      },
       sizes: {
         md: {
           field: {

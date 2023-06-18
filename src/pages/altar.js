@@ -111,10 +111,10 @@ const Altar = ({ isSupportWebp }) => {
         const res = await mint('burn_and_fill', params);
         console.log('res: ', res);
         if (res) {
-            console.log('todo reload nft.');
-            reexecuteQuery();
+            setTimeout(() => {
+                reexecuteQuery();
+            }, 3000);
         }
-        playButton();
     };
 
     useEffect(() => {
