@@ -53,7 +53,7 @@ const Landing = ({ isSupportWebp }) => (
         <Grid w="100%" justifyContent="center">
           <Button
             as={NextLink}
-            href="/graveyard"
+            href="/merchant"
             zIndex={2}
             mt="20px"
             mb="16px"
