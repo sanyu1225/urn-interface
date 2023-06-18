@@ -1,21 +1,21 @@
-import { useState } from 'react';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
-import { Box, Flex, Text, Button, Link } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useQuery } from 'urql';
 import useSound from 'use-sound';
-import { bounceInAnimation } from '../utils/animation';
-import Layout from '../layout';
-import { useWalletContext } from '../context';
-import HomeBg from '../assets/images/graveyard/graveyard_1920_x2.jpg';
-import HomeBgWebp from '../assets/images/graveyard/graveyard_1920_x2.webp';
+
+import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
+
+import BoneEffect1Img from '../assets/images/graveyard/bone_effect_1.png';
+import BoneEffect2Img from '../assets/images/graveyard/bone_effect_2.png';
+import ButtImg from '../assets/images/graveyard/butt.png';
 import HomeBaseBg from '../assets/images/graveyard/graveyard_1024.jpg';
 import HomeBaseBgWebp from '../assets/images/graveyard/graveyard_1024.webp';
 import Home1440Bg from '../assets/images/graveyard/graveyard_1440_x2.jpg';
 import Home1440BgWebp from '../assets/images/graveyard/graveyard_1440_x2.webp';
-import TombstoneImg from '../assets/images/graveyard/tombstone.png';
-import TombstoneImgWebp from '../assets/images/graveyard/tombstone.webp';
-import SkullImg from '../assets/images/graveyard/skull.svg';
+import HomeBg from '../assets/images/graveyard/graveyard_1920_x2.jpg';
+import HomeBgWebp from '../assets/images/graveyard/graveyard_1920_x2.webp';
 import SignpostImg1 from '../assets/images/graveyard/signpost_1.png';
 import SignpostImg1Webp from '../assets/images/graveyard/signpost_1.webp';
 import SignpostImg2 from '../assets/images/graveyard/signpost_2.png';
@@ -24,10 +24,14 @@ import SignpostImg3 from '../assets/images/graveyard/signpost_3.png';
 import SignpostImg3Webp from '../assets/images/graveyard/signpost_3.webp';
 import SignpostImg4 from '../assets/images/graveyard/signpost_4.png';
 import SignpostImg4Webp from '../assets/images/graveyard/signpost_4.webp';
-import BoneEffect1Img from '../assets/images/graveyard/bone_effect_1.png';
-import BoneEffect2Img from '../assets/images/graveyard/bone_effect_2.png';
-import ButtImg from '../assets/images/graveyard/butt.png';
+import SkullImg from '../assets/images/graveyard/skull.svg';
+import TombstoneImg from '../assets/images/graveyard/tombstone.png';
+import TombstoneImgWebp from '../assets/images/graveyard/tombstone.webp';
 import FartAudio from '../assets/music/fart.mp3';
+import { CREATOR_ADDRESS, queryShovelData } from '../constant';
+import { useWalletContext } from '../context';
+import Layout from '../layout';
+import { bounceInAnimation } from '../utils/animation';
 
 const CustomLink = ({ children, right, top, path, transform, disabled = false }) => (
     <Link
@@ -55,10 +59,11 @@ const CustomLink = ({ children, right, top, path, transform, disabled = false })
 );
 
 const Graveyard = ({ isSupportWebp }) => {
-    const { mint } = useWalletContext();
+    const { connected, waitForTransaction, account, mint } = useWalletContext();
     const [showBone, setShowBone] = useState(false);
     const [showButt, setshowButt] = useState(false);
     const [playFart] = useSound(FartAudio);
+    const address = account && account.address;
 
     const tombstoneHandler = () => {
         if (!showBone && !showButt) {
@@ -74,6 +79,28 @@ const Graveyard = ({ isSupportWebp }) => {
             }, 3500);
         }
     };
+
+    const [result, reexecuteQuery] = useQuery({
+        query: queryShovelData,
+        variables: {
+            address,
+            creator_address: CREATOR_ADDRESS,
+        },
+    });
+
+    const { data, fetching, error } = result;
+    const shovelAmount = (data && data.current_token_ownerships[0]?.amount) ?? 0;
+
+    console.log(`💥 data: ${JSON.stringify(data, null, '	')}`);
+    console.log(`💥 queryShovelData error: ${JSON.stringify(error, null, '	')}`);
+
+    const digButtonText = () => {
+        if (connected) {
+            return shovelAmount > 0 ? 'Dig' : 'Poor Guy';
+        }
+        return 'Not Connected';
+    };
+
     return (
         <Layout>
             <Box
@@ -85,8 +112,16 @@ const Graveyard = ({ isSupportWebp }) => {
                 }}
                 bgRepeat="no-repeat"
                 bgSize="100% 100%"
-                minH={{ base: '768px', mid: '900px', desktop: '1080px' }}
-                minW={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
+                minH={{
+                    base: '768px',
+                    mid: '900px',
+                    desktop: '1080px',
+                }}
+                minW={{
+                    base: '1024px',
+                    mid: '1440px',
+                    desktop: '1920px',
+                }}
                 position="relative"
             >
                 <Box
@@ -96,19 +131,26 @@ const Graveyard = ({ isSupportWebp }) => {
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
                     w={{ base: '204px', mid: '255px' }}
-                    minH={{ base: '287px', mid: '360px', desktop: '360px' }}
+                    minH={{
+                        base: '287px',
+                        mid: '360px',
+                        desktop: '360px',
+                    }}
                     position="absolute"
-                    bottom={{ base: '9%', mid: '8%', desktop: '13%' }}
-                    right={{ base: '39%', mid: '39%', desktop: '37%' }}
+                    bottom={{
+                        base: '9%',
+                        mid: '8%',
+                        desktop: '13%',
+                    }}
+                    right={{
+                        base: '39%',
+                        mid: '39%',
+                        desktop: '37%',
+                    }}
                     onClick={tombstoneHandler}
                     cursor="pointer"
                 >
-                    <Flex
-                        justifyContent="center"
-                        mt={{ base: '4.5rem', mid: '6rem' }}
-                        wrap="wrap"
-                        p="0 49px"
-                    >
+                    <Flex justifyContent="center" mt={{ base: '4.5rem', mid: '6rem' }} wrap="wrap" p="0 49px">
                         <Image src={SkullImg} alt="skull" />
                         <Text
                             p={{ base: '0 10px', mid: '0' }}
@@ -120,11 +162,37 @@ const Graveyard = ({ isSupportWebp }) => {
                             mb={{ base: '5px', mid: '14px' }}
                             mt={{ base: '10px', mid: '14px' }}
                         >
-                            Haha...look<br /> what I can get
+                            Haha...look
+                            <br /> what I can get
                         </Text>
-                        <Button w={{ base: '60px' }} h={{ base: '39px' }} variant="lightGray" onClick={() => mint('dig')}>
-                            Dig
+                        <Button
+                            // w={{ base: '60px' }}
+                            h={{ base: '39px' }}
+                            variant="lightGray"
+                            onClick={async () => {
+                                const hash = await mint('dig');
+                                if (hash) {
+                                    await waitForTransaction(hash);
+                                }
+                                reexecuteQuery();
+                            }}
+                            isLoading={fetching}
+                            isDisabled={!connected || shovelAmount === 0}
+                        >
+                            {digButtonText()}
                         </Button>
+                        <Text
+                            p={{ base: '0 10px', mid: '0' }}
+                            w="100%"
+                            textAlign="center"
+                            color="#F3F3F3"
+                            fontSize="14px"
+                            fontWeight={500}
+                            mb={{ base: '5px', mid: '14px' }}
+                            mt={{ base: '10px', mid: '14px' }}
+                        >
+                            {shovelAmount} shovel left
+                        </Text>
                     </Flex>
                     <Box
                         bgImage={{
@@ -188,11 +256,7 @@ const Graveyard = ({ isSupportWebp }) => {
                         w="325px"
                         position="relative"
                     >
-                        <CustomLink
-                            path="/merchant"
-                            right={{ base: '28px' }}
-                            top={{ base: '68px', mid: '75px' }}
-                        >
+                        <CustomLink path="/merchant" right={{ base: '28px' }} top={{ base: '68px', mid: '75px' }}>
                             Go to merchant
                         </CustomLink>
                     </Box>
@@ -206,11 +270,8 @@ const Graveyard = ({ isSupportWebp }) => {
                         w="325px"
                         position="relative"
                     >
-                        <CustomLink
-                            right={{ base: '70px' }}
-                            top={{ base: '15px', mid: '20px' }}
-                            path="/altar"
-                        >Go to altar
+                        <CustomLink right={{ base: '70px' }} top={{ base: '15px', mid: '20px' }} path="/altar">
+                            Go to altar
                         </CustomLink>
                     </Box>
                     <Box
@@ -229,7 +290,10 @@ const Graveyard = ({ isSupportWebp }) => {
                             top={{ base: '20px' }}
                             transform={{ base: 'scale(0.8)' }}
                             disabled
-                        >Go to reincarnation<br />(Coming soon)
+                        >
+                            Go to reincarnation
+                            <br />
+                            (Coming soon)
                         </CustomLink>
                     </Box>
                     <Box
@@ -241,9 +305,7 @@ const Graveyard = ({ isSupportWebp }) => {
                         h={{ base: '95px', mid: '105px' }}
                         w="325px"
                     />
-
                 </Box>
-
             </Box>
         </Layout>
     );
