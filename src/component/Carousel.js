@@ -95,7 +95,7 @@ const Carousel = ({
                                 color="#FFF3CD"
                                 fontWeight="600"
                             >
-                                {item?.current_token_data?.default_properties?.ASH ?? ''}
+                                {item?.token_properties?.point ?? ''}
                             </Text>
                         </Box>
                     </SwiperSlide>
