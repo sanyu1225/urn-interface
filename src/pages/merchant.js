@@ -248,10 +248,12 @@ const Merchant = ({ isSupportWebp }) => {
                                     mt={{ base: '10px', mid: '12px' }}
                                     variant="dark"
                                     onClick={async () => {
-                                        const tx = await mint('mint_shovel');
-                                        await waitForTransaction(tx);
-                                        playButton();
-                                        checkMintEnabled();
+                                        const txHash = await mint('mint_shovel');
+                                        if (txHash) {
+                                            await waitForTransaction(txHash);
+                                            playButton();
+                                            checkMintEnabled();
+                                        }
                                     }}
                                     isDisabled={!isShovelEnabled}
                                 >
@@ -290,10 +292,12 @@ const Merchant = ({ isSupportWebp }) => {
                                     mt={{ base: '10px', mid: '12px' }}
                                     variant="dark"
                                     onClick={async () => {
-                                        const tx = await mint('mint_urn');
-                                        await waitForTransaction(tx);
-                                        playButton();
-                                        checkMintEnabled();
+                                        const txHash = await mint('mint_urn');
+                                        if (txHash) {
+                                            await waitForTransaction(txHash);
+                                            playButton();
+                                            checkMintEnabled();
+                                        }
                                     }}
                                     isDisabled={!isUrnEnabled}
                                 >
