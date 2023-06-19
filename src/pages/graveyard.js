@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery } from 'urql';
 import useSound from 'use-sound';
 
@@ -94,11 +94,24 @@ const Graveyard = ({ isSupportWebp }) => {
     console.log(`💥 shovelAmount: ${JSON.stringify(shovelAmount, null, '  ')}`);
     console.log(`💥 queryShovelData error: ${JSON.stringify(error, null, ' ')}`);
 
-    const digButtonText = () => {
+    const digButtonText = useMemo(() => {
         if (connected) {
             return shovelAmount > 0 ? 'Dig' : 'Poor Guy';
         }
         return 'Not Connected';
+    }, [connected, shovelAmount]);
+
+    const digHandler = async () => {
+        try {
+            const hash = await mint('dig');
+            if (!hash) return;
+            await waitForTransaction(hash);
+            setTimeout(() => {
+                reexecuteQuery();
+            }, 1000);
+        } catch (error) {
+            console.error('error: ', error);
+        }
     };
 
     return (
@@ -169,17 +182,11 @@ const Graveyard = ({ isSupportWebp }) => {
                             // w={{ base: '60px' }}
                             h={{ base: '39px' }}
                             variant="lightGray"
-                            onClick={async () => {
-                                const hash = await mint('dig');
-                                if (hash) {
-                                    await waitForTransaction(hash);
-                                }
-                                reexecuteQuery();
-                            }}
+                            onClick={digHandler}
                             isLoading={fetching}
                             isDisabled={!connected || shovelAmount === 0}
                         >
-                            {digButtonText()}
+                            {digButtonText}
                         </Button>
                         <Text
                             p={{ base: '0 10px', mid: '0' }}
