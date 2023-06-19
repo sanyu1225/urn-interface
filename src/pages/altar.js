@@ -103,26 +103,30 @@ const Altar = ({ isSupportWebp }) => {
             });
         }
     };
+    const functionNameMap = {
+        urn: 'burn_and_fill',
+        golden_urn: 'burn_and_fill_golden',
+    };
 
     const putInHandler = async () => {
         console.log('todo put in contract.', choiseBone);
         console.log('todo put in contract.', choiseUrn);
-        const params = [choiseUrn.property_version, choiseBone.property_version, choiseBone.current_token_data.name];
-        let functionName = '';
-        if (choiseUrn.name === 'urn') {
-            functionName = 'burn_and_fill';
-        } else if (choiseUrn.name === 'golden_urn') {
-            functionName = 'burn_and_fill_golden';
-        } else {
-            return;
-        }
+
+        const params = [
+            choiseUrn.property_version,
+            choiseBone.property_version,
+            choiseBone.current_token_data.name,
+        ];
+
+        const functionName = functionNameMap[choiseUrn.name];
+        if (!functionName) return;
+
         const res = await mint(functionName, params);
         console.log('res: ', res);
-        if (res) {
-            setTimeout(() => {
-                reexecuteQuery();
-            }, 3000);
-        }
+
+        if (!res) return;
+
+        setTimeout(reexecuteQuery, 3000);
     };
 
     useEffect(() => {
