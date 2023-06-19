@@ -130,8 +130,8 @@ const Robbery = ({ isSupportWebp }) => {
     const submitRob = async () => {
         try {
             if (modalType === 'random') {
-                if (inputAddress === '') {
-                    toastError('Address is required');
+                if (inputMessage === '') {
+                    toastError('Message is required');
                     return;
                 }
 
@@ -362,39 +362,41 @@ const Robbery = ({ isSupportWebp }) => {
                                     )
                                 }
                             </Flex>
-                            <Box w="100%" mb="12px">
-                                <Text color="#FFF3CD" textAlign="left" fontSize="16px" fontWeight={700}>
-                                    Address
-                                </Text>
-                            </Box>
-                            <Input placeholder="0x..." />
+
                             {
                                 modalType === 'specific' && (
                                     <>
                                         <Box w="100%" m="12px 0">
-                                            <Text
-                                                color="#FFF3CD"
-                                                textAlign="left"
-                                                fontSize="16px"
-                                                fontWeight={700}
-                                                onChange={(e) => setInputAddress(e.target.value)}
-                                            >
-                                                Message
+                                            <Text color="#FFF3CD" textAlign="left" fontSize="16px" fontWeight={700}>
+                                                Address
                                             </Text>
                                         </Box>
-                                        <Textarea
-                                            placeholder="Text"
-                                            h="60px"
-                                            borderColor="#FFF3CD"
-                                            _focus={{
-                                                borderColor: '#FFF3CD',
-                                                boxShadow: 'none',
-                                            }}
-                                            onChange={(e) => setInputMessage(e.target.value)}
-                                        />
+                                        <Input placeholder="0x..." />
+
                                     </>
                                 )
                             }
+                            <Box w="100%" m="12px 0">
+                                <Text
+                                    color="#FFF3CD"
+                                    textAlign="left"
+                                    fontSize="16px"
+                                    fontWeight={700}
+                                    onChange={(e) => setInputAddress(e.target.value)}
+                                >
+                                    Message
+                                </Text>
+                            </Box>
+                            <Textarea
+                                placeholder="Text"
+                                h="60px"
+                                borderColor="#FFF3CD"
+                                _focus={{
+                                    borderColor: '#FFF3CD',
+                                    boxShadow: 'none',
+                                }}
+                                onChange={(e) => setInputMessage(e.target.value)}
+                            />
 
                             <Center mt="24px">
                                 <Button isDisabled={!!isEmpty(UrnList)} onClick={submitRob}>
