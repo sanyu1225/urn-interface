@@ -108,7 +108,15 @@ const Altar = ({ isSupportWebp }) => {
         console.log('todo put in contract.', choiseBone);
         console.log('todo put in contract.', choiseUrn);
         const params = [choiseUrn.property_version, choiseBone.property_version, choiseBone.current_token_data.name];
-        const res = await mint('burn_and_fill', params);
+        let functionName = '';
+        if (choiseUrn.name === 'urn') {
+            functionName = 'burn_and_fill';
+        } else if (choiseUrn.name === 'golden_urn') {
+            functionName = 'burn_and_fill_golden';
+        } else {
+            return;
+        }
+        const res = await mint(functionName, params);
         console.log('res: ', res);
         if (res) {
             setTimeout(() => {
