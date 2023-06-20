@@ -390,6 +390,7 @@ const Robbery = ({ isSupportWebp }) => {
                             <Textarea
                                 placeholder="Text"
                                 h="60px"
+                                color="#FFF3CD"
                                 borderColor="#FFF3CD"
                                 _focus={{
                                     borderColor: '#FFF3CD',
