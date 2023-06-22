@@ -68,7 +68,7 @@ const Altar = ({ isSupportWebp }) => {
     });
 
     const { data, fetching, error } = result;
-    const { urnData, urnFetching, urnError } = urnRsult;
+    const { data: urnData, urnFetching, urnError } = urnRsult;
 
     console.log('data: ', data);
     console.log('urnData: ', urnData);
