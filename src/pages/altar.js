@@ -191,6 +191,8 @@ const Altar = ({ isSupportWebp }) => {
                         bottom="0"
                         onClick={showGhostHandler}
                         cursor="pointer"
+                        transition="all 0.2s ease-in-out"
+                        _hover={{ transform: 'scale(0.98)' }}
                     />
                     <Box
                         bgImage={{
