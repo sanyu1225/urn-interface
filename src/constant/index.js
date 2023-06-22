@@ -115,7 +115,7 @@ export const getItemQuery = (item) => gql`
 `;
 
 export const queryAllUrnData = gql`
-    query CurrentTokens($address: String, $offset: Int, $creator_address: String) {
+    query CurrentTokens($address: String, $creator_address: String) {
         current_token_ownerships(
             where: {
                 owner_address: { _eq: $address }
@@ -125,7 +125,6 @@ export const queryAllUrnData = gql`
                 collection_name: { _eq: "urn" }
                 creator_address: { _eq: $creator_address }
             }
-            offset: $offset
         ) {
             token_data_id_hash
             name

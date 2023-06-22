@@ -19,7 +19,6 @@ const RobButton = ({ choiseUrnPropertyVersion, victimAddress, isDisabled, isLoad
         query: queryAllUrnData,
         variables: {
             address: victimAddress,
-            offset: 0,
             creator_address: CREATOR_ADDRESS,
         },
     });
