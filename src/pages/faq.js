@@ -75,7 +75,7 @@ const FAQ = ({ isSupportWebp }) => {
                             w="300px"
                             position="absolute"
                             top="20%"
-                            left="20%"
+                            left={{ base: '14%', mid: '20%' }}
                         >
                             <Typewriter key={info} content={info} onComplete={handlePause} />
                         </Box>

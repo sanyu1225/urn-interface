@@ -175,7 +175,7 @@ const Robbery = ({ isSupportWebp }) => {
                 }}
                 bgRepeat="no-repeat"
                 bgSize={{ base: '100% 100%', desktop: 'cover' }}
-                minH={{ base: '800px', mid: '800px', desktop: '800px' }}
+                minH={{ base: '768px', mid: '800px', desktop: '800px' }}
                 maxH={{ base: '768px', mid: '900px', desktop: '1080px' }}
                 minW={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
                 bgPosition="bottom"
@@ -187,7 +187,7 @@ const Robbery = ({ isSupportWebp }) => {
                     bgSize="100% 100%"
                     w="444px"
                     position="absolute"
-                    bottom="42px"
+                    bottom={{ base: '0', mid: '42px' }}
                     left={{ base: '15px', mid: '190px', desktop: '433px' }}
                     justifyContent="center"
                 >
@@ -236,7 +236,7 @@ const Robbery = ({ isSupportWebp }) => {
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
                     position="absolute"
-                    bottom={{ base: '211px' }}
+                    bottom={{ base: '20%' }}
                     right={{ base: '65px', mid: '210px', desktop: '440px' }}
                     w={{ base: '510px' }}
                     h={{ base: '599px' }}
