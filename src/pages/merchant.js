@@ -194,7 +194,7 @@ const Merchant = ({ isSupportWebp }) => {
                     minH={{ base: '137px' }}
                     position="absolute"
                     bottom="39vh"
-                    right={{ base: '26%' }}
+                    right={{ base: '26%', desktop: '29%' }}
                     display={showFire ? 'block' : 'none'}
                     animation={`${fadeIn} 2s linear `}
                 />
