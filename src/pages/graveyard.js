@@ -162,7 +162,7 @@ const Graveyard = ({ isSupportWebp }) => {
                     }}
                     onClick={tombstoneHandler}
                     cursor="pointer"
-                    transition="all 0.2s ease-in-out"
+                    transition="transform 0.2s ease 0s"
                     _hover={{ transform: 'scale(0.98)' }}
                 >
                     <Flex justifyContent="center" mt={{ base: '4.5rem', mid: '6rem' }} wrap="wrap" p="0 49px">

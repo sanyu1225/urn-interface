@@ -19,16 +19,16 @@ import KeyboardAudio from '@/assets/music/keyboard.mp3';
 
 const FAQ_LIST = [{
     title: 'What will I earn?',
-}, {
-    title: 'Fun and a god damn cool NFT',
+    description: 'you earn fun',
 }, {
     title: 'Will you rug?',
-}, {
-    title: 'Nah, soft rug at most',
+    description: 'Nah, soft rug at most',
 }, {
     title: 'What will happen if I fill the urn?',
+    description: 'Congratulations! Your grandma has now secured her eternal digital residency on the blockchain.',
 }, {
-    title: 'Congrats, your grandma lives on-chain permanently.',
+    title: 'What the heck are you doing?',
+    description: "Hold onto your hats, this wild ride is just getting started - we're only in phase one! For now, kick back and relish the delicious chaos of our gameplay NFTs.",
 }];
 
 const FAQ = ({ isSupportWebp }) => {
@@ -44,9 +44,8 @@ const FAQ = ({ isSupportWebp }) => {
     };
 
     const showInfo = (item) => {
-        // TODO: show info message not title..
         if (info === item.title) return;
-        setInfo(item.title);
+        setInfo(item.description);
         handlePlay();
     };
 
@@ -106,7 +105,7 @@ const FAQ = ({ isSupportWebp }) => {
                     bottom="0"
                     left={{ base: '30%', mid: '31%', desktop: '35%' }}
                 >
-                    <Grid position="absolute" bottom={{ base: '11%', mid: '15%' }} textAlign="center" justifyItems="center" w="85%">
+                    <Grid position="absolute" bottom={{ base: '20%', mid: '25%' }} textAlign="center" justifyItems="center" w="85%">
                         <Text color="#FFF3CD" fontSize={{ base: '24px', mid: '28px' }} fontWeight={700}>
                             Need some help?
                         </Text>

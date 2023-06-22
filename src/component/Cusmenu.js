@@ -10,7 +10,7 @@ const Cusmenu = ({ buttonText, children }) => (
             color="#FFF3CD"
             background="#292229"
             backgroundColor="#292229"
-            transition="all 0.2s ease-in-out"
+            transition="transform 0.2s ease 0s"
             borderRadius="10"
             fontSize="16px"
             fontWeight="600"
