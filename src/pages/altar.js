@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'urql';
 import useSound from 'use-sound';
+
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import AltarImg from '../assets/images/altar/altar.png';
 import AltarImgWebp from '../assets/images/altar/altar.webp';
@@ -25,9 +26,10 @@ import UrnItemImg from '../assets/images/altar/urn_item.png';
 import UrnItemImgWebp from '../assets/images/altar/urn_item.webp';
 import ButtonClickAudio from '../assets/music/clickButton.mp3';
 import LaughAudio from '../assets/music/laugh.mp3';
-import { CREATOR_ADDRESS, queryAltarData } from '../constant';
+import { CREATOR_ADDRESS, queryAllUrnData, queryAltarData } from '../constant';
 import { useWalletContext } from '../context';
 import Layout from '../layout';
+
 import Carousel from '@/component/Carousel';
 import { isEmpty } from '@/plugin/lodash';
 import { fadeup } from '@/utils/animation';
@@ -49,6 +51,14 @@ const Altar = ({ isSupportWebp }) => {
     const { connected, account, mint, waitForTransaction } = useWalletContext();
     const address = account && account.address;
 
+    const [urnRsult, reexecuteUrnQuery] = useQuery({
+        query: queryAllUrnData,
+        variables: {
+            address,
+            creator_address: CREATOR_ADDRESS,
+        },
+    });
+
     const [result, reexecuteQuery] = useQuery({
         query: queryAltarData,
         variables: {
@@ -58,9 +68,14 @@ const Altar = ({ isSupportWebp }) => {
     });
 
     const { data, fetching, error } = result;
+    const { data: urnData, urnFetching, urnError } = urnRsult;
+
     console.log('data: ', data);
+    console.log('urnData: ', urnData);
     console.log('error: ', error);
-    const UrnList = data && data?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden_urn');
+    console.log('urnError: ', urnError);
+    const UrnList = urnData && urnData?.current_token_ownerships;
+    //  = data && data?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden_urn');
 
     const resetState = () => {
         setChoiseUrn({});
@@ -70,11 +85,12 @@ const Altar = ({ isSupportWebp }) => {
 
     useEffect(() => {
         if (connected) {
-            reexecuteQuery();
+            // reexecuteQuery();
+            reexecuteUrnQuery();
         } else {
             resetState();
         }
-    }, [connected, reexecuteQuery]);
+    }, [connected, reexecuteQuery, reexecuteUrnQuery]);
 
     useEffect(() => {
         if (!choiseUrn || choiseUrn.length === 0) {
@@ -89,7 +105,7 @@ const Altar = ({ isSupportWebp }) => {
         const boneList = data?.current_token_ownerships?.filter((item) => boneNameList.includes(item?.name)) || [];
 
         setBoneList(boneList);
-    }, [choiseUrn, data]);
+    }, [choiseUrn, data, urnData]);
 
     const showItemHandler = async (item) => {
         playButton();
@@ -103,11 +119,7 @@ const Altar = ({ isSupportWebp }) => {
     };
 
     const putInHandler = async () => {
-        const params = [
-            choiseUrn.property_version,
-            choiseBone.property_version,
-            choiseBone.current_token_data.name,
-        ];
+        const params = [choiseUrn.property_version, choiseBone.property_version, choiseBone.current_token_data.name];
 
         const functionName = functionNameMap[choiseUrn.name];
         if (!functionName) return;
@@ -116,15 +128,13 @@ const Altar = ({ isSupportWebp }) => {
         if (!hash) return;
         await waitForTransaction(hash);
         setTimeout(() => {
-            setChoiseUrn((state) => (
-                {
-                    ...state,
-                    token_properties: {
-                        ...state.token_properties,
-                        ash: Number(state.token_properties.ash) + Number(choiseBone.token_properties.point),
-                    },
-                }
-            ));
+            setChoiseUrn((state) => ({
+                ...state,
+                token_properties: {
+                    ...state.token_properties,
+                    ash: Number(state.token_properties.ash) + Number(choiseBone.token_properties.point),
+                },
+            }));
             setChoiseBone([]);
             setShowItem({ name: '', list: [] });
             reexecuteQuery();
@@ -307,7 +317,7 @@ const Altar = ({ isSupportWebp }) => {
                                     variant="primary"
                                     onClick={() => showItemHandler('urn')}
                                     isDisabled={!isUrnEnabled()}
-                                    isLoading={fetching}
+                                    isLoading={urnFetching}
                                 >
                                     {urnButtonText}
                                 </Button>
