@@ -32,7 +32,7 @@ import TombstoneImg from '../assets/images/graveyard/tombstone.png';
 import TombstoneImgWebp from '../assets/images/graveyard/tombstone.webp';
 import FartAudio from '../assets/music/fart.mp3';
 import { CREATOR_ADDRESS, getItemQuery } from '../constant';
-import { interpretTransaction, useWalletContext } from '../context';
+import { useWalletContext } from '../context';
 import Layout from '../layout';
 import { bounceInAnimation } from '../utils/animation';
 import { randomInRange } from '../utils/randomInRange';
@@ -64,6 +64,15 @@ const CustomLink = ({ children, right, top, path, transform, disabled = false })
 
 const baseBoneNames = ['arm', 'leg', 'hip', 'chest', 'skull'];
 const goldenBoneNames = baseBoneNames.map((bone) => `golden ${bone}`);
+
+const getItemFromTransaction = (transaction) => {
+    const event = transaction.events.find(
+        (event) => event.type === '0x3::token::DepositEvent'
+        && event.guid
+        && event.guid.account_address === transaction.sender,
+    );
+    return event.data.id.token_data_id.name;
+};
 
 const showConfetti = (itemName) => {
     let image;
@@ -171,7 +180,7 @@ const Graveyard = ({ isSupportWebp }) => {
         try {
             const transaction = await mint('dig');
             if (!transaction) return;
-            const itemName = interpretTransaction(transaction);
+            const itemName = getItemFromTransaction(transaction);
             showConfetti(itemName);
             setTimeout(() => {
                 reexecuteQuery();

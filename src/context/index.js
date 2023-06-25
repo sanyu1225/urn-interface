@@ -19,7 +19,7 @@ export function useWalletContext() {
     return useContext(Context);
 }
 
-export const interpretTransaction = (transaction) => {
+const interpretTransaction = (transaction) => {
     if (transaction.payload.function.includes('burn_and_fill')) {
         const event = transaction.events.find(
             (event) => event.type === '0x3::token::MutateTokenPropertyMapEvent'
