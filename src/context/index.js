@@ -28,14 +28,14 @@ export const interpretTransaction = (transaction) => {
         );
         const hexString = event.data.values[0];
         const decimal = parseInt(hexString, 16);
-        return `your urn now contains ${decimal} ashes`;
+        return `Your urn now contains ${decimal} ashes`;
     }
     const event = transaction.events.find(
         (event) => event.type === '0x3::token::DepositEvent'
         && event.guid
         && event.guid.account_address === transaction.sender,
     );
-    return `you've got a ${event.data.id.token_data_id.name}`;
+    return `You've got a ${event.data.id.token_data_id.name}`;
 };
 
 export function ContextProvider({ children }) {

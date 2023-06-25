@@ -247,7 +247,7 @@ const Altar = ({ isSupportWebp }) => {
                             </Text>
                             <Button
                                 variant="putIn"
-                                isDisabled={!connected || isEmpty(choiseUrn)}
+                                isDisabled={!connected || isEmpty(choiseUrn) || isEmpty(choiseBone)}
                                 isLoading={fetching}
                                 onClick={putInHandler}
                             >
