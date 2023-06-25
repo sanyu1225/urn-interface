@@ -136,9 +136,9 @@ const Robbery = ({ isSupportWebp }) => {
                 }
 
                 const params = [choiseUrn.property_version];
-                const res = await mint('random_rob', params);
-                console.log('res: ', res);
-                if (res) {
+                const transaction = await mint('random_rob', params);
+                console.log('transaction: ', transaction);
+                if (transaction) {
                     setTimeout(() => {
                         closeModalHandler();
                         reexecuteQuery();
@@ -150,9 +150,9 @@ const Robbery = ({ isSupportWebp }) => {
                     return;
                 }
                 const params = [choiseUrn.property_version];
-                const res = await mint('rob', params);
-                console.log('res: ', res);
-                if (res) {
+                const transaction = await mint('rob', params);
+                console.log('transaction: ', transaction);
+                if (transaction) {
                     setTimeout(() => {
                         closeModalHandler();
                         reexecuteQuery();

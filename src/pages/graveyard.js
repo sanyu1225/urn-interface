@@ -1,13 +1,17 @@
 import Image from 'next/image';
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { confetti } from 'tsparticles-confetti';
 import { useQuery } from 'urql';
 import useSound from 'use-sound';
 
 import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
 import BoneEffect1Img from '../assets/images/graveyard/bone_effect_1.png';
 import BoneEffect2Img from '../assets/images/graveyard/bone_effect_2.png';
+import LittleNormalBone from '../assets/images/graveyard/bone_normal.svg';
+import LittleGoldenBone from '../assets/images/graveyard/bone_golden.svg';
+import LittleKnife from '../assets/images/graveyard/knife.svg';
 import ButtImg from '../assets/images/graveyard/butt.png';
 import HomeBaseBg from '../assets/images/graveyard/graveyard_1024.jpg';
 import HomeBaseBgWebp from '../assets/images/graveyard/graveyard_1024.webp';
@@ -28,9 +32,10 @@ import TombstoneImg from '../assets/images/graveyard/tombstone.png';
 import TombstoneImgWebp from '../assets/images/graveyard/tombstone.webp';
 import FartAudio from '../assets/music/fart.mp3';
 import { CREATOR_ADDRESS, getItemQuery } from '../constant';
-import { useWalletContext } from '../context';
+import { interpretTransaction, useWalletContext } from '../context';
 import Layout from '../layout';
 import { bounceInAnimation } from '../utils/animation';
+import { randomInRange } from '../utils/randomInRange';
 
 const CustomLink = ({ children, right, top, path, transform, disabled = false }) => (
     <Link
@@ -57,8 +62,69 @@ const CustomLink = ({ children, right, top, path, transform, disabled = false })
     </Link>
 );
 
+const baseBoneNames = ['arm', 'leg', 'hip', 'chest', 'skull'];
+const goldenBoneNames = baseBoneNames.map((bone) => `golden ${bone}`);
+
+const showConfetti = (itemName) => {
+    let image;
+    if (baseBoneNames.includes(itemName)) {
+        image = LittleNormalBone;
+    } else if (goldenBoneNames.includes(itemName)) {
+        image = LittleGoldenBone;
+    } else if (itemName === 'knife') {
+        image = LittleKnife;
+    } else {
+        image = LittleKnife;
+    }
+    confetti({
+        angle: randomInRange(50, 57),
+        spread: randomInRange(97, 102),
+        particleCount: randomInRange(10, 20),
+        origin: { x: 0, y: 0.7 },
+        ticks: 200,
+        gravity: 1,
+        decay: 0.94,
+        startVelocity: randomInRange(40, 60),
+        scalar: 3,
+        shapes: ['image'],
+        shapeOptions: {
+            image: [image],
+        },
+    });
+
+    confetti({
+        angle: randomInRange(132, 140),
+        spread: randomInRange(95, 99),
+        particleCount: randomInRange(10, 20),
+        origin: { x: 1, y: 0.7 },
+        ticks: 200,
+        gravity: 1,
+        decay: 0.94,
+        startVelocity: randomInRange(40, 60),
+        scalar: 3,
+        shapes: ['image'],
+        shapeOptions: {
+            image: [image],
+        },
+    });
+
+    confetti({
+        angle: randomInRange(30, 45),
+        spread: randomInRange(80, 110),
+        particleCount: randomInRange(50, 100),
+        origin: { x: 0, y: randomInRange(0.45, 0.72) },
+    });
+
+    confetti({
+        angle: randomInRange(132, 140),
+        spread: randomInRange(80, 110),
+        particleCount: randomInRange(50, 100),
+        origin: { x: 1, y: randomInRange(0.45, 0.72) },
+    });
+};
+
 const Graveyard = ({ isSupportWebp }) => {
-    const { connected, waitForTransaction, account, mint } = useWalletContext();
+    const { connected, account, mint } = useWalletContext();
     const [showBone, setShowBone] = useState(false);
     const [showButt, setshowButt] = useState(false);
     const [playFart] = useSound(FartAudio);
@@ -103,9 +169,10 @@ const Graveyard = ({ isSupportWebp }) => {
 
     const digHandler = async () => {
         try {
-            const hash = await mint('dig');
-            if (!hash) return;
-            await waitForTransaction(hash);
+            const transaction = await mint('dig');
+            if (!transaction) return;
+            const itemName = interpretTransaction(transaction);
+            showConfetti(itemName);
             setTimeout(() => {
                 reexecuteQuery();
             }, 1000);

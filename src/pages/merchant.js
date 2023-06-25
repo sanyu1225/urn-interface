@@ -32,7 +32,7 @@ export const shovelMintingPrice = '1000000';
 export const urnMintingPrice = '10000000';
 
 const Merchant = ({ isSupportWebp }) => {
-    const { mint, connected, account, getAptBalance, waitForTransaction } = useWalletContext();
+    const { mint, connected, account, getAptBalance } = useWalletContext();
     const [playButton] = useSound(ButtonClickAudio);
     const [playFire, { stop }] = useSound(FireAudio);
     const [showFire, setShowFire] = useState(false);
@@ -153,11 +153,10 @@ const Merchant = ({ isSupportWebp }) => {
                         <Button
                             variant="gold"
                             onClick={async () => {
-                                const hash = await mint('forge');
-                                if (hash) {
-                                    await waitForTransaction(hash);
+                                const transaction = await mint('forge');
+                                if (transaction) {
+                                    reexecuteQuery();
                                 }
-                                reexecuteQuery();
                                 playFire();
                             }}
                             w={{ base: '140px', mid: '148px' }}
@@ -250,10 +249,9 @@ const Merchant = ({ isSupportWebp }) => {
                                     mt={{ base: '10px', mid: '12px' }}
                                     variant="dark"
                                     onClick={async () => {
-                                        const txHash = await mint('mint_shovel');
-                                        if (txHash) {
-                                            await waitForTransaction(txHash);
-                                            playButton();
+                                        playButton();
+                                        const transaction = await mint('mint_shovel');
+                                        if (transaction) {
                                             checkMintEnabled();
                                         }
                                     }}
@@ -294,10 +292,9 @@ const Merchant = ({ isSupportWebp }) => {
                                     mt={{ base: '10px', mid: '12px' }}
                                     variant="dark"
                                     onClick={async () => {
-                                        const txHash = await mint('mint_urn');
-                                        if (txHash) {
-                                            await waitForTransaction(txHash);
-                                            playButton();
+                                        playButton();
+                                        const transaction = await mint('mint_urn');
+                                        if (transaction) {
                                             checkMintEnabled();
                                         }
                                     }}

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useMemo } from 'react';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
-import { AptosClient, CoinClient } from 'aptos';
+import { AptosClient, CoinClient, WaitForTransactionError, FailedTransactionError, ApiError } from 'aptos';
 import useCusToast from '../hooks/useCusToast';
 
 import CONTRACT_ADDR from '../constant';
@@ -19,8 +19,17 @@ export function useWalletContext() {
     return useContext(Context);
 }
 
+export const interpretTransaction = (transaction) => {
+    const event = transaction.events.find(
+        (value) => value.type === '0x3::token::DepositEvent'
+        && value.guid
+        && value.guid.account_address === transaction.sender,
+    );
+    return event.data.id.token_data_id.name;
+};
+
 export function ContextProvider({ children }) {
-    const { connect, connected, signAndSubmitTransaction, account, disconnect } = useWallet();
+    const { connect, connected, signAndSubmitTransaction, account, disconnect, wallet } = useWallet();
     const [isLoading, setLoading] = useState(false);
     const [isPlayBackground, setIsPlayBackground] = useState(true);
     const { toastSeccess, toastError, toastLoading } = useCusToast();
@@ -74,14 +83,26 @@ export function ContextProvider({ children }) {
                 type_arguments: [],
             };
             const hash = await signAndSubmitTransactionFnc(params);
-            if (hash) {
-                toastSeccess(hash);
-                return hash;
+            const transaction = await waitForTransactionWithResult(hash);
+            console.log(`💥 transaction: ${JSON.stringify(transaction, null, '  ')}`);
+            if (transaction) {
+                const itemName = interpretTransaction(transaction);
+                toastSeccess(`you've got a ${itemName}`);
+                return transaction;
             }
-            toastError('error');
+            toastError(`transaction not found, hash ${hash}`);
             return null;
         } catch (error) {
-            toastError(error);
+            if (error instanceof WaitForTransactionError) {
+                toastError(`${error.message} ${error.lastSubmittedTransaction.hash}`);
+            } else if (error instanceof FailedTransactionError) {
+                toastError(`${error.message} ${error.transaction.vm_status}`);
+            } else if (error instanceof ApiError) {
+                toastError(`${error.message} ${error.vmErrorCode}`);
+            } else {
+                toastError(error);
+            }
+            return null;
         }
     };
 
@@ -115,15 +136,28 @@ export function ContextProvider({ children }) {
         await aptosClient.waitForTransaction(txhash);
     };
 
+    const waitForTransactionWithResult = async (txhash) => {
+        const transaction = await aptosClient.waitForTransactionWithResult(txhash, { checkSuccess: true });
+        return transaction;
+    };
+
+    const getTransactionByHash = async (txhash) => {
+        const transaction = await aptosClient.getTransactionByHash(txhash);
+        return transaction;
+    };
+
     const value = useMemo(() => ({
         mint,
         wlMint,
         checkLogin,
         connect,
         connected,
+        wallet,
         getAptBalance,
         signAndSubmitTransaction,
         waitForTransaction,
+        waitForTransactionWithResult,
+        getTransactionByHash,
         isLoading,
         account,
         disconnect,

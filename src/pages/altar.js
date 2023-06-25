@@ -51,14 +51,6 @@ const Altar = ({ isSupportWebp }) => {
     const { connected, account, mint, waitForTransaction } = useWalletContext();
     const address = account && account.address;
 
-    const [urnRsult, reexecuteUrnQuery] = useQuery({
-        query: queryAllUrnData,
-        variables: {
-            address,
-            creator_address: CREATOR_ADDRESS,
-        },
-    });
-
     const [result, reexecuteQuery] = useQuery({
         query: queryAltarData,
         variables: {
@@ -67,8 +59,16 @@ const Altar = ({ isSupportWebp }) => {
         },
     });
 
+    const [urnRsult, reexecuteUrnQuery] = useQuery({
+        query: queryAllUrnData,
+        variables: {
+            address,
+            creator_address: CREATOR_ADDRESS,
+        },
+    });
+
     const { data, fetching, error } = result;
-    const { data: urnData, urnFetching, urnError } = urnRsult;
+    const { data: urnData, fetching: urnFetching, error: urnError } = urnRsult;
 
     console.log('data: ', data);
     console.log('urnData: ', urnData);
@@ -85,7 +85,7 @@ const Altar = ({ isSupportWebp }) => {
 
     useEffect(() => {
         if (connected) {
-            // reexecuteQuery();
+            reexecuteQuery();
             reexecuteUrnQuery();
         } else {
             resetState();
@@ -138,6 +138,7 @@ const Altar = ({ isSupportWebp }) => {
             setChoiseBone([]);
             setShowItem({ name: '', list: [] });
             reexecuteQuery();
+            reexecuteUrnQuery();
         }, 1000);
     };
 
@@ -292,7 +293,7 @@ const Altar = ({ isSupportWebp }) => {
                         <Flex justifyContent="space-evenly" p="0 30px" mb="20px">
                             <Box position="relative">
                                 <Image alt="img" src={isSupportWebp ? UrnItemImgWebp.src : UrnItemImg.src} />
-                                {!isEmpty(choiseUrn?.current_token_data?.default_properties?.ASH) && (
+                                {!isEmpty(choiseUrn?.token_properties?.ash) && (
                                     <Text
                                         position="absolute"
                                         top="10px"
@@ -301,7 +302,7 @@ const Altar = ({ isSupportWebp }) => {
                                         color="#FFF3CD"
                                         fontWeight="600"
                                     >
-                                        {choiseUrn?.current_token_data?.default_properties?.ASH}%
+                                        {choiseUrn?.token_properties?.ash}%
                                     </Text>
                                 )}
                             </Box>
