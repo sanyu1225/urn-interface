@@ -48,7 +48,7 @@ const Altar = ({ isSupportWebp }) => {
     const [playLaugh, { stop }] = useSound(LaughAudio);
     const [playButton] = useSound(ButtonClickAudio);
 
-    const { connected, account, mint, waitForTransaction } = useWalletContext();
+    const { connected, account, mint } = useWalletContext();
     const address = account && account.address;
 
     const [result, reexecuteQuery] = useQuery({
@@ -124,9 +124,8 @@ const Altar = ({ isSupportWebp }) => {
         const functionName = functionNameMap[choiseUrn.name];
         if (!functionName) return;
 
-        const hash = await mint(functionName, params);
-        if (!hash) return;
-        await waitForTransaction(hash);
+        const transaction = await mint(functionName, params);
+        if (!transaction) return;
         setTimeout(() => {
             setChoiseUrn((state) => ({
                 ...state,

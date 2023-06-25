@@ -20,12 +20,22 @@ export function useWalletContext() {
 }
 
 export const interpretTransaction = (transaction) => {
+    if (transaction.payload.function.includes('burn_and_fill')) {
+        const event = transaction.events.find(
+            (event) => event.type === '0x3::token::MutateTokenPropertyMapEvent'
+            && event.data
+            && event.guid.account_address === transaction.sender,
+        );
+        const hexString = event.data.values[0];
+        const decimal = parseInt(hexString, 16);
+        return `your urn now contains ${decimal} ashes`;
+    }
     const event = transaction.events.find(
-        (value) => value.type === '0x3::token::DepositEvent'
-        && value.guid
-        && value.guid.account_address === transaction.sender,
+        (event) => event.type === '0x3::token::DepositEvent'
+        && event.guid
+        && event.guid.account_address === transaction.sender,
     );
-    return event.data.id.token_data_id.name;
+    return `you've got a ${event.data.id.token_data_id.name}`;
 };
 
 export function ContextProvider({ children }) {
@@ -86,8 +96,8 @@ export function ContextProvider({ children }) {
             const transaction = await waitForTransactionWithResult(hash);
             console.log(`💥 transaction: ${JSON.stringify(transaction, null, '  ')}`);
             if (transaction) {
-                const itemName = interpretTransaction(transaction);
-                toastSeccess(`you've got a ${itemName}`);
+                const desc = interpretTransaction(transaction);
+                toastSeccess(desc);
                 return transaction;
             }
             toastError(`transaction not found, hash ${hash}`);
