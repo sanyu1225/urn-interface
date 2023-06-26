@@ -12,6 +12,7 @@ import BoneEffect2Img from '../assets/images/graveyard/bone_effect_2.png';
 import LittleNormalBone from '../assets/images/graveyard/bone_normal.svg';
 import LittleGoldenBone from '../assets/images/graveyard/bone_golden.svg';
 import LittleKnife from '../assets/images/graveyard/knife.svg';
+import GoldenShard from '../assets/images/graveyard/golden_shard.svg';
 import ButtImg from '../assets/images/graveyard/butt.png';
 import HomeBaseBg from '../assets/images/graveyard/graveyard_1024.jpg';
 import HomeBaseBgWebp from '../assets/images/graveyard/graveyard_1024.webp';
@@ -83,7 +84,7 @@ const showConfetti = (itemName) => {
     } else if (itemName === 'knife') {
         image = LittleKnife;
     } else {
-        image = LittleKnife;
+        image = GoldenShard;
     }
     confetti({
         angle: randomInRange(50, 57),
