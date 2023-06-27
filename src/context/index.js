@@ -23,8 +23,8 @@ const interpretTransaction = (transaction) => {
     if (transaction.payload.function.includes('burn_and_fill')) {
         const event = transaction.events.find(
             (event) => event.type === '0x3::token::MutateTokenPropertyMapEvent'
-            && event.data
-            && event.guid.account_address === transaction.sender,
+                && event.data
+                && event.guid.account_address === transaction.sender,
         );
         const hexString = event.data.values[0];
         const decimal = parseInt(hexString, 16);
@@ -32,8 +32,8 @@ const interpretTransaction = (transaction) => {
     }
     const event = transaction.events.find(
         (event) => event.type === '0x3::token::DepositEvent'
-        && event.guid
-        && event.guid.account_address === transaction.sender,
+            && event.guid
+            && event.guid.account_address === transaction.sender,
     );
     return `You've got a ${event.data.id.token_data_id.name}`;
 };
@@ -110,7 +110,7 @@ export function ContextProvider({ children }) {
             } else if (error instanceof ApiError) {
                 toastError(`${error.message} ${error.vmErrorCode}`);
             } else {
-                toastError(error);
+                toastError(String(error));
             }
             return null;
         }
