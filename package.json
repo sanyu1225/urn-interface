@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@aptos-labs/wallet-adapter-react": "^1.2.1",
-    "@blocto/aptos-wallet-adapter-plugin": "^0.1.8",
+    "@blocto/aptos-wallet-adapter-plugin": "^0.1.9",
     "@chakra-ui/icons": "^2.0.18",
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
