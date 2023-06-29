@@ -11,7 +11,7 @@
     "static": "next export"
   },
   "dependencies": {
-    "@aptos-labs/wallet-adapter-react": "^1.2.1",
+    "@aptos-labs/wallet-adapter-react": "^1.2.3",
     "@blocto/aptos-wallet-adapter-plugin": "^0.1.9",
     "@chakra-ui/icons": "^2.0.18",
     "@chakra-ui/react": "^2.5.5",

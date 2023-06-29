@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 dependencies:
   '@aptos-labs/wallet-adapter-react':
-    specifier: ^1.2.1
-    version: 1.2.1
+    specifier: ^1.2.3
+    version: 1.2.3
   '@blocto/aptos-wallet-adapter-plugin':
     specifier: ^0.1.9
     version: 0.1.9
@@ -188,10 +188,21 @@ packages:
       - debug
     dev: false
 
-  /@aptos-labs/wallet-adapter-react@1.2.1:
-    resolution: {integrity: sha512-K9F8a1qehGvDKd4M7fDdA+sWPuTYDuK/m5A2oFcqjoWOXRNuTQNWUTBgg7VOqXQxBRMY7FjbJSxOdrj/j3WJOw==}
+  /@aptos-labs/wallet-adapter-core@2.3.3:
+    resolution: {integrity: sha512-32GC6moQMNiRXEbv6C1K9yyS4wb/NrkuoSBPMCJ/BRRosSCLXkK2KwKxDrJ2cvVtmQiFGDEz1Ck2hnxK2lKAzw==}
     dependencies:
-      '@aptos-labs/wallet-adapter-core': 2.3.1
+      aptos: 1.10.0
+      buffer: 6.0.3
+      eventemitter3: 4.0.7
+      tweetnacl: 1.0.3
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /@aptos-labs/wallet-adapter-react@1.2.3:
+    resolution: {integrity: sha512-zJZvpk+1VFulXjwR1+rPapCZ/+YW2EdhRjAQhMWxSEsBuId9bBwAOUktGEG58DXNEGGLvTnXvPgA4RZicc5OIw==}
+    dependencies:
+      '@aptos-labs/wallet-adapter-core': 2.3.3
       aptos: 1.10.0
       react: 18.2.0
     transitivePeerDependencies:
