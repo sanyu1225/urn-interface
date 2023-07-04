@@ -37,7 +37,7 @@ import RobberyBrand from '../assets/images/robbery/robbery_brand.png';
 import RobberyBrandWebp from '../assets/images/robbery/robbery_brand.webp';
 import CopyIcon from '@/assets/images/icons/CopyLight.svg';
 import useCopyToClipboard from '@/hooks/useCopyToClipboard';
-import { shortenAddress } from '@/utils';
+import { shortenAddress, hexToBytes } from '@/utils';
 import Carousel from '@/component/Carousel';
 import ButtonClickAudio from '../assets/music/clickButton.mp3';
 
@@ -91,13 +91,14 @@ const Robbery = ({ isSupportWebp }) => {
         query: queryAllUrnData,
         variables: {
             address,
-            offset: 0,
+            // offset: 0,
             creator_address: CREATOR_ADDRESS,
         },
     });
 
     const { data } = result;
     const UrnList = data && data?.current_token_ownerships;
+    console.log('UrnList: ', UrnList);
 
     useEffect(() => {
         if (connected) {
@@ -135,28 +136,32 @@ const Robbery = ({ isSupportWebp }) => {
                     return;
                 }
 
-                const params = [choiseUrn.property_version];
+                const params = [choiseUrn.property_version, inputMessage];
                 const transaction = await mint('random_rob', params);
-                console.log('transaction: ', transaction);
                 if (transaction) {
                     setTimeout(() => {
                         closeModalHandler();
                         reexecuteQuery();
-                    }, 3000);
+                    }, 1000);
                 }
             } else if (modalType === 'specific') {
-                if (inputAddress === '' || inputMessage === '') {
-                    toastError('Input is required');
+                if (inputAddress === '') {
+                    toastError('Address is required');
                     return;
                 }
-                const params = [choiseUrn.property_version];
+                if (inputMessage === '') {
+                    toastError('Message is required');
+                    return;
+                }
+                // TODO validate inputMessage length
+                const params = [choiseUrn.property_version, inputAddress, hexToBytes(inputMessage)];
                 const transaction = await mint('rob', params);
                 console.log('transaction: ', transaction);
                 if (transaction) {
                     setTimeout(() => {
                         closeModalHandler();
                         reexecuteQuery();
-                    }, 3000);
+                    }, 1000);
                 }
             }
         } catch (error) {
@@ -372,7 +377,10 @@ const Robbery = ({ isSupportWebp }) => {
                                                 Address
                                             </Text>
                                         </Box>
-                                        <Input placeholder="0x..." />
+                                        <Input
+                                            placeholder="0x..."
+                                            onChange={(e) => setInputAddress(e.target.value)}
+                                        />
 
                                     </>
                                 )
@@ -383,7 +391,6 @@ const Robbery = ({ isSupportWebp }) => {
                                     textAlign="left"
                                     fontSize="16px"
                                     fontWeight={700}
-                                    onChange={(e) => setInputAddress(e.target.value)}
                                 >
                                     Message
                                 </Text>
