@@ -127,13 +127,19 @@ const Altar = ({ isSupportWebp }) => {
         const transaction = await mint(functionName, params);
         if (!transaction) return;
         setTimeout(() => {
-            setChoiseUrn((state) => ({
-                ...state,
-                token_properties: {
-                    ...state.token_properties,
-                    ash: Number(state.token_properties.ash) + Number(choiseBone.token_properties.point),
-                },
-            }));
+            setChoiseUrn((state) => {
+                const ash = Number(state.token_properties.ash);
+                const point = Number(choiseBone.token_properties.point);
+
+                return {
+                    ...state,
+                    token_properties: {
+                        ...state.token_properties,
+                        ash: Number.isNaN(ash) ? point : ash + point,
+                    },
+                };
+            });
+
             setChoiseBone([]);
             setShowItem({ name: '', list: [] });
             reexecuteQuery();

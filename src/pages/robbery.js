@@ -40,6 +40,7 @@ import useCopyToClipboard from '@/hooks/useCopyToClipboard';
 import { shortenAddress, hexToBytes } from '@/utils';
 import Carousel from '@/component/Carousel';
 import ButtonClickAudio from '../assets/music/clickButton.mp3';
+import useRobData from '../hooks/useRobData';
 
 const fakeAddressList = [{
     address: '0x1234567890123456789012345678901234567890',
@@ -98,15 +99,21 @@ const Robbery = ({ isSupportWebp }) => {
 
     const { data } = result;
     const UrnList = data && data?.current_token_ownerships;
-    console.log('UrnList: ', UrnList);
+
+    const [robResult, fetchRobData] = useRobData(address);
+    const { data: robdata, error: robError, isLoading: robIsLoading } = robResult;
+    console.log('robIsLoading: ', robIsLoading);
+    console.log('robError: ', robError);
+    console.log('robdata: ', robdata);
 
     useEffect(() => {
         if (connected) {
             reexecuteQuery();
+            fetchRobData();
         } else {
             setChoiseUrn({});
         }
-    }, [connected, reexecuteQuery]);
+    }, [connected, reexecuteQuery, fetchRobData]);
 
     const robHandler = async (type) => {
         setModalType(type);
@@ -154,7 +161,7 @@ const Robbery = ({ isSupportWebp }) => {
                     return;
                 }
                 // TODO validate inputMessage length
-                const params = [choiseUrn.property_version, inputAddress, hexToBytes(inputMessage)];
+                const params = [choiseUrn.property_version, inputAddress, inputMessage];
                 const transaction = await mint('rob', params);
                 console.log('transaction: ', transaction);
                 if (transaction) {
