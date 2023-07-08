@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import useSound from 'use-sound';
 import PropTypes from 'prop-types';
@@ -20,7 +20,7 @@ import {
     Textarea,
     Center,
 } from '@chakra-ui/react';
-import { isEmpty } from '@/plugin/lodash';
+import { isEmpty, debounce } from '@/plugin/lodash';
 import { queryAllUrnData, CREATOR_ADDRESS } from '../constant';
 import { useWalletContext } from '../context';
 import Layout from '../layout';
@@ -42,40 +42,6 @@ import Carousel from '@/component/Carousel';
 import ButtonClickAudio from '../assets/music/clickButton.mp3';
 import useRobData from '../hooks/useRobData';
 
-const fakeAddressList = [{
-    address: '0x1234567890123456789012345678901234567890',
-    success: false,
-    account: '50',
-}, {
-    address: '0x1234567890123456789012345678901234567891',
-    success: true,
-    account: '40',
-}, {
-    address: '0x1234567890123456789012345678901234567892',
-    success: false,
-    account: '30',
-}, {
-    address: '0x1234567890123456789012345678901234567893',
-    success: true,
-    account: '20',
-}, {
-    address: '0x1234567890123456789012345678901234567894',
-    success: false,
-    account: '10',
-}, {
-    address: '0x1234567890123456789012345678901234567895',
-    success: true,
-    account: '5',
-}, {
-    address: '0x1234567890123456789012345678901234567896',
-    success: false,
-    account: '1',
-}, {
-    address: '0x1234567890123456789012345678901234567897',
-    success: true,
-    account: '0.5',
-}];
-
 const Robbery = ({ isSupportWebp }) => {
     const [copyToClipboard] = useCopyToClipboard();
     const [choiseUrn, setChoiseUrn] = useState({});
@@ -96,10 +62,32 @@ const Robbery = ({ isSupportWebp }) => {
             creator_address: CREATOR_ADDRESS,
         },
     });
+    const [debounceInputAddr, setDebounceInputAddr] = useState('');
+    const [specifyAddrResult] = useQuery({
+        query: queryAllUrnData,
+        variables: {
+            address: debounceInputAddr,
+            creator_address: CREATOR_ADDRESS,
+        },
+    });
+
+    // only specific need get urnList from address
+    useEffect(() => {
+        const debouncedInput = debounce((value) => {
+            if (connected && modalType === 'specific') {
+                setDebounceInputAddr(value);
+            }
+        }, 800);
+        debouncedInput(inputAddress);
+        return () => {
+            debouncedInput.cancel();
+        };
+    }, [inputAddress, connected, modalType]);
 
     const { data } = result;
     const UrnList = data && data?.current_token_ownerships;
 
+    const specifyAddrUrnList = specifyAddrResult?.data && specifyAddrResult?.data?.current_token_ownerships;
     const [robResult, fetchRobData] = useRobData(address);
     const { data: robdata, error: robError, isLoading: robIsLoading } = robResult;
     console.log('robIsLoading: ', robIsLoading);
@@ -131,6 +119,7 @@ const Robbery = ({ isSupportWebp }) => {
 
     const closeModalHandler = () => {
         onClose();
+        setChoiseUrn({});
         setInputAddress('');
         setInputMessage('');
     };
@@ -152,18 +141,11 @@ const Robbery = ({ isSupportWebp }) => {
                     }, 1000);
                 }
             } else if (modalType === 'specific') {
-                if (inputAddress === '') {
-                    toastError('Address is required');
-                    return;
-                }
-                if (inputMessage === '') {
-                    toastError('Message is required');
-                    return;
-                }
+                const versions = !isEmpty(specifyAddrUrnList) && specifyAddrUrnList.map((ownership) => ownership.property_version);
+                const maxVersion = !isEmpty(specifyAddrUrnList) ? Math.max(...versions) : null;
                 // TODO validate inputMessage length
-                const params = [choiseUrn.property_version, inputAddress, inputMessage];
+                const params = [choiseUrn.property_version, inputAddress, maxVersion, inputMessage];
                 const transaction = await mint('rob', params);
-                console.log('transaction: ', transaction);
                 if (transaction) {
                     setTimeout(() => {
                         closeModalHandler();
@@ -173,6 +155,18 @@ const Robbery = ({ isSupportWebp }) => {
             }
         } catch (error) {
             console.error('error: ', error);
+        }
+    };
+
+    const robButtonDisabled = () => {
+        if (modalType === 'random') {
+            return !!isEmpty(UrnList);
+        }
+        if (modalType === 'specific') {
+            if (inputAddress === '' || inputMessage === '') {
+                return true;
+            }
+            return !!isEmpty(UrnList) || !!isEmpty(specifyAddrUrnList);
         }
     };
 
@@ -273,7 +267,7 @@ const Robbery = ({ isSupportWebp }) => {
                         position="relative"
                     >
                         {
-                            fakeAddressList?.length && fakeAddressList.map((item, index) => (
+                            robdata?.length && robdata.map((item, index) => (
                                 <Flex key={index} flexWrap="wrap" borderBottom="1px solid #383732" mt="12px">
                                     <Flex
                                         justifyContent="flex-start"
@@ -283,11 +277,11 @@ const Robbery = ({ isSupportWebp }) => {
                                         gap="12px"
                                     >
                                         <Text color="#FFF3CD" fontSize="14px" fontWeight={700}>
-                                            {item.address && shortenAddress(item.address, 8)}
+                                            {item.data.robber && shortenAddress(item.data.robber, 8)}
                                         </Text>
                                         <Box
                                             cursor="pointer"
-                                            onClick={() => copyToClipboard(item.address)}
+                                            onClick={() => copyToClipboard(item.data.robber)}
                                         >
                                             <Image alt="copy" src={CopyIcon} />
                                         </Box>
@@ -307,10 +301,10 @@ const Robbery = ({ isSupportWebp }) => {
                                             }}
                                             mr="10px"
                                         >
-                                            Success: {String(item.success)}
+                                            Success: {String(item.data.success)}
                                         </Text>
                                         <Text color="#CCC2A1" fontSize="14px" fontWeight={700}>
-                                            Account: {item.account}
+                                            Amount: {item.data.amount}
                                         </Text>
                                     </Flex>
                                 </Flex>
@@ -415,7 +409,7 @@ const Robbery = ({ isSupportWebp }) => {
                             />
 
                             <Center mt="24px">
-                                <Button isDisabled={!!isEmpty(UrnList)} onClick={submitRob}>
+                                <Button isDisabled={robButtonDisabled()} onClick={submitRob}>
                                     {robButtonText}
                                 </Button>
                             </Center>

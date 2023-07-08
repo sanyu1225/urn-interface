@@ -68,7 +68,7 @@ export function ContextProvider({ children }) {
     ) => {
         try {
             setLoading(true);
-            const { hash } = await signAndSubmitTransaction(payload);
+            const { hash } = await signAndSubmitTransaction(payload, options);
             if (hash) {
                 return hash;
             }
