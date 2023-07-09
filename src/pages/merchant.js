@@ -31,6 +31,12 @@ import { fadeIn } from '../utils/animation';
 export const shovelMintingPrice = '1000000';
 export const urnMintingPrice = '10000000';
 
+const NotiveMessage = [
+    'Acquires a shovel, hasten to the gloomy graveyard, and unearth the secrets hidden beneath the hallowed ground!',
+    "Don't neglect to purchase an urn. If you unearth the bones of the deceased, haste to the altar! There, your path will become clear.",
+    "Unearth shiny shards? Bring them, I'll forge a golden urn. Need 69 shards minimum. Why? It's my quirk!",
+];
+
 const Merchant = ({ isSupportWebp }) => {
     const { mint, connected, account, getAptBalance } = useWalletContext();
     const [playButton] = useSound(ButtonClickAudio);
@@ -38,6 +44,10 @@ const Merchant = ({ isSupportWebp }) => {
     const [showFire, setShowFire] = useState(false);
     const [isShovelEnabled, setIsShovelEnabled] = useState(false);
     const [isUrnEnabled, setIsUrnEnabled] = useState(false);
+    const [noticeInfo, setNoticeInfo] = useState('');
+    const [noticeIndex, setNoticeIndex] = useState(0);
+    const [isDisabled, setIsDisabled] = useState(false);
+
     const address = account && account.address;
 
     const checkMintEnabled = useCallback(async () => {
@@ -89,10 +99,24 @@ const Merchant = ({ isSupportWebp }) => {
 
     const { data, fetching, error } = result;
     const shardAmount = data?.current_token_ownerships[0]?.amount ?? 0;
-
-    console.log(`💥 data: ${JSON.stringify(data, null, ' ')}`);
     console.log(`💥 query shard data error: ${JSON.stringify(error, null, ' ')}`);
 
+    const showNotice = () => {
+        if (isDisabled) return;
+        setNoticeInfo(NotiveMessage[noticeIndex]);
+        setNoticeIndex((noticeIndex + 1) % NotiveMessage.length);
+        setIsDisabled(true);
+    };
+
+    useEffect(() => {
+        if (isDisabled) {
+            const timer = setTimeout(() => {
+                setNoticeInfo('');
+                setIsDisabled(false);
+            }, 15000);
+            return () => clearTimeout(timer);
+        }
+    }, [isDisabled]);
     return (
         <Layout>
             <Box
@@ -108,6 +132,25 @@ const Merchant = ({ isSupportWebp }) => {
                 w={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
                 position="relative"
             >
+                <Box
+                    w={{ base: '245px', mid: '300px' }}
+                    position="absolute"
+                    bottom={{ base: '30%', mid: '40%', desktop: '32%' }}
+                    left={{ base: '0%', mid: '8%', desktop: '20%' }}
+                    borderRadius="20px"
+                    border="1px solid #FFF3CD"
+                    bg="#292229"
+                    p="18px 24px"
+                    display={noticeInfo ? 'block' : 'none'}
+                    animation={`${fadeIn} 2s linear `}
+                >
+                    <Text
+                        fontSize="14px"
+                        color="#FFF3CD"
+                    >
+                        {noticeInfo}
+                    </Text>
+                </Box>
                 <Box
                     bgImage={{
                         base: isSupportWebp ? BoardSmallImgWebp.src : BoardSmallImg.src,
@@ -313,6 +356,10 @@ const Merchant = ({ isSupportWebp }) => {
                         bgSize="100% 100%"
                         w={{ base: '362px', mid: '491px' }}
                         h={{ base: '381px', mid: '517px' }}
+                        cursor="pointer"
+                        transition="transform 0.2s ease 0s"
+                        _hover={{ transform: 'scale(0.98)' }}
+                        onClick={showNotice}
                     />
                 </Flex>
             </Box>
