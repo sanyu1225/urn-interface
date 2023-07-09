@@ -25,29 +25,40 @@ const useCusToast = () => {
     const toastInstance = useToast();
     const toastIdRef = useRef();
 
-    const toastSeccess = (title, id) => {
+    const toastSeccess = ({ title = 'Success', message }, id) => {
         const render = ({ onClose }) => (
             <Flex
                 bg="#292229"
                 justifyContent="space-between"
-                h="52px"
-                p="0 16px"
+                h={message ? 'auto' : '52px'}
+                p="16px"
                 border="1px solid #49473E"
                 alignItems="center"
                 borderRadius="12px"
                 boxShadow="0px 0px 12px rgba(0, 0, 0, 0.05)"
+                flexWrap="wrap"
+                maxW="545px"
             >
-                <Flex alignItems="center">
-                    <Box w="16px" h="16px">
-                        {typeIcon.success}
+                <Flex w="100%" justifyContent="space-between" mb="14px">
+                    <Flex alignItems="center">
+                        <Box w="16px" h="16px">
+                            {typeIcon.success}
+                        </Box>
+                        <Text color="#FFF3CD" p="0 10px" fontWeight={400} fontSize="14px">
+                            {title}
+                        </Text>
+                    </Flex>
+                    <Box cursor="pointer">
+                        <Image src={CloseIcon} alt="close_icon" onClick={onClose} />
                     </Box>
-                    <Text color="#FFF3CD" p="0 10px" fontWeight={400} fontSize="14px">
-                        {title}
-                    </Text>
                 </Flex>
-                <Box cursor="pointer">
-                    <Image src={CloseIcon} alt="close_icon" onClick={onClose} />
-                </Box>
+                {message && (
+                    <Flex w="100%">
+                        <Text color="#FFF3CD" textAlign="left" fontWeight={400} fontSize="14px">
+                            {message}
+                        </Text>
+                    </Flex>
+                )}
             </Flex>
         );
         if (toastInstance.isActive(id) && toastIdRef.current && toastIdRef.current === id) {
@@ -60,6 +71,7 @@ const useCusToast = () => {
                 containerStyle: {
                     maxWidth: '100%',
                 },
+                // duration: 900000,
                 render,
             });
         }

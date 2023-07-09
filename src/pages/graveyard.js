@@ -316,8 +316,9 @@ const Graveyard = ({ isSupportWebp }) => {
                         w={{ base: '104px' }}
                         minH={{ base: '86px' }}
                         position="absolute"
-                        top={{ base: '-7%' }}
-                        right={{ base: '3%' }}
+                        top={{ base: '-7%', mid: '-2%', desktop: '-3%' }}
+                        right={{ base: '3%', mid: '1', desktop: '1%' }}
+                        transform={{ mid: 'rotate(9deg)', desktop: 'rotate(10deg)' }}
                         display={showButt ? 'block' : 'none'}
                         animation={`${bounceInAnimation} 2s linear `}
                     />

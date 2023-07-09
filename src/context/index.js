@@ -106,7 +106,7 @@ export function ContextProvider({ children }) {
             console.log(`💥 transaction: ${JSON.stringify(transaction, null, '  ')}`);
             if (transaction) {
                 const desc = interpretTransaction(transaction);
-                toastSeccess(desc);
+                toastSeccess({ title: desc, message: hash });
                 return transaction;
             }
             toastError(`transaction not found, hash ${hash}`);
@@ -141,7 +141,7 @@ export function ContextProvider({ children }) {
             toastLoading('pending confirmation', toastId);
             try {
                 await waitForTransaction(hash);
-                toastSeccess(hash, toastId);
+                toastSeccess({ title: 'Success', message: hash }, toastId);
             } catch (error) {
                 console.log(error);
                 toastError(JSON.stringify(error), toastId);
