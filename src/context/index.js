@@ -30,6 +30,14 @@ const interpretTransaction = (transaction) => {
         const decimal = parseInt(hexString, 16);
         return `Your urn now contains ${decimal} ashes`;
     }
+    if (transaction.payload.function.includes('random_rob') || transaction.payload.function.includes('rob')) {
+        const event = transaction.events.find(
+            (event) => event.type.includes('::knife::BeenRobbedEvent'),
+        );
+        const status = event.data.success;
+        return `Your robbery ${status ? 'succeeded' : 'failed'}`;
+    }
+
     const event = transaction.events.find(
         (event) => event.type === '0x3::token::DepositEvent'
             && event.guid
@@ -93,6 +101,7 @@ export function ContextProvider({ children }) {
                 type_arguments: [],
             };
             const hash = await signAndSubmitTransactionFnc(params);
+            console.log('hash: ', hash);
             const transaction = await waitForTransactionWithResult(hash);
             console.log(`💥 transaction: ${JSON.stringify(transaction, null, '  ')}`);
             if (transaction) {

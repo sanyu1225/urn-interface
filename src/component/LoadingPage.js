@@ -15,14 +15,18 @@ const pulse = keyframes`
   }
 `;
 
-const LaserLoading = () => (
+const LaserLoading = ({
+  width = '100vw',
+  height = '100vh',
+  bg = '#141414',
+}) => (
   <Box
-    width="100vw"
-    height="100vh"
+    width={width}
+    height={height}
     display="flex"
     justifyContent="center"
     alignItems="center"
-    bg="#141414"
+    bg={bg}
     position="relative"
   >
     <Spinner

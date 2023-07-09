@@ -5,7 +5,6 @@ import { useMemo, useState } from 'react';
 import { confetti } from 'tsparticles-confetti';
 import { useQuery } from 'urql';
 import useSound from 'use-sound';
-
 import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
 import BoneEffect1Img from '../assets/images/graveyard/bone_effect_1.png';
 import BoneEffect2Img from '../assets/images/graveyard/bone_effect_2.png';
@@ -69,8 +68,8 @@ const goldenBoneNames = baseBoneNames.map((bone) => `golden ${bone}`);
 const getItemFromTransaction = (transaction) => {
     const event = transaction.events.find(
         (event) => event.type === '0x3::token::DepositEvent'
-        && event.guid
-        && event.guid.account_address === transaction.sender,
+            && event.guid
+            && event.guid.account_address === transaction.sender,
     );
     return event.data.id.token_data_id.name;
 };
@@ -238,7 +237,7 @@ const Graveyard = ({ isSupportWebp }) => {
                         desktop: '37%',
                     }}
                     onClick={tombstoneHandler}
-                    cursor="pointer"
+                    cursor="url('/dig_cursor.ico'), auto"
                     transition="transform 0.2s ease 0s"
                     _hover={{ transform: 'scale(0.98)' }}
                 >
