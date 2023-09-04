@@ -19,7 +19,6 @@ import { PontemWallet } from '@pontem/wallet-adapter-plugin';
 import { RiseWallet } from '@rise-wallet/wallet-adapter';
 import { TokenPocketWallet } from '@tp-lab/aptos-wallet-adapter';
 import { TrustWallet } from '@trustwallet/aptos-wallet-adapter';
-import { MSafeWalletAdapter } from 'msafe-plugin-wallet-adapter';
 import { WelldoneWallet } from '@welldone-studio/aptos-wallet-adapter';
 import { theme } from '../theme';
 import { ContextProvider } from '../context';
@@ -34,7 +33,6 @@ const wallets = [
   }),
   new FewchaWallet(),
   new MartianWallet(),
-  new MSafeWalletAdapter(),
   new NightlyWallet(),
   new OpenBlockWallet(),
   new PetraWallet(),
