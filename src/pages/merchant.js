@@ -23,6 +23,7 @@ import SkullImg from '../assets/images/merchant/merchant_skull.png';
 import SkullImgWebp from '../assets/images/merchant/merchant_skull.webp';
 import ButtonClickAudio from '../assets/music/clickButton.mp3';
 import FireAudio from '../assets/music/fire.mp3';
+import Counter from '../component/Counter';
 import { CREATOR_ADDRESS, getItemQuery } from '../constant';
 import { useWalletContext } from '../context';
 import Layout from '../layout';
@@ -39,6 +40,7 @@ const NotiveMessage = [
 
 const Merchant = ({ isSupportWebp }) => {
     const { mint, connected, account, getAptBalance } = useWalletContext();
+    const [mintAmount, setMintAmount] = useState(1);
     const [playButton] = useSound(ButtonClickAudio);
     const [playFire, { stop }] = useSound(FireAudio);
     const [showFire, setShowFire] = useState(false);
@@ -144,10 +146,7 @@ const Merchant = ({ isSupportWebp }) => {
                     display={noticeInfo ? 'block' : 'none'}
                     animation={`${fadeIn} 2s linear `}
                 >
-                    <Text
-                        fontSize="14px"
-                        color="#FFF3CD"
-                    >
+                    <Text fontSize="14px" color="#FFF3CD">
                         {noticeInfo}
                     </Text>
                 </Box>
@@ -267,6 +266,7 @@ const Merchant = ({ isSupportWebp }) => {
                                 borderRadius="20px"
                                 p={{ base: '14px', mid: '16px' }}
                                 justifyContent="center"
+                                rowGap="6px"
                             >
                                 <Text
                                     fontSize={{ base: '13px', mid: '18px' }}
@@ -278,7 +278,6 @@ const Merchant = ({ isSupportWebp }) => {
                                     Buy shovel / {Number(shovelMintingPrice) / Number(10 ** 8)} APT
                                 </Text>
                                 <Text
-                                    mt={{ base: '10px', mid: '12px' }}
                                     fontSize={{ base: '14px', mid: '14px' }}
                                     fontWeight={500}
                                     color="#292229"
@@ -287,15 +286,20 @@ const Merchant = ({ isSupportWebp }) => {
                                 >
                                     Every grave robber needs a shovel.
                                 </Text>
+                                <Counter defaultValue={mintAmount} onChange={setMintAmount} />
                                 <Button
                                     height={{ base: '47px' }}
                                     mt={{ base: '10px', mid: '12px' }}
                                     variant="dark"
                                     onClick={async () => {
                                         playButton();
-                                        const transaction = await mint('mint_shovel');
-                                        if (transaction) {
-                                            checkMintEnabled();
+                                        try {
+                                            const transaction = await mint('mint_shovel', [mintAmount]);
+                                            if (transaction) {
+                                                checkMintEnabled();
+                                            }
+                                        } catch (e) {
+                                            console.log(`💥 e: ${JSON.stringify(e, null, '  ')}`);
                                         }
                                     }}
                                     isDisabled={!isShovelEnabled}

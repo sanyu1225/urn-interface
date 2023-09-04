@@ -43,7 +43,8 @@ const interpretTransaction = (transaction) => {
             && event.guid
             && event.guid.account_address === transaction.sender,
     );
-    return `You've got a ${event.data.id.token_data_id.name}`;
+    const tokenName = +event.data.amount > 1 ? event.data.id.token_data_id.name : `${event.data.id.token_data_id.name}s`;
+    return `You've got ${event.data.amount} ${tokenName}`;
 };
 
 export function ContextProvider({ children }) {
