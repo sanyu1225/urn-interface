@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import NextImage from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -19,7 +20,6 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-import { CREATOR_ADDRESS, queryAltarData } from '../constant';
 import { useWalletContext } from '../context';
 
 const buttonGroup = [

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 /* eslint-disable function-paren-newline */
 
 /* eslint-disable operator-linebreak */

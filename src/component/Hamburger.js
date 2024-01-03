@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-curly-newline */
+
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable no-console */
@@ -19,36 +21,20 @@ import useWindowSize from '@/hooks/useWindowSize';
 import { shortenAddress } from '@/utils';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { HamburgerIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Grid,
-  Link,
-  MenuItem,
-  Text,
-  useOutsideClick,
-} from '@chakra-ui/react';
+import { Box, Button, Divider, Flex, Grid, Link, MenuItem, Text, useOutsideClick } from '@chakra-ui/react';
 
 import { useWalletContext } from '../context';
 import Cusmenu from './Cusmenu';
 
 // eslint-disable-next-line react/prop-types
-function AnimationLink({
-  children,
-  path,
-  disabled = false,
-}) {
+function AnimationLink({ children, path, disabled = false }) {
   const { pathname } = useRouter();
   const isActive = pathname === path;
   return (
     <Link
       as={NextLink}
       color={disabled ? '#676765' : '#FFF3CD'}
-      cursor={
-        disabled ? 'not-allowed' : 'pointer'
-      }
+      cursor={disabled ? 'not-allowed' : 'pointer'}
       display="inline-flex"
       alignItems="center"
       w="100%"
@@ -91,13 +77,7 @@ function AnimationLink({
 
 const Hamburger = ({ hideMenu }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const {
-    connect,
-    disconnect,
-    connected,
-    account,
-    wallet,
-  } = useWalletContext();
+  const { connect, disconnect, connected, account, wallet } = useWalletContext();
   const [copyToClipboard] = useCopyToClipboard();
   const [width] = useWindowSize();
   const ref = useRef();
@@ -140,40 +120,15 @@ const Hamburger = ({ hideMenu }) => {
               }}
               p="16 28px"
             >
-              <Flex
-                flexWrap="wrap"
-                w="100%"
-                onClick={() =>
-                  copyToClipboard(address)
-                }
-              >
-                <Text
-                  color="#FFF3CD"
-                  fontSize="14px"
-                  fontWeight={700}
-                  w="100%"
-                >
+              <Flex flexWrap="wrap" w="100%" onClick={() => copyToClipboard(address)}>
+                <Text color="#FFF3CD" fontSize="14px" fontWeight={700} w="100%">
                   Your Address
                 </Text>
-                <Flex
-                  justifyContent="space-between"
-                  w="100%"
-                >
-                  <Text
-                    color="#FFF3CD"
-                    fontSize="14px"
-                    fontWeight={700}
-                  >
-                    {account &&
-                      shortenAddress(
-                        account.address
-                      )}
+                <Flex justifyContent="space-between" w="100%">
+                  <Text color="#FFF3CD" fontSize="14px" fontWeight={700}>
+                    {account && shortenAddress(account.address)}
                   </Text>
-                  <Image
-                    alt="copy"
-                    src={CopyIcon}
-                    cursor="pointer"
-                  />
+                  <Image alt="copy" src={CopyIcon} cursor="pointer" />
                 </Flex>
               </Flex>
             </MenuItem>
@@ -185,23 +140,11 @@ const Hamburger = ({ hideMenu }) => {
               }}
               p="16 28px"
             >
-              <Flex
-                justifyContent="space-between"
-                w="100%"
-                onClick={disconnect}
-              >
-                <Text
-                  color="#FFF3CD"
-                  fontSize="14px"
-                  fontWeight={700}
-                >
+              <Flex justifyContent="space-between" w="100%" onClick={disconnect}>
+                <Text color="#FFF3CD" fontSize="14px" fontWeight={700}>
                   Log out
                 </Text>
-                <Image
-                  alt="logout"
-                  src={LogoutIcon}
-                  cursor="pointer"
-                />
+                <Image alt="logout" src={LogoutIcon} cursor="pointer" />
               </Flex>
             </MenuItem>
           </Cusmenu>
@@ -219,13 +162,7 @@ const Hamburger = ({ hideMenu }) => {
       {!hideMenu && (
         <Box position="relative">
           <Box w="100%" zIndex={isOpen ? 1 : 2}>
-            <Button
-              w="54px"
-              variant="hamburger"
-              onClick={() =>
-                setIsOpen((state) => !state)
-              }
-            >
+            <Button w="54px" variant="hamburger" onClick={() => setIsOpen((state) => !state)}>
               <HamburgerIcon color="#FFF3CD" />
             </Button>
           </Box>
@@ -245,10 +182,7 @@ const Hamburger = ({ hideMenu }) => {
             fontWeight={700}
             fontSize="18px"
           >
-            <Flex
-              w="100%"
-              justifyContent="flex-end"
-            >
+            <Flex w="100%" justifyContent="flex-end">
               <Box
                 zIndex={2}
                 cursor="pointer"
@@ -257,68 +191,32 @@ const Hamburger = ({ hideMenu }) => {
                   transform: 'rotate(90deg)',
                 }}
               >
-                <Image
-                  src={CloseIcon}
-                  alt="colse"
-                  onClick={() =>
-                    setIsOpen((state) => !state)
-                  }
-                />
+                <Image src={CloseIcon} alt="colse" onClick={() => setIsOpen((state) => !state)} />
               </Box>
             </Flex>
             <Flex alignItems="center" p="12px">
               <Image src={LogoIcon} alt="loto" />
               <Text ml="12px">Urn2urn</Text>
             </Flex>
-            <Grid
-              gap="40px"
-              alignItems="center"
-              wrap="wrap"
-              p="12px"
-            >
-              <AnimationLink path="/">
-                Home
-              </AnimationLink>
-              <AnimationLink path="/merchant">
-                Merchant
-              </AnimationLink>
-              <AnimationLink path="/graveyard">
-                Graveyard
-              </AnimationLink>
-              <AnimationLink path="/altar">
-                Altar
-              </AnimationLink>
-              <AnimationLink path="/robbery">
-                Robbery
-              </AnimationLink>
-              <AnimationLink
-                disabled
-                path="/teleport"
-              >
+            <Grid gap="40px" alignItems="center" wrap="wrap" p="12px">
+              <AnimationLink path="/">Home</AnimationLink>
+              <AnimationLink path="/merchant">Merchant</AnimationLink>
+              <AnimationLink path="/graveyard">Graveyard</AnimationLink>
+              <AnimationLink path="/altar">Altar</AnimationLink>
+              <AnimationLink path="/robbery">Robbery</AnimationLink>
+              <AnimationLink disabled path="/teleport">
                 Reincarnation *Coming soon
               </AnimationLink>
-              <AnimationLink path="/faq">
-                FAQ
-              </AnimationLink>
+              <AnimationLink path="/faq">FAQ</AnimationLink>
             </Grid>
             <Flex wrap="wrap">
-              <Divider
-                mt="40px"
-                mb="25px"
-                borderColor="#FFF3CD"
-              />
+              <Divider mt="40px" mb="25px" borderColor="#FFF3CD" />
               <Flex w="100%">
                 <Box mr="20px" cursor="pointer">
-                  <Image
-                    src={TwitterIcon}
-                    alt="twitter"
-                  />
+                  <Image src={TwitterIcon} alt="twitter" />
                 </Box>
                 <Box cursor="pointer">
-                  <Image
-                    src={TgIcon}
-                    alt="telegram"
-                  />
+                  <Image src={TgIcon} alt="telegram" />
                 </Box>
               </Flex>
             </Flex>
