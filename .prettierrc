@@ -1,30 +1,19 @@
 {
-    "endOfLine": "lf",
-    "semi": true,
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "printWidth": 50,
-    "eslintIntegration": true,
-    "importOrderBuiltinModulesToTop": true,
-    "importOrderCaseInsensitive": true,
-    "importOrderParserPlugins": [
-      "typescript",
-      "jsx",
-      "decorators-legacy"
-    ],
-    "plugins": [
-      "@trivago/prettier-plugin-sort-imports"
-    ],
-    "importOrderMergeDuplicateImports": true,
-    "importOrderCombineTypeAndValueImports": true,
-    "importOrderSeparation": true,
-    "importOrderSortSpecifiers": true,
-    "importOrder": [
-      "<THIRD_PARTY_MODULES>",
-      "^@components/(.*)$",
-      "^@(.*)",
-      "^[./]"
-    ]
-  }
-  
+  "endOfLine": "lf",
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "printWidth": 120,
+  "eslintIntegration": true,
+  "importOrderBuiltinModulesToTop": true,
+  "importOrderCaseInsensitive": true,
+  "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrderMergeDuplicateImports": true,
+  "importOrderCombineTypeAndValueImports": true,
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrder": ["<THIRD_PARTY_MODULES>", "^@components/(.*)$", "^@(.*)", "^[./]"],
+  "jsxSingleQuote": false
+}

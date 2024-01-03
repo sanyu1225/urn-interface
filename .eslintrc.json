@@ -10,6 +10,7 @@
     "eslint:recommended",
     "plugin:react/jsx-runtime"
   ],
+  "plugins": ["prettier"],
   "rules": {
     "no-use-before-define": "off",
     "no-shadow": "off",
@@ -34,17 +35,17 @@
     "react/jsx-filename-extension": 0,
     "react/jsx-indent": 0,
     "react/jsx-indent-props": 0,
-    "react/no-unknown-property": [
-      2,
-      { "ignore": ["sx"] }
-    ],
+    "react/no-unknown-property": [2, { "ignore": ["sx"] }],
     "jsx-a11y/media-has-caption": 0,
     "import/no-extraneous-dependencies": 0,
     "consistent-return": 0,
     "react/forbid-prop-types": 0,
     "react/no-array-index-key": 0,
     "no-plusplus": 0,
-    "max-len": 0
+    "max-len": 0,
+    "import/order": 0,
+    "comma-dangle": "off",
+    "implicit-arrow-linebreak": "off"
   },
   "parserOptions": {
     "ecmaVersion": 2021,

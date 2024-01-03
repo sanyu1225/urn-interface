@@ -298,7 +298,6 @@ export const theme = extendTheme({
             borderColor: 'transparent',
             opacity: 0.8,
             transform: 'translateY(-50%) scale(0.98)',
-
           },
           _active: {
             borderColor: 'transparent',
@@ -312,6 +311,35 @@ export const theme = extendTheme({
           _disabled: {
             cursor: 'not-allowed',
             backgroundColor: 'gray05',
+          },
+        },
+        basic: {
+          background: '#transparent',
+          backgroundColor: 'transparent',
+          borderColor: '#FFF3CD',
+          border: '1px solid ',
+          transition: 'all 0.2s ease-in-out',
+          borderRadius: 100,
+          fontSize: '16px',
+          fontWeight: '600',
+          color: '#FFF3CD',
+          width: '72px',
+          height: '39px',
+          padding: '10px',
+          _hover: {
+            backgroundColor: '#FFF3CD',
+            opacity: 0.8,
+            color: '#292229',
+            transform: 'scale(0.98)',
+          },
+          _active: {
+            backgroundColor: '#FFF3CD',
+            opacity: 0.9,
+            color: '#292229',
+            transform: 'scale(0.96)',
+          },
+          _focus: {
+            boxShadow: 'none',
           },
         },
       },
