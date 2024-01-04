@@ -7,6 +7,7 @@ import PackageIcon from '@/assets/images/icons/backpack.svg';
 import {
   Box,
   Button,
+  Center,
   Flex,
   Image,
   Modal,
@@ -40,7 +41,7 @@ const buttonGroup = [
 const Backpack = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [buttonType, setButtonType] = useState('basic');
-  const { connected, boneList, shovelList } = useWalletContext();
+  const { connected, boneList, shovelList, goldenlList } = useWalletContext();
   const [showList, setShowList] = useState(shovelList);
   console.log('boneList: ', boneList);
 
@@ -52,10 +53,9 @@ const Backpack = () => {
       setShowList(boneList);
     }
     if (buttonType === 'golden') {
-      // todo
-      setShowList([]);
+      setShowList(goldenlList);
     }
-  }, [boneList, buttonType, shovelList]);
+  }, [boneList, buttonType, shovelList, goldenlList]);
 
   return (
     <>
@@ -80,12 +80,7 @@ const Backpack = () => {
           <ModalBody p="0">
             <Flex gap="12px">
               {buttonGroup.map((btn) => (
-                <Button
-                  key={btn.id}
-                  variant="basic"
-                  onClick={() => setButtonType(btn.id)}
-                  isActive={buttonType === btn.id}
-                >
+                <Button key={btn.id} variant="basic" onClick={() => setButtonType(btn.id)} isActive={buttonType === btn.id}>
                   {btn.label}
                 </Button>
               ))}
@@ -104,6 +99,12 @@ const Backpack = () => {
             >
               {showList?.map((item, idx) => (
                 <Box w="120px" h="120px" key={idx}>
+                  {/* {item?.current_token_data?.name === 'shovel' && (
+                        <>
+                          <Box bg="#383030/" h="5px" w="100%" position="absolute" top="5px" />
+                          <Box bg="#413636" h="5px" w="100%" position="absolute" top="10px" />
+                        </>
+                      )} */}
                   <Tooltip label={item?.current_token_data?.name} placement="top">
                     <Box position="relative">
                       <Image
@@ -117,36 +118,22 @@ const Backpack = () => {
                         // border={choiseItem.property_version === item.property_version ? '1px solid #FFF3CD' : 'none'}
                       />
                       {item?.current_token_data?.name === 'urn' && (
-                        <Text
-                          position="absolute"
-                          top="6px"
-                          right="6px"
-                          fontSize="12px"
-                          color="#FFF3CD"
-                          fontWeight="600"
-                        >
+                        <Text position="absolute" top="6px" right="6px" fontSize="12px" color="#FFF3CD" fontWeight="600">
                           {item?.token_properties?.ash ?? '0'}
                         </Text>
                       )}
                       {/* TODO golden sholvel */}
                       {item?.current_token_data?.name !== 'urn' && item?.current_token_data?.name !== 'shovel' && (
-                        <Text
-                          position="absolute"
-                          top="6px"
-                          right="6px"
-                          fontSize="12px"
-                          color="#FFF3CD"
-                          fontWeight="600"
-                        >
+                        <Text position="absolute" top="6px" right="6px" fontSize="12px" color="#FFF3CD" fontWeight="600">
                           {item?.token_properties?.amount ?? ''}
                         </Text>
                       )}
                       {item?.current_token_data?.name === 'shovel' && (
-                        <Box bg="#FFF3CD" borderRadius={100} position="absolute" bottom="6px" left="6px">
+                        <Center bg="#FFF3CD" borderRadius={100} position="absolute" w="18px" bottom="6px" left="6px">
                           <Text fontSize="12px" color="#363121" fontWeight="600">
                             {item?.amount ?? ''}
                           </Text>
-                        </Box>
+                        </Center>
                       )}
                     </Box>
                   </Tooltip>

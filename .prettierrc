@@ -4,7 +4,7 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "es5",
-  "printWidth": 120,
+  "printWidth": 150,
   "eslintIntegration": true,
   "importOrderBuiltinModulesToTop": true,
   "importOrderCaseInsensitive": true,

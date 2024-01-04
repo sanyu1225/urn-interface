@@ -45,7 +45,7 @@ import CopyIcon from '@/assets/images/icons/CopyLight.svg';
 
 const Robbery = ({ isSupportWebp }) => {
     const [copyToClipboard] = useCopyToClipboard();
-    const { connected, account, mint } = useWalletContext();
+    const { connected, account, mint, reExecuteAltarQuery } = useWalletContext();
     const [playButton] = useSound(ButtonClickAudio);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [choiseUrn, setChoiseUrn] = useState({});
@@ -146,6 +146,7 @@ const Robbery = ({ isSupportWebp }) => {
                     closeModalHandler();
                     setTimeout(() => {
                         reexecuteQuery();
+                        reExecuteAltarQuery();
                     }, 1000);
                 }
             } else if (modalType === 'specific') {
@@ -158,6 +159,7 @@ const Robbery = ({ isSupportWebp }) => {
                     closeModalHandler();
                     setTimeout(() => {
                         reexecuteQuery();
+                        reExecuteAltarQuery();
                     }, 1000);
                 }
             }

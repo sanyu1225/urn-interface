@@ -10,7 +10,7 @@ import { useQuery } from 'urql';
 import { isEmpty } from '@/plugin/lodash';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 
-import CONTRACT_ADDR, { CREATOR_ADDRESS, queryAltarData } from '../constant';
+import CONTRACT_ADDR, { CREATOR_ADDRESS, normaBoneList, queryAltarData } from '../constant';
 import useCusToast from '../hooks/useCusToast';
 
 export const TESTNET_NODE_URL = 'https://fullnode.testnet.aptoslabs.com/v1';
@@ -30,10 +30,7 @@ export function useWalletContext() {
 const interpretTransaction = (transaction) => {
   if (transaction.payload.function.includes('burn_and_fill')) {
     const event = transaction.events.find(
-      (event) =>
-        event.type === '0x3::token::MutateTokenPropertyMapEvent' &&
-        event.data &&
-        event.guid.account_address === transaction.sender
+      (event) => event.type === '0x3::token::MutateTokenPropertyMapEvent' && event.data && event.guid.account_address === transaction.sender
     );
     const hexString = event.data.values[0];
     const decimal = parseInt(hexString, 16);
@@ -46,8 +43,7 @@ const interpretTransaction = (transaction) => {
   }
 
   const event = transaction.events.find(
-    (event) =>
-      event.type === '0x3::token::DepositEvent' && event.guid && event.guid.account_address === transaction.sender
+    (event) => event.type === '0x3::token::DepositEvent' && event.guid && event.guid.account_address === transaction.sender
   );
   const tokenName = +event.data.amount > 1 ? event.data.id.token_data_id.name : `${event.data.id.token_data_id.name}s`;
   return `You've got ${event.data.amount} ${tokenName}`;
@@ -66,25 +62,17 @@ export function ContextProvider({ children }) {
       creator_address: CREATOR_ADDRESS,
     },
   });
-  const baseBoneNames = ['arm', 'leg', 'hip', 'chest', 'skull'];
   console.log('data: ', data);
-  const boneList = data?.data?.current_token_ownerships?.filter((item) => baseBoneNames.includes(item?.name));
-  const UrnList = data?.data && data?.data?.current_token_ownerships;
+  const boneList = data?.data?.current_token_ownerships?.filter((item) => normaBoneList.includes(item?.name));
   // TODO: need check goledn_shovel name
-  const shovelList = data?.data?.current_token_ownerships?.filter((item) =>
-    ['shovel', 'golden_shovel'].includes(item?.name)
-  );
+  const shovelList = data?.data?.current_token_ownerships?.filter((item) => ['shovel', 'golden_shovel'].includes(item?.name)) || [];
+  const goldenlList = data?.data?.current_token_ownerships?.filter((item) => item?.name.indexOf('golden') > -1);
   console.log('shovelList: ', shovelList);
 
   // const zeroAshUrn = data.current_token_data.name === 'urn' && data.amount > 1
-  const zeroAshUrn =
-    data?.data &&
-    data.data?.current_token_ownerships?.filter((e) => e.current_token_data.name === 'urn' && e.amount > 1);
+  const zeroAshUrn = data?.data && data.data?.current_token_ownerships?.filter((e) => e.current_token_data.name === 'urn' && e.amount > 1);
   const hasAshUrn =
-    data?.data &&
-    data.data?.current_token_ownerships?.filter(
-      (e) => e.current_token_data.name === 'urn' && !isEmpty(e.token_properties.ash)
-    );
+    data?.data && data.data?.current_token_ownerships?.filter((e) => e.current_token_data.name === 'urn' && !isEmpty(e.token_properties.ash));
   console.log('hasAshUrn: ', hasAshUrn);
   console.log('zeroAshUrn: ', zeroAshUrn);
   const originalUrnList = [];
@@ -242,6 +230,8 @@ export function ContextProvider({ children }) {
       reExecuteAltarQuery,
       boneList,
       shovelList,
+      goldenlList,
+      fetching: data.fetching,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps, max-len
     [connect, connected, mint, signAndSubmitTransaction, isLoading, account, disconnect, isPlayBackground]
