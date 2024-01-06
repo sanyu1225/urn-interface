@@ -43,7 +43,6 @@ const Backpack = () => {
   const [buttonType, setButtonType] = useState('basic');
   const { connected, boneList, shovelList, goldenlList } = useWalletContext();
   const [showList, setShowList] = useState(shovelList);
-  console.log('boneList: ', boneList);
 
   useEffect(() => {
     if (buttonType === 'basic') {
@@ -98,45 +97,50 @@ const Backpack = () => {
               justifyContent="left"
             >
               {showList?.map((item, idx) => (
-                <Box w="120px" h="120px" key={idx}>
-                  {/* {item?.current_token_data?.name === 'shovel' && (
-                        <>
-                          <Box bg="#383030/" h="5px" w="100%" position="absolute" top="5px" />
-                          <Box bg="#413636" h="5px" w="100%" position="absolute" top="10px" />
-                        </>
-                      )} */}
-                  <Tooltip label={item?.current_token_data?.name} placement="top">
-                    <Box position="relative">
-                      <Image
-                        width={120}
-                        height={120}
-                        src={item?.current_token_data?.metadata_uri}
-                        alt={item?.current_token_data?.name}
-                        fallbackSrc={placeholderImg.src}
-                        border="1px solid #49473E"
-                        borderRadius="12px"
-                        // border={choiseItem.property_version === item.property_version ? '1px solid #FFF3CD' : 'none'}
-                      />
-                      {item?.current_token_data?.name === 'urn' && (
-                        <Text position="absolute" top="6px" right="6px" fontSize="12px" color="#FFF3CD" fontWeight="600">
-                          {item?.token_properties?.ash ?? '0'}
-                        </Text>
-                      )}
-                      {/* TODO golden sholvel */}
-                      {item?.current_token_data?.name !== 'urn' && item?.current_token_data?.name !== 'shovel' && (
-                        <Text position="absolute" top="6px" right="6px" fontSize="12px" color="#FFF3CD" fontWeight="600">
-                          {item?.token_properties?.amount ?? ''}
-                        </Text>
-                      )}
-                      {item?.current_token_data?.name === 'shovel' && (
-                        <Center bg="#FFF3CD" borderRadius={100} position="absolute" w="18px" bottom="6px" left="6px">
-                          <Text fontSize="12px" color="#363121" fontWeight="600">
-                            {item?.amount ?? ''}
+                <Box key={idx} position="relative" w="120px" h="120px">
+                  {['shovel', 'golden_shovel'].includes(item?.current_token_data?.name) && item?.amount > 1 && (
+                    <>
+                      <Box bg="#383030" borderRadius="12px 12px 0 0" h="20px" w="100%" position="absolute" top="0px" />
+                      <Box bg="#413636" borderRadius="12px 12px 0 0" h="20px" w="100%" position="absolute" top="5px" />
+                    </>
+                  )}
+                  <Box
+                    top={['shovel', 'golden_shovel'].includes(item?.current_token_data?.name) ? '10px' : '0'}
+                    position={['shovel', 'golden_shovel'].includes(item?.current_token_data?.name) ? 'relative' : 'absolute'}
+                  >
+                    <Tooltip label={item?.current_token_data?.name} placement="top">
+                      <Box position="relative">
+                        <Image
+                          width={120}
+                          height={120}
+                          src={item?.current_token_data?.metadata_uri}
+                          alt={item?.current_token_data?.name}
+                          fallbackSrc={placeholderImg.src}
+                          border="1px solid #49473E"
+                          borderRadius="12px"
+                          // border={choiseItem.property_version === item.property_version ? '1px solid #FFF3CD' : 'none'}
+                        />
+                        {item?.current_token_data?.name === 'urn' && (
+                          <Text position="absolute" top="6px" right="6px" fontSize="12px" color="#FFF3CD" fontWeight="600">
+                            {item?.token_properties?.ash ?? '0'}
                           </Text>
-                        </Center>
-                      )}
-                    </Box>
-                  </Tooltip>
+                        )}
+                        {/* TODO golden sholvel */}
+                        {item?.current_token_data?.name !== 'urn' && !['shovel', 'golden_shovel'].includes(item?.current_token_data?.name) && (
+                          <Text position="absolute" top="6px" right="6px" fontSize="12px" color="#FFF3CD" fontWeight="600">
+                            {item?.token_properties?.amount ?? ''}
+                          </Text>
+                        )}
+                        {['shovel', 'golden_shovel'].includes(item?.current_token_data?.name) && (
+                          <Center bg="#FFF3CD" borderRadius={100} position="absolute" w="18px" bottom="6px" left="6px">
+                            <Text fontSize="12px" color="#363121" fontWeight="600">
+                              {item?.amount ?? ''}
+                            </Text>
+                          </Center>
+                        )}
+                      </Box>
+                    </Tooltip>
+                  </Box>
                 </Box>
               ))}
             </Flex>

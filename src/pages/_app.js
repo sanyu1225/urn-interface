@@ -1,8 +1,4 @@
-/* eslint-disable no-useless-escape */
-
 /* eslint-disable react/jsx-no-useless-fragment */
-
-/* eslint-disable no-unused-vars */
 import { FewchaWallet } from 'fewcha-plugin-wallet-adapter';
 import Head from 'next/head';
 import { PetraWallet } from 'petra-plugin-wallet-adapter';
@@ -74,17 +70,13 @@ export default function App({ Component, pageProps }) {
         plugins={wallets}
         autoConnect={false}
         onError={(error) => {
-          console.log('Handle Error Message', error);
+          console.error('Handle Error Message', error);
         }}
       >
         <ChakraProvider theme={theme}>
           <UrqlProvider value={client}>
             <ContextProvider>
-              {isLoading ? (
-                <Loading />
-              ) : (
-                <>{isDesktop ? <Component isSupportWebp={isSupportWebp} {...pageProps} /> : <Mobile />}</>
-              )}
+              {isLoading ? <Loading /> : <>{isDesktop ? <Component isSupportWebp={isSupportWebp} {...pageProps} /> : <Mobile />}</>}
             </ContextProvider>
           </UrqlProvider>
         </ChakraProvider>

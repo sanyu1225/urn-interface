@@ -1,7 +1,5 @@
-/* eslint-disable operator-linebreak */
 import PropTypes from 'prop-types';
 import { useEffect, useMemo, useState } from 'react';
-import { useQuery } from 'urql';
 import useSound from 'use-sound';
 
 import Carousel from '@/component/Carousel';
@@ -31,7 +29,6 @@ import UrnItemImg from '../assets/images/altar/urn_item.png';
 import UrnItemImgWebp from '../assets/images/altar/urn_item.webp';
 import ButtonClickAudio from '../assets/music/clickButton.mp3';
 import LaughAudio from '../assets/music/laugh.mp3';
-import { CREATOR_ADDRESS, queryAllUrnData, queryAltarData } from '../constant';
 import { useWalletContext } from '../context';
 import Layout from '../layout';
 
@@ -44,39 +41,12 @@ const Altar = ({ isSupportWebp }) => {
   const [showItem, setShowItem] = useState({ name: '', list: [] });
   const [choiseUrn, setChoiseUrn] = useState({});
   const [choiseBone, setChoiseBone] = useState([]);
-  const [boneList, setBoneList] = useState([]);
+  const [boneListState, setBoneList] = useState([]);
   const [showGhost, setShowGhost] = useState(false);
   const [playLaugh, { stop }] = useSound(LaughAudio);
   const [playButton] = useSound(ButtonClickAudio);
 
-  const { connected, account, mint, reExecuteAltarQuery } = useWalletContext();
-  const address = account && account.address;
-
-  const [result, reexecuteQuery] = useQuery({
-    query: queryAltarData,
-    variables: {
-      address,
-      creator_address: CREATOR_ADDRESS,
-    },
-  });
-
-  const [urnRsult, reexecuteUrnQuery] = useQuery({
-    query: queryAllUrnData,
-    variables: {
-      address,
-      creator_address: CREATOR_ADDRESS,
-    },
-  });
-
-  const { data, fetching, error } = result;
-  const { data: urnData, fetching: urnFetching, error: urnError } = urnRsult;
-
-  console.log('data: ', data);
-  console.log('urnData: ', urnData);
-  console.log('error: ', error);
-  console.log('urnError: ', urnError);
-  const UrnList = urnData && urnData?.current_token_ownerships;
-  //  = data && data?.current_token_ownerships?.filter((item) => item?.name === 'urn' || item?.name === 'golden_urn');
+  const { connected, mint, reExecuteAltarQuery, urnList, fetching, boneList } = useWalletContext();
 
   const resetState = () => {
     setChoiseUrn({});
@@ -85,37 +55,27 @@ const Altar = ({ isSupportWebp }) => {
   };
 
   useEffect(() => {
-    if (connected) {
-      reexecuteQuery();
-      reexecuteUrnQuery();
-    } else {
+    if (!connected) {
       resetState();
     }
-  }, [connected, reexecuteQuery, reexecuteUrnQuery]);
+  }, [connected]);
 
   useEffect(() => {
     if (!choiseUrn || choiseUrn.length === 0) {
       setBoneList([]);
       return;
     }
-
-    const baseBoneNames = ['arm', 'leg', 'hip', 'chest', 'skull'];
-    const prefix = choiseUrn.name === 'golden_urn' ? 'golden ' : '';
-    const boneNameList = baseBoneNames.map((bone) => prefix + bone);
-
-    const boneList = data?.current_token_ownerships?.filter((item) => boneNameList.includes(item?.name)) || [];
-
-    setBoneList(boneList);
-  }, [choiseUrn, data, urnData]);
+    const filterUrnList = boneList.filter((e) => !['urn', 'golden_urn'].includes(e.current_token_data.name));
+    setBoneList(filterUrnList);
+  }, [boneList, choiseUrn]);
 
   const showItemHandler = async (item) => {
     playButton();
     const isUrn = item === 'urn';
-    console.log(`${isUrn ? 'Urn' : 'Bone'}List: `, isUrn ? UrnList : boneList);
 
     setShowItem({
       name: isUrn ? 'urn' : 'bone',
-      list: isUrn ? UrnList : boneList,
+      list: isUrn ? urnList : boneListState,
     });
   };
 
@@ -143,15 +103,9 @@ const Altar = ({ isSupportWebp }) => {
 
       setChoiseBone([]);
       setShowItem({ name: '', list: [] });
-      reexecuteQuery();
-      reexecuteUrnQuery();
       reExecuteAltarQuery();
     }, 1000);
   };
-
-  useEffect(() => {
-    console.log('showItem: ', showItem);
-  }, [showItem]);
 
   const showGhostHandler = () => {
     playLaugh();
@@ -164,16 +118,16 @@ const Altar = ({ isSupportWebp }) => {
 
   const isUrnEnabled = () => {
     if (!connected) return false;
-    return UrnList && UrnList.length > 0;
+    return urnList && urnList.length > 0;
   };
 
   const urnButtonText = useMemo(() => {
     if (!connected) return 'Connect wallet';
-    if (UrnList && UrnList.length > 0) {
+    if (urnList && urnList.length > 0) {
       return 'Select urn';
     }
     return 'Buy one first';
-  }, [connected, UrnList]);
+  }, [connected, urnList]);
 
   return (
     <Layout>
@@ -307,7 +261,7 @@ const Altar = ({ isSupportWebp }) => {
                 <Text mt="12px" fontSize="14px" fontWeight={400} color="#FFF3CD" w="100%">
                   You can choose the urn.
                 </Text>
-                <Button mt="12px" variant="primary" onClick={() => showItemHandler('urn')} isDisabled={!isUrnEnabled()} isLoading={urnFetching}>
+                <Button mt="12px" variant="primary" onClick={() => showItemHandler('urn')} isDisabled={!isUrnEnabled()} isLoading={fetching}>
                   {urnButtonText}
                 </Button>
               </Flex>

@@ -2,14 +2,7 @@
   "env": {
     "es2020": true
   },
-  "extends": [
-    "prettier",
-    "next/core-web-vitals",
-    "airbnb",
-    "airbnb/hooks",
-    "eslint:recommended",
-    "plugin:react/jsx-runtime"
-  ],
+  "extends": ["prettier", "next/core-web-vitals", "airbnb", "airbnb/hooks", "eslint:recommended", "plugin:react/jsx-runtime"],
   "plugins": ["prettier"],
   "rules": {
     "no-use-before-define": "off",
@@ -45,7 +38,8 @@
     "max-len": 0,
     "import/order": 0,
     "comma-dangle": "off",
-    "implicit-arrow-linebreak": "off"
+    "implicit-arrow-linebreak": "off",
+    "operator-linebreak": "off"
   },
   "parserOptions": {
     "ecmaVersion": 2021,

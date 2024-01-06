@@ -258,7 +258,7 @@ const Merchant = ({ isSupportWebp }) => {
             bgRepeat="no-repeat"
             bgSize="100% 100%"
             w={{ base: '436px', mid: '556px', desktop: '556px' }}
-            h={{ base: '319px', mid: '406px', desktop: '406px' }}
+            h={{ base: '345px', mid: '406px', desktop: '406px' }}
           >
             <Flex justifyContent="center" gap="24px" mt={{ base: '7rem', mid: '10rem', desktop: '10rem' }}>
               <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p={{ base: '14px', mid: '16px' }} justifyContent="center" rowGap="6px">

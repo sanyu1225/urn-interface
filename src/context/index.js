@@ -62,27 +62,21 @@ export function ContextProvider({ children }) {
       creator_address: CREATOR_ADDRESS,
     },
   });
-  console.log('data: ', data);
-  const boneList = data?.data?.current_token_ownerships?.filter((item) => normaBoneList.includes(item?.name));
+  const boneList = data?.data?.current_token_ownerships?.filter((item) => normaBoneList.includes(item?.name)) || [];
   // TODO: need check goledn_shovel name
   const shovelList = data?.data?.current_token_ownerships?.filter((item) => ['shovel', 'golden_shovel'].includes(item?.name)) || [];
   const goldenlList = data?.data?.current_token_ownerships?.filter((item) => item?.name.indexOf('golden') > -1);
-  console.log('shovelList: ', shovelList);
-
+  const urnList = data?.data?.current_token_ownerships?.filter((item) => ['urn', 'golden_urn'].includes(item?.name)) || [];
   // const zeroAshUrn = data.current_token_data.name === 'urn' && data.amount > 1
   const zeroAshUrn = data?.data && data.data?.current_token_ownerships?.filter((e) => e.current_token_data.name === 'urn' && e.amount > 1);
   const hasAshUrn =
     data?.data && data.data?.current_token_ownerships?.filter((e) => e.current_token_data.name === 'urn' && !isEmpty(e.token_properties.ash));
-  console.log('hasAshUrn: ', hasAshUrn);
-  console.log('zeroAshUrn: ', zeroAshUrn);
   const originalUrnList = [];
   if (zeroAshUrn?.length > 0) {
     for (let i = 0; i < zeroAshUrn[0].amount; i++) {
       originalUrnList.push(zeroAshUrn[0]);
     }
   }
-
-  console.log('originalUrnList: ', originalUrnList);
 
   const checkLogin = async () => {
     if (connected) {
@@ -139,9 +133,7 @@ export function ContextProvider({ children }) {
         type_arguments: [],
       };
       const hash = await signAndSubmitTransactionFnc(params);
-      console.log('hash: ', hash);
       const transaction = await waitForTransactionWithResult(hash);
-      console.log(`💥 transaction: ${JSON.stringify(transaction, null, '  ')}`);
       if (transaction) {
         const desc = interpretTransaction(transaction);
         toastSeccess({ title: desc, message: hash });
@@ -175,13 +167,12 @@ export function ContextProvider({ children }) {
     };
     const hash = await signAndSubmitTransactionFnc(shovel);
     if (hash) {
-      console.log(hash);
       toastLoading('pending confirmation', toastId);
       try {
         await waitForTransaction(hash);
         toastSeccess({ title: 'Success', message: hash }, toastId);
       } catch (error) {
-        console.log(error);
+        console.error(error);
         toastError(JSON.stringify(error), toastId);
       }
     } else {
@@ -231,6 +222,7 @@ export function ContextProvider({ children }) {
       boneList,
       shovelList,
       goldenlList,
+      urnList,
       fetching: data.fetching,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps, max-len
