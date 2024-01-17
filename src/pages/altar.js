@@ -163,7 +163,7 @@ const Altar = ({ isSupportWebp }) => {
   const submitReincarnate = async () => {
     const functionName = functionNameMap.reincarnate;
     console.log(`💥 choiseUrn.property_version: ${JSON.stringify(choiseUrn.property_version, null, '  ')}`);
-    const transaction = await mint(functionName, [choiseUrn.property_version]);
+    const transaction = await mint(functionName, [choiseUrn.property_version, inputPolygonAddress]);
     console.log(`💥 transaction: ${JSON.stringify(transaction, null, '  ')}`);
     if (!transaction) return;
     fetchTeleportData(transaction.hash, inputPolygonAddress);
