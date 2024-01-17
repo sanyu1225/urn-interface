@@ -1,7 +1,5 @@
-import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useQuery } from 'urql';
 import useSound from 'use-sound';
 
 import { Box, Button, Flex, Text } from '@chakra-ui/react';
@@ -16,8 +14,6 @@ import HomeBg from '../assets/images/merchant/merchant_bg.png';
 import HomeBgWebp from '../assets/images/merchant/merchant_bg.webp';
 import BoardBigImg from '../assets/images/merchant/merchant_board_big.png';
 import BoardBigImgWebp from '../assets/images/merchant/merchant_board_big.webp';
-import BoardSmallImg from '../assets/images/merchant/merchant_board_small.png';
-import BoardSmallImgWebp from '../assets/images/merchant/merchant_board_small.webp';
 import FurnaceImg from '../assets/images/merchant/merchant_furnace.png';
 import FurnaceImgWebp from '../assets/images/merchant/merchant_furnace.webp';
 import SkullImg from '../assets/images/merchant/merchant_skull.png';
