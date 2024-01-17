@@ -67,7 +67,6 @@ export function ContextProvider({ children }) {
     },
   });
   const boneList = data?.data?.current_token_ownerships?.filter((item) => normaBoneList.includes(item?.name)) || [];
-  console.log('context boneList: ', boneList);
   // TODO: need check goledn_shovel name
   const shovelList =
     data?.data?.current_token_ownerships?.filter((item) => ['shovel', 'golden_shovel'].includes(item?.name)) || [];
