@@ -66,8 +66,7 @@ const Altar = ({ isSupportWebp }) => {
   const [playButton] = useSound(ButtonClickAudio);
   const [teleportResult, fetchTeleportData] = useReincarnation();
   const { data: teleportData, error: teleportError, isLoading: teleportIsLoading } = teleportResult;
-  const { connected, account, mint, reExecuteAltarQuery, urnList, fetching, boneList } = useWalletContext();
-  const address = account && account.address;
+  const { connected, mint, reExecuteAltarQuery, urnList, fetching, boneList } = useWalletContext();
 
   const resetState = () => {
     setChoiseUrn({});
@@ -163,22 +162,20 @@ const Altar = ({ isSupportWebp }) => {
   const submitReincarnate = async () => {
     const functionName = functionNameMap.reincarnate;
     console.log(`💥 choiseUrn.property_version: ${JSON.stringify(choiseUrn.property_version, null, '  ')}`);
-    const transaction = await mint(functionName, [choiseUrn.property_version, inputPolygonAddress]);
+    const transaction = await mint(functionName, [choiseUrn.property_version, 100, inputPolygonAddress]);
     console.log(`💥 transaction: ${JSON.stringify(transaction, null, '  ')}`);
     if (!transaction) return;
     fetchTeleportData(transaction.hash, inputPolygonAddress);
     setTimeout(() => {
       resetState();
-      reexecuteQuery();
-      reexecuteUrnQuery();
+      reExecuteAltarQuery();
     }, 1000);
   };
 
   const closeModalHandler = () => {
     onClose();
     resetState();
-    reexecuteQuery();
-    reexecuteUrnQuery();
+    reExecuteAltarQuery();
   };
 
   return (
@@ -196,7 +193,13 @@ const Altar = ({ isSupportWebp }) => {
         w={{ base: '1024px', mid: '1440px', desktop: '1920px' }}
         position="relative"
       >
-        <Box w={{ base: '323px', mid: '436px' }} position="absolute" minH={{ base: '688px' }} bottom="9vh" right={{ base: '7%', desktop: '22%' }}>
+        <Box
+          w={{ base: '323px', mid: '436px' }}
+          position="absolute"
+          minH={{ base: '688px' }}
+          bottom="9vh"
+          right={{ base: '7%', desktop: '22%' }}
+        >
           <Box
             bgImage={{
               base: isSupportWebp ? AltarImgWebp.src : AltarImg.src,
@@ -314,7 +317,13 @@ const Altar = ({ isSupportWebp }) => {
                 <Text mt="12px" fontSize="14px" fontWeight={400} color="#FFF3CD" w="100%">
                   You can choose the urn.
                 </Text>
-                <Button mt="12px" variant="primary" onClick={() => showItemHandler('urn')} isDisabled={!isUrnEnabled()} isLoading={fetching}>
+                <Button
+                  mt="12px"
+                  variant="primary"
+                  onClick={() => showItemHandler('urn')}
+                  isDisabled={!isUrnEnabled()}
+                  isLoading={fetching}
+                >
                   {urnButtonText}
                 </Button>
               </Flex>
@@ -401,7 +410,11 @@ const Altar = ({ isSupportWebp }) => {
                   <Input placeholder="0x..." onChange={(e) => setInputPolygonAddress(e.target.value)} />
 
                   <Center mt="24px">
-                    <Button isDisabled={!inputPolygonAddress || teleportIsLoading} isLoading={teleportIsLoading} onClick={submitReincarnate}>
+                    <Button
+                      isDisabled={!inputPolygonAddress || teleportIsLoading}
+                      isLoading={teleportIsLoading}
+                      onClick={submitReincarnate}
+                    >
                       Reincarnate
                     </Button>
                   </Center>

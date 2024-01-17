@@ -30,9 +30,12 @@ export function useWalletContext() {
 const interpretTransaction = (transaction) => {
   if (transaction.payload.function.includes('burn_and_fill')) {
     const event = transaction.events.find(
-      (event) => event.type === '0x3::token::MutateTokenPropertyMapEvent' && event.data && event.guid.account_address === transaction.sender
+      (event) =>
+        event.type === '0x3::token::MutateTokenPropertyMapEvent' &&
+        event.data &&
+        event.guid.account_address === transaction.sender
     );
-    const hexString = event.data.values[0];
+    const hexString = event.data.values[0]?.substr(0, 4);
     const decimal = parseInt(hexString, 16);
     return `Your urn now contains ${decimal} ashes`;
   }
@@ -43,7 +46,8 @@ const interpretTransaction = (transaction) => {
   }
 
   const event = transaction.events.find(
-    (event) => event.type === '0x3::token::DepositEvent' && event.guid && event.guid.account_address === transaction.sender
+    (event) =>
+      event.type === '0x3::token::DepositEvent' && event.guid && event.guid.account_address === transaction.sender
   );
   const tokenName = +event.data.amount > 1 ? event.data.id.token_data_id.name : `${event.data.id.token_data_id.name}s`;
   return `You've got ${event.data.amount} ${tokenName}`;
@@ -63,14 +67,22 @@ export function ContextProvider({ children }) {
     },
   });
   const boneList = data?.data?.current_token_ownerships?.filter((item) => normaBoneList.includes(item?.name)) || [];
+  console.log('context boneList: ', boneList);
   // TODO: need check goledn_shovel name
-  const shovelList = data?.data?.current_token_ownerships?.filter((item) => ['shovel', 'golden_shovel'].includes(item?.name)) || [];
+  const shovelList =
+    data?.data?.current_token_ownerships?.filter((item) => ['shovel', 'golden_shovel'].includes(item?.name)) || [];
   const goldenlList = data?.data?.current_token_ownerships?.filter((item) => item?.name.indexOf('golden') > -1);
-  const urnList = data?.data?.current_token_ownerships?.filter((item) => ['urn', 'golden_urn'].includes(item?.name)) || [];
+  const urnList =
+    data?.data?.current_token_ownerships?.filter((item) => ['urn', 'golden_urn'].includes(item?.name)) || [];
   // const zeroAshUrn = data.current_token_data.name === 'urn' && data.amount > 1
-  const zeroAshUrn = data?.data && data.data?.current_token_ownerships?.filter((e) => e.current_token_data.name === 'urn' && e.amount > 1);
+  const zeroAshUrn =
+    data?.data &&
+    data.data?.current_token_ownerships?.filter((e) => e.current_token_data.name === 'urn' && e.amount > 1);
   const hasAshUrn =
-    data?.data && data.data?.current_token_ownerships?.filter((e) => e.current_token_data.name === 'urn' && !isEmpty(e.token_properties.ash));
+    data?.data &&
+    data.data?.current_token_ownerships?.filter(
+      (e) => e.current_token_data.name === 'urn' && !isEmpty(e.token_properties.ash)
+    );
   const originalUrnList = [];
   if (zeroAshUrn?.length > 0) {
     for (let i = 0; i < zeroAshUrn[0].amount; i++) {

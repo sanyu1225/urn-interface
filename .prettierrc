@@ -4,7 +4,7 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "es5",
-  "printWidth": 150,
+  "printWidth": 120,
   "eslintIntegration": true,
   "importOrderBuiltinModulesToTop": true,
   "importOrderCaseInsensitive": true,
@@ -15,5 +15,6 @@
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
   "importOrder": ["<THIRD_PARTY_MODULES>", "^@components/(.*)$", "^@(.*)", "^[./]"],
+  "jsxBracketSameLine": false,
   "jsxSingleQuote": false
 }
