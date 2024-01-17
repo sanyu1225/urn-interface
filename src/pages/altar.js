@@ -390,7 +390,7 @@ const Altar = ({ isSupportWebp }) => {
             <ModalCloseButton m="20px" color="#FFF3CD" />
             <ModalBody p="0">
               {teleportData ? (
-                <>Reincarnate Succeed, check your polygon account!</>
+                teleportError || 'Reincarnate Succeed, check your polygon account!'
               ) : (
                 <>
                   <Box w="100%" m="12px 0">
