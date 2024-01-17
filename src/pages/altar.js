@@ -4,6 +4,7 @@ import useSound from 'use-sound';
 
 import Carousel from '@/component/Carousel';
 import { isEmpty } from '@/plugin/lodash';
+import { hexToBytes } from '@/utils';
 import { fadeup } from '@/utils/animation';
 import {
   Box,
@@ -161,8 +162,9 @@ const Altar = ({ isSupportWebp }) => {
 
   const submitReincarnate = async () => {
     const functionName = functionNameMap.reincarnate;
+    const formatAddr = hexToBytes(inputPolygonAddress?.replaceAll('0x', ''));
     console.log(`💥 choiseUrn.property_version: ${JSON.stringify(choiseUrn.property_version, null, '  ')}`);
-    const transaction = await mint(functionName, [choiseUrn.property_version, 100, inputPolygonAddress]);
+    const transaction = await mint(functionName, [choiseUrn.property_version, 100, formatAddr]);
     console.log(`💥 transaction: ${JSON.stringify(transaction, null, '  ')}`);
     if (!transaction) return;
     fetchTeleportData(transaction.hash, inputPolygonAddress);
