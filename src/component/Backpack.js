@@ -9,6 +9,7 @@ import {
   Button,
   Center,
   Flex,
+  Grid,
   Image,
   Modal,
   ModalBody,
@@ -84,7 +85,10 @@ const Backpack = () => {
                 </Button>
               ))}
             </Flex>
-            <Flex
+            <Grid
+              alignContent="flex-start"
+              gridTemplateColumns="repeat(3, 1fr)"
+              gap="14px"
               bg="#211C21"
               h="437px"
               w="424px"
@@ -92,9 +96,6 @@ const Backpack = () => {
               p="20px 16px 0 20px"
               mt="18px"
               borderRadius={20}
-              flexWrap="wrap"
-              gap="14px"
-              justifyContent="left"
             >
               {showList?.map((item, idx) => (
                 <Box key={idx} position="relative" w="120px" h="120px">
@@ -143,7 +144,7 @@ const Backpack = () => {
                   </Box>
                 </Box>
               ))}
-            </Flex>
+            </Grid>
           </ModalBody>
         </ModalContent>
       </Modal>
