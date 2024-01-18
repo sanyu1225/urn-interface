@@ -67,7 +67,8 @@ const goldenBoneNames = baseBoneNames.map((bone) => `golden ${bone}`);
 
 const getItemFromTransaction = (transaction) => {
   const event = transaction.events.find(
-    (event) => event.type === '0x3::token::DepositEvent' && event.guid && event.guid.account_address === transaction.sender
+    (event) =>
+      event.type === '0x3::token::DepositEvent' && event.guid && event.guid.account_address === transaction.sender
   );
   return event.data.id.token_data_id.name;
 };
@@ -150,8 +151,8 @@ const Graveyard = ({ isSupportWebp }) => {
       }, 3500);
     }
   };
-  //   TODO filter golden shovel
-  const shovelAmount = shovelList.length > 0 ? shovelList[0].amount : 0;
+
+  const shovelAmount = shovelList.length > 0 ? shovelList.find((item) => item.name === 'shovel').amount : 0;
 
   const digButtonText = useMemo(() => {
     if (connected) {
@@ -354,7 +355,13 @@ const Graveyard = ({ isSupportWebp }) => {
             w="325px"
             position="relative"
           >
-            <CustomLink path="#" right={{ base: '28px' }} top={{ base: '20px' }} transform={{ base: 'scale(0.8)' }} disabled>
+            <CustomLink
+              path="#"
+              right={{ base: '28px' }}
+              top={{ base: '20px' }}
+              transform={{ base: 'scale(0.8)' }}
+              disabled
+            >
               Go to reincarnation
               <br />
               (Coming soon)

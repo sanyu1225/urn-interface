@@ -171,8 +171,7 @@ const Altar = ({ isSupportWebp }) => {
     if (!transaction) return;
     fetchTeleportData(transaction.hash, inputPolygonAddress);
     setTimeout(() => {
-      resetState();
-      reExecuteAltarQuery();
+      closeModalHandler();
     }, 1000);
   };
 

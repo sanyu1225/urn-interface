@@ -42,7 +42,7 @@ const buttonGroup = [
 const Backpack = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [buttonType, setButtonType] = useState('basic');
-  const { connected, boneList, shovelList, goldenlList } = useWalletContext();
+  const { boneList, shovelList, goldenlList } = useWalletContext();
   const [showList, setShowList] = useState(shovelList);
 
   useEffect(() => {
@@ -80,7 +80,12 @@ const Backpack = () => {
           <ModalBody p="0">
             <Flex gap="12px">
               {buttonGroup.map((btn) => (
-                <Button key={btn.id} variant="basic" onClick={() => setButtonType(btn.id)} isActive={buttonType === btn.id}>
+                <Button
+                  key={btn.id}
+                  variant="basic"
+                  onClick={() => setButtonType(btn.id)}
+                  isActive={buttonType === btn.id}
+                >
                   {btn.label}
                 </Button>
               ))}
@@ -99,15 +104,15 @@ const Backpack = () => {
             >
               {showList?.map((item, idx) => (
                 <Box key={idx} position="relative" w="120px" h="120px">
-                  {['shovel', 'golden_shovel'].includes(item?.current_token_data?.name) && item?.amount > 1 && (
+                  {['shovel', 'knife'].includes(item?.current_token_data?.name) && item?.amount > 1 && (
                     <>
                       <Box bg="#383030" borderRadius="12px 12px 0 0" h="20px" w="100%" position="absolute" top="0px" />
                       <Box bg="#413636" borderRadius="12px 12px 0 0" h="20px" w="100%" position="absolute" top="5px" />
                     </>
                   )}
                   <Box
-                    top={['shovel', 'golden_shovel'].includes(item?.current_token_data?.name) ? '10px' : '0'}
-                    position={['shovel', 'golden_shovel'].includes(item?.current_token_data?.name) ? 'relative' : 'absolute'}
+                    top={['shovel', 'knife'].includes(item?.current_token_data?.name) ? '10px' : '0'}
+                    position={['shovel', 'knife'].includes(item?.current_token_data?.name) ? 'relative' : 'absolute'}
                   >
                     <Tooltip label={item?.current_token_data?.name} placement="top">
                       <Box position="relative">
@@ -119,20 +124,33 @@ const Backpack = () => {
                           fallbackSrc={placeholderImg.src}
                           border="1px solid #49473E"
                           borderRadius="12px"
-                          // border={choiseItem.property_version === item.property_version ? '1px solid #FFF3CD' : 'none'}
                         />
                         {item?.current_token_data?.name === 'urn' && (
-                          <Text position="absolute" top="6px" right="6px" fontSize="12px" color="#FFF3CD" fontWeight="600">
+                          <Text
+                            position="absolute"
+                            top="6px"
+                            right="6px"
+                            fontSize="12px"
+                            color="#FFF3CD"
+                            fontWeight="600"
+                          >
                             {item?.token_properties?.ash ?? '0'}
                           </Text>
                         )}
-                        {/* TODO golden sholvel */}
-                        {item?.current_token_data?.name !== 'urn' && !['shovel', 'golden_shovel'].includes(item?.current_token_data?.name) && (
-                          <Text position="absolute" top="6px" right="6px" fontSize="12px" color="#FFF3CD" fontWeight="600">
-                            {item?.token_properties?.amount ?? ''}
-                          </Text>
-                        )}
-                        {['shovel', 'golden_shovel'].includes(item?.current_token_data?.name) && (
+                        {item?.current_token_data?.name !== 'urn' &&
+                          !['shovel', 'knife'].includes(item?.current_token_data?.name) && (
+                            <Text
+                              position="absolute"
+                              top="6px"
+                              right="6px"
+                              fontSize="12px"
+                              color="#FFF3CD"
+                              fontWeight="600"
+                            >
+                              {item?.token_properties?.amount ?? ''}
+                            </Text>
+                          )}
+                        {['shovel', 'knife'].includes(item?.current_token_data?.name) && (
                           <Center bg="#FFF3CD" borderRadius={100} position="absolute" w="18px" bottom="6px" left="6px">
                             <Text fontSize="12px" color="#363121" fontWeight="600">
                               {item?.amount ?? ''}
