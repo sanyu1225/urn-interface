@@ -28,6 +28,12 @@ export function useWalletContext() {
 }
 
 const interpretTransaction = (transaction) => {
+  if (transaction.payload.function.includes('reincarnate')) {
+    const event = transaction.events.find((event) => event.type.includes(`${CONTRACT_ADDR}::counter::BridgeEvent`));
+    const address = event?.data?.addr;
+    return `Reincarnate to ${address}`;
+  }
+
   if (transaction.payload.function.includes('burn_and_fill')) {
     const event = transaction.events.find(
       (event) =>
@@ -73,7 +79,6 @@ export function ContextProvider({ children }) {
   const goldenlList = data?.data?.current_token_ownerships?.filter((item) => item?.name.indexOf('golden') > -1);
   const urnList =
     data?.data?.current_token_ownerships?.filter((item) => ['urn', 'golden_urn'].includes(item?.name)) || [];
-  // const zeroAshUrn = data.current_token_data.name === 'urn' && data.amount > 1
   const zeroAshUrn =
     data?.data &&
     data.data?.current_token_ownerships?.filter((e) => e.current_token_data.name === 'urn' && e.amount > 1);

@@ -12,8 +12,6 @@ import { Box, Flex, IconButton, Image, Text } from '@chakra-ui/react';
 SwiperCore.use([Keyboard, Mousewheel]);
 
 function Carousel({ NftList, selectItem, choiseItem }) {
-  console.log('NftList: ', NftList);
-  console.log('choiseItem: ', choiseItem);
   const [swiper, setSwiper] = useState(null);
   const [swiperIndex, setSwiperIndex] = useState(0);
   const [isEnd, setIsEnd] = useState(false);

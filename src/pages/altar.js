@@ -67,6 +67,7 @@ const Altar = ({ isSupportWebp }) => {
   const [showGhost, setShowGhost] = useState(false);
   const [playLaugh, { stop }] = useSound(LaughAudio);
   const [playButton] = useSound(ButtonClickAudio);
+  // eslint-disable-next-line no-unused-vars
   const [teleportResult, fetchTeleportData] = useReincarnation();
   const { data: teleportData, error: teleportError, isLoading: teleportIsLoading } = teleportResult;
   const { connected, mint, reExecuteAltarQuery, urnList, fetching, boneList } = useWalletContext();
@@ -169,7 +170,7 @@ const Altar = ({ isSupportWebp }) => {
     const transaction = await mint(functionName, [choiseUrn.property_version, 100, formatAddr]);
     console.log(`💥 transaction: ${JSON.stringify(transaction, null, '  ')}`);
     if (!transaction) return;
-    fetchTeleportData(transaction.hash, inputPolygonAddress);
+    // fetchTeleportData(transaction.hash, inputPolygonAddress);
     setTimeout(() => {
       closeModalHandler();
     }, 1000);
