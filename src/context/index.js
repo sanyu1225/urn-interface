@@ -33,7 +33,7 @@ const interpretTransaction = (transaction) => {
       (event) =>
         event.type === '0x3::token::MutateTokenPropertyMapEvent' &&
         event.data &&
-        event.data.key[0] === 'ash' &&
+        event.data.keys?.[0] === 'ash' &&
         event.guid.account_address === transaction.sender
     );
     const hexString = event.data.values[0]?.substr(0, 4);
