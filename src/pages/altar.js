@@ -7,6 +7,7 @@ import { isEmpty } from '@/plugin/lodash';
 import { hexToBytes } from '@/utils';
 import { fadeup } from '@/utils/animation';
 import {
+  AspectRatio,
   Box,
   Button,
   Center,
@@ -17,6 +18,7 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Text,
@@ -39,6 +41,7 @@ import GhostImg from '../assets/images/altar/ghost.png';
 import GhostImgWebp from '../assets/images/altar/ghost.webp';
 import HandImg from '../assets/images/altar/hand.png';
 import HandImgWebp from '../assets/images/altar/hand.webp';
+import LayerZero from '../assets/images/altar/layer_zero.svg';
 import SkullItemImg from '../assets/images/altar/skull_item.png';
 import SkullItemImgWebp from '../assets/images/altar/skull_item.webp';
 import UrnItemImg from '../assets/images/altar/urn_item.png';
@@ -394,7 +397,7 @@ const Altar = ({ isSupportWebp }) => {
 
         <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={closeModalHandler}>
           <ModalOverlay />
-          <ModalContent p="28px" bg="#292229">
+          <ModalContent p="28px 28px 10px 28px" bg="#292229">
             <ModalHeader p="0 0 20px 0px" alignItems="center" color="#FFF3CD">
               Time to Reincarnate
             </ModalHeader>
@@ -423,6 +426,11 @@ const Altar = ({ isSupportWebp }) => {
                 </>
               )}
             </ModalBody>
+            <ModalFooter mt="50px">
+              <Flex w="100%" direction="column" alignItems="center" borderRadius="12px" justifyContent="stretch">
+                <Image src={LayerZero.src} alt="Layer Zero Icon" objectFit="cover" />
+              </Flex>
+            </ModalFooter>
           </ModalContent>
         </Modal>
       </Box>
