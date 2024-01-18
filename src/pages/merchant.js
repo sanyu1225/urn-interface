@@ -30,8 +30,8 @@ import { useWalletContext } from '../context';
 import Layout from '../layout';
 import { fadeIn } from '../utils/animation';
 
-export const shovelMintingPrice = '1000000';
-export const urnMintingPrice = '10000000';
+export const shovelMintingPrice = '100000'; // 0.001 apt
+export const urnMintingPrice = '1000000'; // 0.01 apt
 
 const NotiveMessage = [
   'Acquires a shovel, hasten to the gloomy graveyard, and unearth the secrets hidden beneath the hallowed ground!',
@@ -191,7 +191,7 @@ const Merchant = ({ isSupportWebp }) => {
               mt={{ base: '10px', mid: '14px', desktop: '14px' }}
               lineHeight={{ base: '20px' }}
             >
-              it&apos;s lame without the golden urn. {shardAmount}/10
+              it&apos;s lame without the golden urn. {shardAmount}/69
             </Text>
             <Button
               variant="gold"
@@ -261,11 +261,31 @@ const Merchant = ({ isSupportWebp }) => {
             h={{ base: '345px', mid: '406px', desktop: '406px' }}
           >
             <Flex justifyContent="center" gap="24px" mt={{ base: '7rem', mid: '10rem', desktop: '10rem' }}>
-              <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p={{ base: '14px', mid: '16px' }} justifyContent="center" rowGap="6px">
-                <Text fontSize={{ base: '13px', mid: '18px' }} fontWeight={700} color="#292229" textAlign="center" w="100%">
+              <Flex
+                wrap="wrap"
+                w="40%"
+                bg="#FCD791"
+                borderRadius="20px"
+                p={{ base: '14px', mid: '16px' }}
+                justifyContent="center"
+                rowGap="6px"
+              >
+                <Text
+                  fontSize={{ base: '13px', mid: '18px' }}
+                  fontWeight={700}
+                  color="#292229"
+                  textAlign="center"
+                  w="100%"
+                >
                   Buy shovel / {Number(shovelMintingPrice) / Number(10 ** 8)} APT
                 </Text>
-                <Text fontSize={{ base: '14px', mid: '14px' }} fontWeight={500} color="#292229" textAlign="center" w="100%">
+                <Text
+                  fontSize={{ base: '14px', mid: '14px' }}
+                  fontWeight={500}
+                  color="#292229"
+                  textAlign="center"
+                  w="100%"
+                >
                   Every grave robber needs a shovel.
                 </Text>
                 <Counter defaultValue={mintAmount} onChange={setMintAmount} />
@@ -290,8 +310,21 @@ const Merchant = ({ isSupportWebp }) => {
                   {mintShovelButtonText}
                 </Button>
               </Flex>
-              <Flex wrap="wrap" w="40%" bg="#FCD791" borderRadius="20px" p={{ base: '14px', mid: '16px' }} justifyContent="center">
-                <Text fontSize={{ base: '13px', mid: '18px' }} fontWeight={700} color="#292229" textAlign="center" w="100%">
+              <Flex
+                wrap="wrap"
+                w="40%"
+                bg="#FCD791"
+                borderRadius="20px"
+                p={{ base: '14px', mid: '16px' }}
+                justifyContent="center"
+              >
+                <Text
+                  fontSize={{ base: '13px', mid: '18px' }}
+                  fontWeight={700}
+                  color="#292229"
+                  textAlign="center"
+                  w="100%"
+                >
                   Buy urn / {Number(urnMintingPrice) / Number(10 ** 8)} APT
                 </Text>
                 <Text
