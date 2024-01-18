@@ -152,7 +152,7 @@ const Graveyard = ({ isSupportWebp }) => {
     }
   };
 
-  const shovelAmount = shovelList.length > 0 ? shovelList.find((item) => item.name === 'shovel').amount : 0;
+  const shovelAmount = shovelList.length > 0 ? shovelList.find((item) => item.name === 'shovel')?.amount ?? 0 : 0;
 
   const digButtonText = useMemo(() => {
     if (connected) {
