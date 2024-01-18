@@ -33,6 +33,7 @@ const interpretTransaction = (transaction) => {
       (event) =>
         event.type === '0x3::token::MutateTokenPropertyMapEvent' &&
         event.data &&
+        event.data.key[0] === 'ash' &&
         event.guid.account_address === transaction.sender
     );
     const hexString = event.data.values[0]?.substr(0, 4);
@@ -69,7 +70,8 @@ export function ContextProvider({ children }) {
   const boneList = data?.data?.current_token_ownerships?.filter((item) => normaBoneList.includes(item?.name)) || [];
   // TODO: need check goledn_shovel name
   const shovelList =
-    data?.data?.current_token_ownerships?.filter((item) => ['shovel', 'golden_shovel'].includes(item?.name)) || [];
+    data?.data?.current_token_ownerships?.filter((item) => ['shovel', 'golden_shovel', 'knife'].includes(item?.name)) ||
+    [];
   const goldenlList = data?.data?.current_token_ownerships?.filter((item) => item?.name.indexOf('golden') > -1);
   const urnList =
     data?.data?.current_token_ownerships?.filter((item) => ['urn', 'golden_urn'].includes(item?.name)) || [];
