@@ -7,7 +7,6 @@ import { isEmpty } from '@/plugin/lodash';
 import { hexToBytes } from '@/utils';
 import { fadeup } from '@/utils/animation';
 import {
-  AspectRatio,
   Box,
   Button,
   Center,

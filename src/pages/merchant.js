@@ -271,7 +271,7 @@ const Merchant = ({ isSupportWebp }) => {
                 rowGap="6px"
               >
                 <Text
-                  fontSize={{ base: '13px', mid: '18px' }}
+                  fontSize={{ base: '13px', mid: '17px' }}
                   fontWeight={700}
                   color="#292229"
                   textAlign="center"
