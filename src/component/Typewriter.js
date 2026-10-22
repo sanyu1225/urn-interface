@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Text, keyframes } from '@chakra-ui/react';
+import { keyframes } from '@emotion/react';
+import { Box, Text } from '@chakra-ui/react';
 
 const TypingCursor = keyframes`
   from {

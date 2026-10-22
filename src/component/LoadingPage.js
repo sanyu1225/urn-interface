@@ -1,4 +1,5 @@
-import { Box, Spinner, keyframes } from '@chakra-ui/react';
+import { keyframes } from '@emotion/react';
+import { Box, Spinner } from '@chakra-ui/react';
 
 const pulse = keyframes`
   0% {

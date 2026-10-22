@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useRef } from 'react';
-import { useToast, Box, Flex, Text, keyframes } from '@chakra-ui/react';
+import { keyframes } from '@emotion/react';
+import { useToast, Box, Flex, Text } from '@chakra-ui/react';
 import CloseIcon from '../assets/images/icons/Close.svg';
 import SuccessfulIcon from '../assets/images/icons/successful.svg';
 import ErrorIcon from '../assets/images/icons/error.svg';

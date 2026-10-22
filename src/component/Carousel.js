@@ -1,15 +1,13 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import SwiperCore, { Keyboard, Mousewheel } from 'swiper';
+import 'swiper/css';
+import { Keyboard, Mousewheel } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper.min.css';
 
 import placeholderImg from '@/assets/images/altar/placeholder_img.png';
 import { isEmpty } from '@/plugin/lodash';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Flex, IconButton, Image, Text } from '@chakra-ui/react';
-
-SwiperCore.use([Keyboard, Mousewheel]);
 
 function Carousel({ NftList, selectItem, choiseItem }) {
   const [swiper, setSwiper] = useState(null);
@@ -51,6 +49,7 @@ function Carousel({ NftList, selectItem, choiseItem }) {
         />
       )}
       <Swiper
+        modules={[Keyboard, Mousewheel]}
         cssMode
         spaceBetween={14}
         onSwiper={(s) => {

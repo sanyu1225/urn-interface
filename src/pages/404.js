@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import { Box, keyframes, Text } from '@chakra-ui/react';
+import { keyframes } from '@emotion/react';
+import { Box, Text } from '@chakra-ui/react';
 import bg from '@/assets/images/Notfound/404_1920.jpg';
 import bgWebp from '@/assets/images/Notfound/404_1920.webp';
 import minBg from '@/assets/images/Notfound/404_1440.jpg';
