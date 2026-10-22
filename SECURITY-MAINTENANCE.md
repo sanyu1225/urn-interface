@@ -11,7 +11,7 @@ form-data, Lodash, PostCSS, ws, and uuid used by older wallet SDKs.
 
 The audit still reports five advisories:
 
-- `braces` (high): an indirect ESLint/build dependency; no patched release.
+- `braces` (high): an indirect ESLint/next-sitemap build dependency; no patched release.
   Application input is not used as a glob pattern.
 - `elliptic` (low): inherited from OpenBlock's legacy multi-chain SDK; no patched
   release. A wallet SDK migration is needed before this dependency can be removed.
