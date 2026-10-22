@@ -23,3 +23,9 @@ The audit still reports five advisories:
 These findings are deferred, not fixed. Reassess them before deploying new wallet
 features or accepting untrusted streaming JSON on a Node server. Build and lint
 checks do not validate external wallets or blockchain transactions.
+
+The owner explicitly accepted the residual risk for the three `stream-json`
+advisories and the `elliptic` advisory on 2026-10-23 and authorized dismissing
+those four GitHub alerts with risk comments. The `braces` alert was dismissed
+because untrusted application input does not reach the build-time glob patterns.
+Dependency scanning remains enabled for new findings.
